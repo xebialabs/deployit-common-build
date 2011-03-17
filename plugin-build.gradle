@@ -1,5 +1,4 @@
 apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/dependencies.gradle'
-apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/releaseable.gradle'
 
 defaultTasks 'build'
 
@@ -47,3 +46,5 @@ jar {
         from 'src/main/resources/META-INF/MANIFEST.MF'
     }
 }
+
+apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/releaseable.gradle'
