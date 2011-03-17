@@ -1,0 +1,37 @@
+defaultTasks 'build'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+group = 'com.xebialabs.deployit.plugins'
+
+configurations {
+    compile {
+        transitive = false
+    }
+}
+
+dependencies {
+    testCompile deps.junit
+}
+
+
+task itest(type: Test) {
+    includes = ['**/*Itest.*']
+    testResultsDir = file("${buildDir}/itest-results")
+    systemProperties['itests'] = project.hasProperty('itests') ? project.getProperty('itests') : ''
+}
+
+test {
+    excludes = ['**/*Itest.*']
+}
+
+sourceSets.main.resources.srcDirs = ['src/main/resources', 'src/main/jython']
+sourceSets.test.resources.srcDirs = ['src/test/resources', 'src/test/jython']
+
+jar {
+    manifest {
+        from 'src/main/resources/META-INF/MANIFEST.MF'
+    }
+}
