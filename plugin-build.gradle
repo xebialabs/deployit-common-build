@@ -1,3 +1,5 @@
+apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/dependencies.gradle'
+
 defaultTasks 'build'
 
 apply plugin: 'java'
