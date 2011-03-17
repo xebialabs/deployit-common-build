@@ -1,4 +1,5 @@
 apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/dependencies.gradle'
+apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/releaseable.gradle'
 
 defaultTasks 'build'
 
