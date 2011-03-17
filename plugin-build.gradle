@@ -27,9 +27,16 @@ task itest(type: Test) {
     systemProperties['itests'] = project.hasProperty('itests') ? project.getProperty('itests') : ''
 }
 
-test {
-    excludes = ['**/*Itest.*']
-}
+
+test { 
+    excludes = ['**/*Itest.*', '**/acceptance/*'] 
+} 
+ 
+task acceptanceTest(type: Test) { 
+    includes = ['**/acceptance/*'] 
+    systemProperties = ['jythonTestBaseDir': "src/acceptance/jython"] 
+    testResultsDir = file("${buildDir}/acceptance-results") 
+} 
 
 sourceSets.main.resources.srcDirs = ['src/main/resources', 'src/main/jython']
 sourceSets.test.resources.srcDirs = ['src/test/resources', 'src/test/jython']
