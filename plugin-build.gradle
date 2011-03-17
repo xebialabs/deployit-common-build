@@ -15,7 +15,9 @@ configurations {
 }
 
 dependencies {
+    compile deps.slf4j_api
     testCompile deps.junit
+    testRuntime deps.logback_classic
 }
 
 
