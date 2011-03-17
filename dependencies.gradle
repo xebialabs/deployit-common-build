@@ -55,5 +55,8 @@ deps = [
 	reflections: "org.reflections:reflections:0.9.5-RC2",
 	servletapi: "javax.servlet:servlet-api:2.5",
 	velocity: "org.apache.velocity:velocity:1.6.1",
-	jms: "javax.jms:jms:1.1"
+	jms: "javax.jms:jms:1.1",
+	dom4j: "dom4j:dom4j:1.6",
+	jaxen: "jaxen:jaxen:1.1.1",
+	icu4j: 'com.ibm.icu:icu4j:3.4.4'
 ]
