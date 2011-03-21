@@ -59,5 +59,6 @@ deps = [
 	jms: "javax.jms:jms:1.1",
 	dom4j: "dom4j:dom4j:1.6",
 	jaxen: "jaxen:jaxen:1.1.1",
-	icu4j: 'com.ibm.icu:icu4j:3.4.4'
+	icu4j: 'com.ibm.icu:icu4j:3.4.4',
+        httpunit: 'httpunit:httpunit:1.6.2'
 ]
