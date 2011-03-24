@@ -6,6 +6,7 @@ repositories {
 		mavenRepo urls: "${nexusBaseUrl}/repositories/hidden-thirdparty/"
 		mavenRepo urls: "${nexusBaseUrl}/repositories/snapshots"
 		mavenRepo urls: "${nexusBaseUrl}/repositories/releases"
+		org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials("Sonatype Nexus Repository Manager", nexusHost, nexusUserName, nexusPassword);
 		mavenCentral()
 	}
 }
