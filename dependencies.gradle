@@ -62,7 +62,7 @@ deps = [
 	jaxen: "jaxen:jaxen:1.1.1",
 	icu4j: 'com.ibm.icu:icu4j:3.4.4',
         httpunit: 'httpunit:httpunit:1.6.2',
-	javaxmail: 'javax.mail:mail:1.4'
+	javaxmail: 'javax.mail:mail:1.4',
         overthere: "com.xebialabs.overthere:overthere:1.0-SNAPSHOT",
         spring_integration: "org.springframework.integration:spring-integration-core:${springIntegrationVersion}",
         truezip: "de.schlichtherle:truezip:6.8.1"
