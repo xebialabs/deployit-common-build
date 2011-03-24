@@ -4,6 +4,7 @@ jackrabbitVersion = "2.2.0"
 jettyVersion = "6.1.11"
 apacheDsVersion = "1.5.7"
 slf4jVersion = "1.6.1"
+springIntegrationVersion = "2.0.1.RELEASE"
 
 deps = [
 	commons_lang: "commons-lang:commons-lang:2.5",
@@ -62,4 +63,8 @@ deps = [
 	icu4j: 'com.ibm.icu:icu4j:3.4.4',
         httpunit: 'httpunit:httpunit:1.6.2',
 	javaxmail: 'javax.mail:mail:1.4'
+        overthere: "com.xebialabs.overthere:overthere:1.0-SNAPSHOT",
+        spring_integration: "org.springframework.integration:spring-integration-core:${springIntegrationVersion}",
+        truezip: "de.schlichtherle:truezip:6.8.1"
+
 ]
