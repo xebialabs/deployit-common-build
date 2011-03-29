@@ -49,4 +49,5 @@ jar {
     }
 }
 
+apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/artifacts.gradle'
 apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/releaseable.gradle'
