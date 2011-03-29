@@ -7,6 +7,8 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 
 group = 'com.xebialabs.deployit.plugins'
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
 
 configurations {
     compile {
