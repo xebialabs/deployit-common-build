@@ -1,0 +1,88 @@
+// Common build file that makes plugins generate a ZIP with documentation
+
+docSrcDir = 'src/main/markdown'
+docTempDir = file("$buildDir/doc-temp")
+docBuildDir = file("$buildDir/doc")
+
+configurations {
+	ciMarkdownGenerator
+	pluginDist
+}
+
+def download(address, targetDir)
+{
+	targetDir.mkdirs()
+    def file = new FileOutputStream("$targetDir/" + address.tokenize("/")[-1])
+    def out = new BufferedOutputStream(file)
+    out << new URL(address).openStream()
+    out.close()
+}
+
+task initPluginManual(type: Copy) {
+	from "$docSrcDir/pluginmanual.markdown"
+	into "$docTempDir"
+}
+
+task appendCiReferenceToPluginManual(type: JavaExec, dependsOn: ['initPluginManual', 'jar']) {
+	inputs.files file("$docTempDir/pluginmanual.markdown")
+	outputs.files file("$docTempDir/pluginmanual.markdown")
+
+	classpath configurations.ciMarkdownGenerator, configurations.compile, jar.archivePath
+	main = 'com.xebialabs.deployit.documentation.PluginCIMarkdownGenerator'
+	args = ["$docTempDir/pluginmanual.markdown", 'com.xebialabs.deployit.plugin.wls']
+}
+
+task markdownTxt(type: Exec, dependsOn: ['appendCiReferenceToPluginManual']) {
+	inputs.files file("$docTempDir/pluginmanual.markdown")
+	outputs.files file("$docBuildDir/pluginmanual.txt")
+
+	docBuildDir.mkdirs()
+	executable = 'pandoc'
+	args = ['-s', '--toc', "$docTempDir/pluginmanual.markdown", '-o', "$docBuildDir/pluginmanual.txt"]
+}
+
+task markdownHtml(type: Exec, dependsOn: ['appendCiReferenceToPluginManual']) {
+	inputs.files file("$docTempDir/pluginmanual.markdown")
+	outputs.files file("$docBuildDir/pluginmanual.html")
+
+	download('https://github.com/xebialabs/deployit-common-build/raw/master/documentation/common/html/header.html', docTempDir)
+	download('https://github.com/xebialabs/deployit-common-build/raw/master/documentation/common/html/footer.html', docTempDir)
+	download('https://github.com/xebialabs/deployit-common-build/raw/master/documentation/common/html/stylesheet.css', docBuildDir)
+	download('https://github.com/xebialabs/deployit-common-build/raw/master/documentation/common/html/images/body_bg.gif', file("$docBuildDir/images"))
+	download('https://github.com/xebialabs/deployit-common-build/raw/master/documentation/common/html/images/logo.png', file("$docBuildDir/images"))
+
+	docBuildDir.mkdirs()
+	executable = 'pandoc'
+	args = ['-s', '-c', 'stylesheet.css', '--toc', '-B', "$docTempDir/header.html", '-A', "$docTempDir/footer.html", "$docTempDir/pluginmanual.markdown", '-o', "$docBuildDir/pluginmanual.html"]
+}
+
+task markdownPdf(type: Exec, dependsOn: ['appendCiReferenceToPluginManual']) {
+	inputs.files file("$docTempDir/pluginmanual.markdown")
+	outputs.files file("$docBuildDir/pluginmanual.pdf")
+
+	download('https://github.com/xebialabs/deployit-common-build/raw/master/documentation/common/latex/latex.template', docTempDir)
+	docBuildDir.mkdirs()
+
+	executable = 'markdown2pdf'
+	args = ["--template=$docTempDir/latex.template", '--toc', "$docTempDir/pluginmanual.markdown", '-o', "$docBuildDir/pluginmanual.pdf"]
+}
+
+task markdown(dependsOn: ['markdownTxt', 'markdownHtml', 'markdownPdf'])
+
+task buildPluginDist(type: Zip, dependsOn: ['jar', 'markdown']) {
+	into('plugins') {
+		from jar.archivePath
+	}
+	
+	into('doc') {
+		from docBuildDir
+	}
+}
+
+dependencies {
+	ciMarkdownGenerator 'com.xebialabs.deployit:documentation:3.0.1'
+}
+
+artifacts {
+	pluginDist buildPluginDist
+}
