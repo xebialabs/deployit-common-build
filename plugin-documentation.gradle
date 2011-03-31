@@ -20,12 +20,12 @@ def download(address, targetDir)
     out.close()
 }
 
-task init${docName}(type: Copy) {
+task initPluginManual(type: Copy) {
 	from "${docSrcDir}/${docName}.markdown"
 	into "${docTempDir}"
 }
 
-task appendCiReferenceToPluginManual(type: JavaExec, dependsOn: ['init${docName}', 'jar']) {
+task appendCiReferenceToPluginManual(type: JavaExec, dependsOn: ['initPluginManual', 'jar']) {
 	inputs.files file("${docTempDir}/${docName}.markdown")
 	outputs.files file("${docTempDir}/${docName}.markdown")
 
@@ -40,7 +40,7 @@ task markdownTxt(type: Exec, dependsOn: ['appendCiReferenceToPluginManual']) {
 
 	docBuildDir.mkdirs()
 	executable = 'pandoc'
-	args = ['-s', '--toc', "${docTempDir}/${docName}.markdown", '-o', "$docBuildDir/${docName}.txt"]
+	args = ['-s', '--toc', "${docTempDir}/${docName}.markdown", '-o', "${docBuildDir}/${docName}.txt"]
 }
 
 task markdownHtml(type: Exec, dependsOn: ['appendCiReferenceToPluginManual']) {
