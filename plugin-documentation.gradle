@@ -43,7 +43,7 @@ task markdownTxt(type: Exec, dependsOn: ['appendCiReferenceToPluginManual']) {
 	args = ['-s', '--toc', "${docTempDir}/${docName}.markdown", '-o', "$docBuildDir/${docName}.txt"]
 }
 
-task markdownHtml(type: Exec, dependsOn: ['appendCiReferenceTo${docName}']) {
+task markdownHtml(type: Exec, dependsOn: ['appendCiReferenceToPluginManual']) {
 	inputs.files file("${docTempDir}/${docName}.markdown")
 	outputs.files file("${docBuildDir}/${docName}.html")
 
@@ -58,7 +58,7 @@ task markdownHtml(type: Exec, dependsOn: ['appendCiReferenceTo${docName}']) {
 	args = ['-s', '-c', 'stylesheet.css', '--toc', '-B', "${docTempDir}/header.html", '-A', "${docTempDir}/footer.html", "${docTempDir}/${docName}.markdown", '-o', "$docBuildDir/${docName}.html"]
 }
 
-task markdownPdf(type: Exec, dependsOn: ['appendCiReferenceTo${docName}']) {
+task markdownPdf(type: Exec, dependsOn: ['appendCiReferenceToPluginManual']) {
 	inputs.files file("${docTempDir}/${docName}.markdown")
 	outputs.files file("${docBuildDir}/${docName}.pdf")
 
