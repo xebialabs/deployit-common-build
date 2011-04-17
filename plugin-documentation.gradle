@@ -11,8 +11,7 @@ configurations {
 	pluginDist
 }
 
-def download(address, targetDir)
-{
+def download(address, targetDir) {
 	targetDir.mkdirs()
     def file = new FileOutputStream("${targetDir}/" + address.tokenize("/")[-1])
     def out = new BufferedOutputStream(file)
@@ -34,39 +33,48 @@ task appendCiReferenceToPluginManual(type: JavaExec, dependsOn: ['initPluginManu
 	args = ["${docTempDir}/${docName}.markdown", 'com.xebialabs.deployit.plugin.wls']
 }
 
+
 task markdownTxt(type: Exec, dependsOn: ['appendCiReferenceToPluginManual']) {
 	inputs.files file("${docTempDir}/${docName}.markdown")
 	outputs.files file("${docBuildDir}/${docName}.txt")
-
-	docBuildDir.mkdirs()
+	
 	executable = 'pandoc'
 	args = ['-s', '--toc', "${docTempDir}/${docName}.markdown", '-o', "${docBuildDir}/${docName}.txt"]
+}
+
+markdownTxt.doFirst {
+	docBuildDir.mkdirs()
 }
 
 task markdownHtml(type: Exec, dependsOn: ['appendCiReferenceToPluginManual']) {
 	inputs.files file("${docTempDir}/${docName}.markdown")
 	outputs.files file("${docBuildDir}/${docName}.html")
 
+	executable = 'pandoc'
+	args = ['-s', '-c', 'stylesheet.css', '--toc', '-B', "${docTempDir}/header.html", '-A', "${docTempDir}/footer.html", "${docTempDir}/${docName}.markdown", '-o', "$docBuildDir/${docName}.html"]
+}
+
+markdownHtml.doFirst {
+	docBuildDir.mkdirs()
+
 	download("${docCommonUrl}/html/header.html", docTempDir)
 	download("${docCommonUrl}/html/footer.html", docTempDir)
 	download("${docCommonUrl}/html/stylesheet.css", docBuildDir)
 	download("${docCommonUrl}/html/images/body_bg.gif", file("${docBuildDir}/images"))
 	download("${docCommonUrl}/html/images/logo.png", file("${docBuildDir}/images"))
-
-	docBuildDir.mkdirs()
-	executable = 'pandoc'
-	args = ['-s', '-c', 'stylesheet.css', '--toc', '-B', "${docTempDir}/header.html", '-A', "${docTempDir}/footer.html", "${docTempDir}/${docName}.markdown", '-o', "$docBuildDir/${docName}.html"]
 }
 
 task markdownPdf(type: Exec, dependsOn: ['appendCiReferenceToPluginManual']) {
 	inputs.files file("${docTempDir}/${docName}.markdown")
 	outputs.files file("${docBuildDir}/${docName}.pdf")
 
-	download("${docCommonUrl}/latex/latex.template", docTempDir)
-	docBuildDir.mkdirs()
-
 	executable = 'markdown2pdf'
 	args = ["--template=${docTempDir}/latex.template", '--toc', "${docTempDir}/${docName}.markdown", '-o', "${docBuildDir}/${docName}.pdf"]
+}
+
+markdownPdf.doFirst {
+	download("${docCommonUrl}/latex/latex.template", docTempDir)
+	docBuildDir.mkdirs()
 }
 
 task markdown(dependsOn: ['markdownTxt', 'markdownHtml', 'markdownPdf'])
