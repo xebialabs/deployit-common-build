@@ -65,6 +65,8 @@ deps = [
 	javaxmail: 'javax.mail:mail:1.4',
         overthere: "com.xebialabs.overthere:overthere:1.0-SNAPSHOT",
         spring_integration: "org.springframework.integration:spring-integration-core:${springIntegrationVersion}",
-        truezip: "de.schlichtherle:truezip:6.8.1"
+        truezip: "de.schlichtherle:truezip:6.8.1",
+	shrinkwrap_api: "org.jboss.shrinkwrap:shrinkwrap-api:1.0.0-alpha-12",
+	shrinkwrap_impl: "org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.0-alpha-12"
 
 ]
