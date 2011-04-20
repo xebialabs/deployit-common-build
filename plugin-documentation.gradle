@@ -30,7 +30,7 @@ task appendCiReferenceToPluginManual(type: JavaExec, dependsOn: ['initPluginManu
 
 	classpath configurations.ciMarkdownGenerator, configurations.compile, jar.archivePath
 	main = 'com.xebialabs.deployit.documentation.PluginCIMarkdownGenerator'
-	args = ["${docTempDir}/${docName}.markdown", 'com.xebialabs.deployit.plugin.wls']
+	args = ["${docTempDir}/${docName}.markdown", 'com.xebialabs.deployit.plugin']
 }
 
 
