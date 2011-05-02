@@ -68,7 +68,7 @@ deps = [
         truezip: "de.schlichtherle:truezip:6.8.1",
 	cglib: "cglib:cglib:2.2",
 	shrinkwrap_api: "org.jboss.shrinkwrap:shrinkwrap-api:1.0.0-alpha-12",
-	shrinkwrap_impl: "org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.0-alpha-12"
+	shrinkwrap_impl: "org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.0-alpha-12",
 	hamcrest_all: "org.hamcrest:hamcrest-all:1.1"
 
 ]
