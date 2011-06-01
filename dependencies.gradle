@@ -36,7 +36,6 @@ deps = [
 	jackrabbit_spi_commons: "org.apache.jackrabbit:jackrabbit-spi-commons:${jackrabbitVersion}",
 	jackrabbit_spi: "org.apache.jackrabbit:jackrabbit-spi:${jackrabbitVersion}",
 	jackrabbit_webdav: "org.apache.jackrabbit:jackrabbit-webdav:${jackrabbitVersion}",
-	google_collections: "com.google.collections:google-collections:1.0",
 	resteasy: "org.jboss.resteasy:resteasy-spring:${resteasyVersion}",
 	jaxrs_api: "org.jboss.resteasy:jaxrs-api:${resteasyVersion}",
 	resteasy_jaxrs: "org.jboss.resteasy:resteasy-jaxrs:${resteasyVersion}",
