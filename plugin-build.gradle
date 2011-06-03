@@ -1,4 +1,4 @@
-apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/dependencies.gradle'
+apply from: 'https://github.com/xebialabs/deployit-common-build/raw/3.0.x-maintenance/dependencies.gradle'
 
 defaultTasks 'build'
 
@@ -49,5 +49,5 @@ jar {
     }
 }
 
-apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/artifacts.gradle'
-apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/releaseable.gradle'
+apply from: 'https://github.com/xebialabs/deployit-common-build/raw/3.0.x-maintenance/artifacts.gradle'
+apply from: 'https://github.com/xebialabs/deployit-common-build/raw/3.0.x-maintenance/releaseable.gradle'
