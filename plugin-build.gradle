@@ -43,11 +43,5 @@ task acceptanceTest(type: Test) {
 sourceSets.main.resources.srcDirs = ['src/main/resources', 'src/main/jython']
 sourceSets.test.resources.srcDirs = ['src/test/resources', 'src/test/jython']
 
-jar {
-    manifest {
-        from 'src/main/resources/META-INF/MANIFEST.MF'
-    }
-}
-
 apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/artifacts.gradle'
 apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/releaseable.gradle'
