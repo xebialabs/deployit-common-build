@@ -70,5 +70,5 @@ deps = [
 	shrinkwrap_impl: "org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.0-alpha-12",
 	hamcrest_all: "org.hamcrest:hamcrest-all:1.1",
 	guava: "com.google.guava:guava:r09",
-	scannit: "nl.javadude.scannit:scannit:0.5"
+	scannit: "nl.javadude.scannit:scannit:0.6"
 ]
