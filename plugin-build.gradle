@@ -27,6 +27,8 @@ task itest(type: Test) {
     includes = ['**/*Itest.*']
     testResultsDir = file("${buildDir}/itest-results")
     systemProperties['itests'] = project.hasProperty('itests') ? project.getProperty('itests') : ''
+    systemProperties['testconfig'] = project.hasProperty('testconfig') ? project.getProperty('testconfig') : ''
+    systemProperties['testimage'] = project.hasProperty('testimage') ? project.getProperty('testimage') : ''
 }
 
 
