@@ -46,7 +46,7 @@ deps = [
 	log4j_over_slf4j: "org.slf4j:log4j-over-slf4j:${slf4jVersion}",
 	logback_classic: "ch.qos.logback:logback-classic:0.9.24",
 	mockito: "org.mockito:mockito-all:1.8.5",
-	overthere: "com.xebialabs.overthere:overthere:1.0-alpha-4",
+	overthere: "com.xebialabs.overthere:overthere:1.0-alpha-5",
 	reflections: "org.reflections:reflections:0.9.5-RC2",
 	resteasy_jaxbprovider: "org.jboss.resteasy:resteasy-jaxb-provider:${resteasyVersion}",
 	resteasy_jaxrs: "org.jboss.resteasy:resteasy-jaxrs:${resteasyVersion}",
