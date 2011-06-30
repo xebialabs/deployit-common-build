@@ -1,10 +1,10 @@
+apacheDsVersion = '1.5.7'
+jackrabbitVersion = '2.2.0'
+jettyVersion = '6.1.11'
 resteasyVersion = '2.0.0.GA'
-springVersion = "3.0.5.RELEASE"
-jackrabbitVersion = "2.2.0"
-jettyVersion = "6.1.11"
-apacheDsVersion = "1.5.7"
-slf4jVersion = "1.6.1"
-springIntegrationVersion = "2.0.1.RELEASE"
+slf4jVersion = '1.6.1'
+springVersion = '3.0.5.RELEASE'
+overthereVersion = '1.0-alpha-7'
 
 deps = [
 	apacheds_client: "org.apache.directory.server:apacheds-core-integ:${apacheDsVersion}",
@@ -22,6 +22,7 @@ deps = [
 	hamcrest_all: "org.hamcrest:hamcrest-all:1.1",
 	httpunit: 'httpunit:httpunit:1.6.2',
 	icu4j: 'com.ibm.icu:icu4j:3.4.4',
+	itest_support: "com.xebialabs.overthere:itest-support:${overthereVersion}",
 	jackrabbit_api: "org.apache.jackrabbit:jackrabbit-api:${jackrabbitVersion}",
 	jackrabbit_commons: "org.apache.jackrabbit:jackrabbit-jcr-commons:${jackrabbitVersion}",
 	jackrabbit_core: "org.apache.jackrabbit:jackrabbit-core:${jackrabbitVersion}",
@@ -46,15 +47,13 @@ deps = [
 	log4j_over_slf4j: "org.slf4j:log4j-over-slf4j:${slf4jVersion}",
 	logback_classic: "ch.qos.logback:logback-classic:0.9.24",
 	mockito: "org.mockito:mockito-all:1.8.5",
-	overthere: "com.xebialabs.overthere:overthere:1.0-alpha-7",
-	reflections: "org.reflections:reflections:0.9.5-RC2",
+	overthere: "com.xebialabs.overthere:overthere:${overthereVersion}",
 	resteasy_jaxbprovider: "org.jboss.resteasy:resteasy-jaxb-provider:${resteasyVersion}",
 	resteasy_jaxrs: "org.jboss.resteasy:resteasy-jaxrs:${resteasyVersion}",
 	resteasy_multipart_provider: "org.jboss.resteasy:resteasy-multipart-provider:${resteasyVersion}",
 	resteasy_spring: "org.jboss.resteasy:resteasy-spring:${resteasyVersion}",
 	resteasy: "org.jboss.resteasy:resteasy-spring:${resteasyVersion}",
 	scannit: "nl.javadude.scannit:scannit:0.7",
-	scannotation: "org.scannotation:scannotation:1.0.2",
 	servletapi: "javax.servlet:servlet-api:2.5",
 	shrinkwrap_api: "org.jboss.shrinkwrap:shrinkwrap-api:1.0.0-alpha-12",
 	shrinkwrap_impl: "org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.0-alpha-12",
@@ -62,7 +61,6 @@ deps = [
 	spring_beans: "org.springframework:spring-beans:${springVersion}",
 	spring_context: "org.springframework:spring-context:${springVersion}",
 	spring_core: "org.springframework:spring-core:${springVersion}",
-	spring_integration: "org.springframework.integration:spring-integration-core:${springIntegrationVersion}",
 	spring_security_config: "org.springframework.security:spring-security-config:${springVersion}",
 	spring_security_core: "org.springframework.security:spring-security-core:${springVersion}",
 	spring_security_web: "org.springframework.security:spring-security-web:${springVersion}",
