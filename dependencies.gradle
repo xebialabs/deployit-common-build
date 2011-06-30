@@ -53,7 +53,7 @@ deps = [
 	resteasy_multipart_provider: "org.jboss.resteasy:resteasy-multipart-provider:${resteasyVersion}",
 	resteasy_spring: "org.jboss.resteasy:resteasy-spring:${resteasyVersion}",
 	resteasy: "org.jboss.resteasy:resteasy-spring:${resteasyVersion}",
-	scannit: "nl.javadude.scannit:scannit:0.6",
+	scannit: "nl.javadude.scannit:scannit:0.7",
 	scannotation: "org.scannotation:scannotation:1.0.2",
 	servletapi: "javax.servlet:servlet-api:2.5",
 	shrinkwrap_api: "org.jboss.shrinkwrap:shrinkwrap-api:1.0.0-alpha-12",
