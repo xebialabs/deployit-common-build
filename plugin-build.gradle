@@ -24,7 +24,7 @@ dependencies {
 
 
 task itest(type: Test) {
-    includes = ['**/*Itest.*']
+    includes = ['**/*Itest.*', '**/*ItestSuite.*']
     testResultsDir = file("${buildDir}/itest-results")
     systemProperties['itests'] = project.hasProperty('itests') ? project.getProperty('itests') : ''
     systemProperties['testconfig'] = project.hasProperty('testconfig') ? project.getProperty('testconfig') : ''
@@ -33,7 +33,7 @@ task itest(type: Test) {
 
 
 test { 
-    excludes = ['**/*Itest.*', '**/acceptance/*'] 
+    excludes = ['**/*Itest.*', '**/*ItestSuite.*', '**/acceptance/*'] 
 } 
  
 task acceptanceTest(type: Test) { 
