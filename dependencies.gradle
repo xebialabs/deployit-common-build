@@ -4,7 +4,7 @@ jettyVersion = '6.1.11'
 resteasyVersion = '2.0.0.GA'
 slf4jVersion = '1.6.1'
 springVersion = '3.0.5.RELEASE'
-overthereVersion = '1.0-alpha-7'
+overthereVersion = '1.0-alpha-8'
 
 deps = [
 	apacheds_client: "org.apache.directory.server:apacheds-core-integ:${apacheDsVersion}",
