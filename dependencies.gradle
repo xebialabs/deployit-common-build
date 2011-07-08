@@ -4,6 +4,7 @@ jettyVersion = '6.1.11'
 resteasyVersion = '2.0.0.GA'
 slf4jVersion = '1.6.1'
 springVersion = '3.0.5.RELEASE'
+trueZipVersion = '7.0-rc2'
 overthereVersion = '1.0-alpha-8'
 
 deps = [
@@ -68,5 +69,8 @@ deps = [
 	spring_web: "org.springframework:spring-web:${springVersion}",
 	spring_webmvc: "org.springframework:spring-webmvc:${springVersion}",
 	truezip: "de.schlichtherle:truezip:6.8.1",
+	truezip_file: "de.schlichtherle.truezip:truezip-file:${trueZipVersion}",
+	truezip_driver_file: "de.schlichtherle.truezip:truezip-driver-file:${trueZipVersion}",
+	truezip_kernel: "de.schlichtherle.truezip:truezip-kernel:${trueZipVersion}",
 	velocity: "org.apache.velocity:velocity:1.6.1"
 ]
