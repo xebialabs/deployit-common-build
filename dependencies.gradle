@@ -71,6 +71,7 @@ deps = [
 	truezip: "de.schlichtherle:truezip:6.8.1",
 	truezip_file: "de.schlichtherle.truezip:truezip-file:${trueZipVersion}",
 	truezip_driver_file: "de.schlichtherle.truezip:truezip-driver-file:${trueZipVersion}",
+	truezip_driver_zip: "de.schlichtherle.truezip:truezip-driver-zip:${trueZipVersion}",
 	truezip_kernel: "de.schlichtherle.truezip:truezip-kernel:${trueZipVersion}",
 	velocity: "org.apache.velocity:velocity:1.6.1"
 ]
