@@ -4,7 +4,7 @@ jettyVersion = '6.1.11'
 resteasyVersion = '2.0.0.GA'
 slf4jVersion = '1.6.1'
 springVersion = '3.0.5.RELEASE'
-trueZipVersion = '7.0-rc2'
+trueZipVersion = '7.2'
 overthereVersion = '1.0-alpha-13'
 
 deps = [
