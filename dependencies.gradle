@@ -44,7 +44,7 @@ deps = [
 	jline: "jline:jline:0.9.94",
 	jms: "javax.jms:jms:1.1",
 	junit: "junit:junit:4.8.2",
-	jython: "org.python:jython:2.5.1",
+	jython: "org.python:jython-standalone:2.5.2",
 	log4j_over_slf4j: "org.slf4j:log4j-over-slf4j:${slf4jVersion}",
 	logback_classic: "ch.qos.logback:logback-classic:0.9.24",
 	mockito: "org.mockito:mockito-all:1.8.5",
