@@ -70,6 +70,8 @@ deps = [
 	spring_test: "org.springframework:spring-test:${springVersion}",
 	spring_web: "org.springframework:spring-web:${springVersion}",
 	spring_webmvc: "org.springframework:spring-webmvc:${springVersion}",
+	tika_core: "org.apache.tika:tika-core:0.9",
+	tika_parsers: "org.apache.tika:tika-parsers:0.9",
 	truezip: "de.schlichtherle:truezip:6.8.1",
 	truezip_file: "de.schlichtherle.truezip:truezip-file:${trueZipVersion}",
 	truezip_driver_file: "de.schlichtherle.truezip:truezip-driver-file:${trueZipVersion}",
