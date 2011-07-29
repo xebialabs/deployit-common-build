@@ -44,6 +44,7 @@ deps = [
 	jetty: "org.mortbay.jetty:jetty:${jettyVersion}",
 	jline: "jline:jline:0.9.94",
 	jms: "javax.jms:jms:1.1",
+    joda_time: "joda-time:joda-time:1.6.2",
 	junit: "junit:junit:4.8.2",
 	jython: "org.python:jython:${jythonVersion}",
 	jython_standalone: "org.python:jython-standalone:${jythonVersion}",
