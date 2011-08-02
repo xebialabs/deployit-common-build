@@ -24,13 +24,16 @@ task initPluginManual(type: Copy) {
 	into "${docTempDir}"
 }
 
+// NOTE: this task requires subprojects to set property 'generatedCIPrefix' which instructs the
+//       generated CI reference which CIs to include.
+//
 task appendCiReferenceToPluginManual(type: JavaExec, dependsOn: ['initPluginManual', 'jar']) {
 	inputs.files file("${docTempDir}/${docName}.markdown")
 	outputs.files file("${docTempDir}/${docName}.markdown")
 
 	classpath configurations.ciMarkdownGenerator, configurations.compile, jar.archivePath
 	main = 'com.xebialabs.deployit.documentation.PluginCIMarkdownGenerator'
-	args = ["${docTempDir}/${docName}.markdown", 'com.xebialabs.deployit.plugin']
+	args = ["${docTempDir}/${docName}.markdown", this.generatedCIPrefix]
 }
 
 
@@ -90,7 +93,7 @@ task buildPluginDist(type: Zip, dependsOn: ['jar', 'markdown']) {
 }
 
 dependencies {
-	ciMarkdownGenerator 'com.xebialabs.deployit:documentation:3.0.1'
+	ciMarkdownGenerator 'com.xebialabs.deployit:documentation:3.1-alpha-SNAPSHOT'
 }
 
 artifacts {
