@@ -1,5 +1,19 @@
 // Common build file that makes plugins generate a ZIP with documentation
 
+// Projects that include this build file need to supply a proper dependency on the doc-generator project.
+// There are two forms:
+//
+//   ciMarkdownGenerator project(":doc-generator")                              -- a project dependency
+//   ciMarkdownGenerator "com.xebialabs.deployit:doc-generator:${apiVersion}"   -- a JAR dependency
+//
+// The project dependency is used in plugins in the plugin-api project itself, the JAR dependency
+// is used in "external" plugins.
+//
+// Also, projects that include this build file need to supply the CI prefix for generated documentation:
+//
+// generatedCIPrefix = 'wls'
+//
+
 docSrcDir = 'src/main/markdown'
 docTempDir = file("${buildDir}/doc-temp")
 docBuildDir = file("${buildDir}/doc")
@@ -90,10 +104,6 @@ task buildPluginDist(type: Zip, dependsOn: ['jar', 'markdown']) {
 	into("doc") {
 		from docBuildDir
 	}
-}
-
-dependencies {
-	ciMarkdownGenerator "com.xebialabs.deployit:doc-generator:${apiVersion}"
 }
 
 artifacts {
