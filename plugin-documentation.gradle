@@ -93,7 +93,7 @@ task buildPluginDist(type: Zip, dependsOn: ['jar', 'markdown']) {
 }
 
 dependencies {
-	ciMarkdownGenerator 'com.xebialabs.deployit:documentation:3.1-alpha-SNAPSHOT'
+	ciMarkdownGenerator "com.xebialabs.deployit:doc-generator:${apiVersion}"
 }
 
 artifacts {
