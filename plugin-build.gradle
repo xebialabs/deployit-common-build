@@ -26,11 +26,19 @@ dependencies {
 task itest(type: Test) {
     includes = ['**/*Itest.*', '**/*ItestSuite.*']
     testResultsDir = file("${buildDir}/itest-results")
-    systemProperties['itests'] = project.hasProperty('itests') ? project.getProperty('itests') : ''
-    systemProperties['testconfig'] = project.hasProperty('testconfig') ? project.getProperty('testconfig') : ''
-    systemProperties['testimage'] = project.hasProperty('testimage') ? project.getProperty('testimage') : ''
+    copyProjectPropertyToSystemProperty(project, systemProperties, 'itests')
+    copyProjectPropertyToSystemProperty(project, systemProperties, 'testconfig')
+    copyProjectPropertyToSystemProperty(project, systemProperties, 'testimage')
+    copyProjectPropertyToSystemProperty(project, systemProperties, 'aws.endpoint')
+    copyProjectPropertyToSystemProperty(project, systemProperties, 'aws.accessKey')
+    copyProjectPropertyToSystemProperty(project, systemProperties, 'aws.secretKey')
 }
 
+def copyProjectPropertyToSystemProperty(project, systemProperties, name) {
+    if(project.hasProperty(name)) {
+        systemProperties[name] = project.getProperty(name)
+    }
+}
 
 test { 
     excludes = ['**/*Itest.*', '**/*ItestSuite.*', '**/acceptance/*'] 
