@@ -7,7 +7,7 @@ slf4jVersion = '1.6.1'
 springVersion = '3.0.5.RELEASE'
 tikaVersion = '0.9'
 trueZipVersion = '7.2'
-overthereVersion = '1.0-alpha-18'
+overthereVersion = '1.0-alpha-19'
 
 deps = [
 	apacheds_client: "org.apache.directory.server:apacheds-core-integ:${apacheDsVersion}",
