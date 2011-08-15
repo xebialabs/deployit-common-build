@@ -1,4 +1,5 @@
-apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/dependencies.gradle'
+commonBuildPath = hasProperty("localCommonBuildRepo") ? file(localCommonBuildRepo).toURL().toString() : 'https://github.com/xebialabs/deployit-common-build/raw/master'
+apply from: "$commonBuildPath/dependencies.gradle"
 
 defaultTasks 'build'
 
@@ -53,5 +54,5 @@ task acceptanceTest(type: Test) {
 sourceSets.main.resources.srcDirs = ['src/main/resources', 'src/main/jython']
 sourceSets.test.resources.srcDirs = ['src/test/resources', 'src/test/jython']
 
-apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/artifacts.gradle'
-apply from: 'https://github.com/xebialabs/deployit-common-build/raw/master/releaseable.gradle'
+apply from: "$commonBuildPath/artifacts.gradle"
+apply from: "$commonBuildPath/releaseable.gradle"
