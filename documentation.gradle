@@ -80,10 +80,8 @@ private def registerDocumentationProject(docProject, config, docClassPath) {
 }
 
 private def copyMarkdownAndResourcesToDocTemp(srcDir) {
-	println "*** here $srcDir"
-    if (!srcDir.exists()) return
-	println "*** here 2 $srcDir"
-    srcDir.eachDir { dir ->
+	if (!srcDir.exists()) return
+	srcDir.eachDir { dir ->
         targetDest = docTempDir
         if (fileTree(dir).include('*.markdown').isEmpty()) {
             targetDest = new File("$docTempDir/${dir.name}")
