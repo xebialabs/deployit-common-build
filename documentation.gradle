@@ -10,6 +10,7 @@ pdfHeader = "$docCommonUrl/pdfPageHeader.html"
 pdfTocXsl = "$docCommonUrl/pdfToc.xsl"
 htmlHeader = "$docCommonUrl/htmlHeader.html"
 docResources = ["$docCommonUrl/css.zip", "$docCommonUrl/image.zip", "$docCommonUrl/js.zip"]
+resolvedMarkdownSources = hasProperty('markdownSources') ? markdownSources : '*.markdown'
 resolvedWkhtmltopdf= hasProperty("wkhtmltopdf") ? wkhtmltopdf : 'wkhtmltopdf'
 resolvedDocArchiveClassifier = hasProperty("docArchiveClassifier") ? docArchiveClassifier : 'doc'
 resolvedDocArchiveExludes = hasProperty("docArchiveExcludes") ? docArchiveExcludes : [ ]
@@ -58,7 +59,7 @@ task doGenerateDocumentation(dependsOn: configurations.docgen) << {
     if (pdfGenerationEnabled) cmdArgs << '-generatePdf'
     docResources.each({cmdArgs << '-resource' << it})
 
-    fileTree("$docTempDir").include('*.markdown').each { cmdArgs << '-source' << "$it"}
+    fileTree("$docTempDir").include(resolvedMarkdownSources).each { cmdArgs << '-source' << "$it"}
     println "Executing DocumentGenerator with following args :\n $cmdArgs"
     docClassPath.addAll(configurations.runtime.resolve())
     javaexec {
