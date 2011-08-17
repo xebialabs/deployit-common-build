@@ -43,30 +43,38 @@ artifacts {
     archives documentationZip
 }
 
-task doGenerateDocumentation(dependsOn: configurations.docgen) << {
-	docTempDir.mkdirs()
-    config = new groovy.util.ConfigObject()
-    docClassPath = new LinkedHashSet()
-	registerDocumentationProject(project, config, docClassPath)
+task doGenerateDocumentation(dependsOn: configurations.docgen) {
+
+	outputs.dir docTempDir
+    inputs.dir "${projectDir}/src/main/markdown"
     configurations.docgen.getDependencies(ProjectDependency.class).each {
-		registerDocumentationProject(it.dependencyProject, config, docClassPath)
+		inputs.dir = "${docProject.projectDir}/src/main/markdown"
     }
-    config.version = project.version
-    config.toProperties().store(file("$docTempDir/props.properties").newWriter(),"")
+	
+	doLast {
+		docTempDir.mkdirs()
+	    config = new groovy.util.ConfigObject()
+	    docClassPath = new LinkedHashSet()
+		registerDocumentationProject(project, config, docClassPath)
+	    configurations.docgen.getDependencies(ProjectDependency.class).each {
+			registerDocumentationProject(it.dependencyProject, config, docClassPath)
+	    }
+    	config.version = project.version
+    	config.toProperties().store(file("$docTempDir/props.properties").newWriter(),"")
 
-    cmdArgs = ['-workingDir', "$docTempDir", '-properties', "$docTempDir/props.properties", '-wkhtmltopdf', resolvedWkhtmltopdf,
-            '-pdfCover', pdfCover, '-pdfFooter', pdfFooter, '-pdfHeader', pdfHeader, '-pdfTocXsl', pdfTocXsl, "-htmlHeader", htmlHeader]
-    if (pdfGenerationEnabled) cmdArgs << '-generatePdf'
-    docResources.each({cmdArgs << '-resource' << it})
-
-    fileTree("$docTempDir").include(resolvedMarkdownSources).each { cmdArgs << '-source' << "$it"}
-    println "Executing DocumentGenerator with following args :\n $cmdArgs"
-    docClassPath.addAll(configurations.runtime.resolve())
-    javaexec {
-        classpath docClassPath
-        setMain 'com.xebialabs.deployit.documentation.DocumentGenerator'
-        args = cmdArgs
-    }
+    	cmdArgs = ['-workingDir', "$docTempDir", '-properties', "$docTempDir/props.properties", '-wkhtmltopdf', resolvedWkhtmltopdf,
+            	'-pdfCover', pdfCover, '-pdfFooter', pdfFooter, '-pdfHeader', pdfHeader, '-pdfTocXsl', pdfTocXsl, "-htmlHeader", htmlHeader]
+    	if (pdfGenerationEnabled == true) cmdArgs << '-generatePdf'
+    	docResources.each({cmdArgs << '-resource' << it})
+		fileTree("$docTempDir").include(resolvedMarkdownSources).each { cmdArgs << '-source' << "$it"}
+    	println "Executing DocumentGenerator with following args :\n $cmdArgs"
+    	docClassPath.addAll(configurations.runtime.resolve())
+    	javaexec {
+        	classpath docClassPath
+        	setMain 'com.xebialabs.deployit.documentation.DocumentGenerator'
+        	args = cmdArgs
+    	}
+	}
 }
 
 private def registerDocumentationProject(docProject, config, docClassPath) {
