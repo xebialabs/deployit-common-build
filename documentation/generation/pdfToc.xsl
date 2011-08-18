@@ -12,35 +12,36 @@
         <title>Table of Content</title>
         <style>
             body {
-             font-family: Tahoma,Verdana,Arial,Helvetica,sans-serif;
-             color: #0000CC;
+             font-family: Arial,sans-serif;
+             color: black;
+             width: 700px;
             }
 
           h1 {
             text-align: center;
             font-size: 18px;
           }
-          div {border-bottom: 1px dashed rgb(200,200,200);}
+
+          li div {border-bottom: 1px dashed rgb(200,200,200);}
           span {float: right;}
           li {list-style: none;}
           ul {
-            font-size: 16px;
+            font-size: 14px;
           }
-          ul ul {font-size: 80%; }
           ul {padding-left: 0em;}
           ul ul {padding-left: 1em;}
-          a {text-decoration:none; color: #0000CC;}
+          a {text-decoration:none; color: black;}
         </style>
       </head>
       <body>
-        <h1>Table of Content</h1>
+        <div style="font-size: 26px; font-weight: bold; color: #75c454; padding-top:2px">Table of Content</div>
         <ul><xsl:apply-templates select="outline:item/outline:item"/></ul>
       </body>
     </html>
   </xsl:template>
   <xsl:template match="outline:item">
     <li>
-      <xsl:if test="@title!=''">
+      <xsl:if test="@title!='' and @title!='Table of Content'">
         <div>
           <a>
             <xsl:if test="@link">
