@@ -69,7 +69,7 @@ task doGenerateDocumentation(dependsOn: configurations.docgen) {
 		fileTree("$docTempDir").include(resolvedMarkdownSources).each { cmdArgs << '-source' << "$it"}
     	println "Executing DocumentGenerator with following args :\n $cmdArgs"
     	docClassPath.addAll(configurations.runtime.resolve())
-    	javaexec {
+	javaexec {
         	classpath docClassPath
         	setMain 'com.xebialabs.deployit.documentation.DocumentGenerator'
         	args = cmdArgs
@@ -77,13 +77,16 @@ task doGenerateDocumentation(dependsOn: configurations.docgen) {
 	}
 }
 
+
 private def registerDocumentationProject(docProject, config, docClassPath) {
     if (docProject.hasProperty('docgen')) {
          config.putAll(docProject.docgen)
     }
-	if (docProject != project) {
-    	docClassPath.addAll(0,docProject.configurations.archives.allArtifactFiles.files)
-    	docClassPath.addAll(docProject.configurations.compile.resolve())
+	if (docProject.equals(project)) {
+          docClassPath.addAll("$buildDir/classes/main")
+        } else {
+    	  docClassPath.addAll(0,docProject.configurations.archives.allArtifactFiles.files)
+    	  docClassPath.addAll(docProject.configurations.compile.resolve())
 	}
 	copyMarkdownAndResourcesToDocTemp(new File("${docProject.projectDir}/src/main/markdown"))
 }
