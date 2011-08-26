@@ -43,6 +43,10 @@ artifacts {
     archives documentationZip
 }
 
+task cleanDoc(type: Delete) {
+	delete "$docTempDir"
+}
+
 task doGenerateDocumentation(dependsOn: configurations.docgen) {
 
 	outputs.dir docTempDir
