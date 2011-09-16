@@ -5,9 +5,8 @@ jythonVersion = '2.5.1'
 resteasyVersion = '2.0.0.GA'
 slf4jVersion = '1.6.1'
 springVersion = '3.0.5.RELEASE'
-tikaVersion = '0.9'
-trueZipVersion = '7.2'
-overthereVersion = '1.0'
+trueZipVersion = '7.3.1'
+overthereVersion = '1.0.1'
 
 deps = [
 	apacheds_client: "org.apache.directory.server:apacheds-core-integ:${apacheDsVersion}",
@@ -61,7 +60,7 @@ deps = [
 	resteasy_multipart_provider: "org.jboss.resteasy:resteasy-multipart-provider:${resteasyVersion}",
 	resteasy_spring: "org.jboss.resteasy:resteasy-spring:${resteasyVersion}",
 	resteasy: "org.jboss.resteasy:resteasy-spring:${resteasyVersion}",
-	scannit: "nl.javadude.scannit:scannit:0.10",
+	scannit: "nl.javadude.scannit:scannit:0.12",
 	servletapi: "javax.servlet:servlet-api:2.5",
 	shrinkwrap_api: "org.jboss.shrinkwrap:shrinkwrap-api:1.0.0-alpha-12",
 	shrinkwrap_impl: "org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.0-alpha-12",
@@ -75,9 +74,6 @@ deps = [
 	spring_test: "org.springframework:spring-test:${springVersion}",
 	spring_web: "org.springframework:spring-web:${springVersion}",
 	spring_webmvc: "org.springframework:spring-webmvc:${springVersion}",
-	tika_core: "org.apache.tika:tika-core:${tikaVersion}",
-	tika_parsers: "org.apache.tika:tika-parsers:${tikaVersion}",
-	truezip: "de.schlichtherle:truezip:6.8.1",
 	truezip_file: "de.schlichtherle.truezip:truezip-file:${trueZipVersion}",
 	truezip_driver_file: "de.schlichtherle.truezip:truezip-driver-file:${trueZipVersion}",
 	truezip_driver_zip: "de.schlichtherle.truezip:truezip-driver-zip:${trueZipVersion}",
