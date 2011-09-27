@@ -6,7 +6,7 @@ resteasyVersion = '2.0.0.GA'
 slf4jVersion = '1.6.1'
 springVersion = '3.0.5.RELEASE'
 trueZipVersion = '7.3.1'
-overthereVersion = '1.0.2'
+overthereVersion = '1.0.1'
 
 deps = [
 	apacheds_client: "org.apache.directory.server:apacheds-core-integ:${apacheDsVersion}",
