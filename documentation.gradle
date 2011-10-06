@@ -3,7 +3,7 @@ commonBuildPath = hasProperty("localCommonBuildRepo") ? file(localCommonBuildRep
 docTempDir = file("${buildDir}/doc")
 docCommonUrl = "${commonBuildPath}/documentation/generation"
 
-pdfGenerationEnabled = hasProperty("pdfGenerationEnabled") ? pdfGenerationEnabled : false
+pdfGenerationEnabled = hasProperty("pdfGenerationEnabled") ? pdfGenerationEnabled : true
 pdfCover = "$docCommonUrl/pdfCover.html"
 pdfFooter = "$docCommonUrl/pdfPageFooter.html"
 pdfHeader = "$docCommonUrl/pdfPageHeader.html"
