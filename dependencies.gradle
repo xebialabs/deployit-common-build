@@ -34,6 +34,7 @@ deps = [
 	jackrabbit_spi: "org.apache.jackrabbit:jackrabbit-spi:${jackrabbitVersion}",
 	jackrabbit_webapp: "org.apache.jackrabbit:jackrabbit-webapp:${jackrabbitVersion}@jar",
 	jackrabbit_webdav: "org.apache.jackrabbit:jackrabbit-webdav:${jackrabbitVersion}",
+	javassist: "javassist:javassist:3.12.1.GA",
 	javax_transaction: "javax.transaction:jta:1.1",
 	javaxmail: 'javax.mail:mail:1.4',
 	jaxen: "jaxen:jaxen:1.1.1",
