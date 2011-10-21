@@ -21,7 +21,7 @@ deps = [
 	commons_lang: "commons-lang:commons-lang:2.5",
 	dom4j: "dom4j:dom4j:1.6",
 	freemarker: 'org.freemarker:freemarker:2.3.18',
-	guava: "com.google.guava:guava:r09",
+	guava: "com.google.guava:guava:10.0.1",
 	hamcrest_all: "org.hamcrest:hamcrest-all:1.1",
 	httpunit: "httpunit:httpunit:1.6.2",
 	icu4j: "com.ibm.icu:icu4j:3.4.4",
