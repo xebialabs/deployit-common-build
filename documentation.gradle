@@ -17,6 +17,7 @@ resolvedDocArchiveExludes = hasProperty("docArchiveExcludes") ? docArchiveExclud
 
 configurations {
     docgen
+	docgenerator
 }
 
 task documentationZip(type: Zip, dependsOn: ['doGenerateDocumentation']) {
@@ -73,6 +74,7 @@ task doGenerateDocumentation(dependsOn: configurations.docgen) {
         docResources.each({cmdArgs << '-resource' << it})
         fileTree("$docTempDir").include(resolvedMarkdownSources).each { cmdArgs << '-source' << "$it"}
         println "Executing DocumentGenerator with following args :\n $cmdArgs"
+        docClassPath.addAll(configurations.docgenerator.resolve())
         docClassPath.addAll(configurations.runtime.resolve())
         javaexec {
             classpath docClassPath
