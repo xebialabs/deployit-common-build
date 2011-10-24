@@ -3,10 +3,10 @@ jackrabbitVersion = '2.2.0'
 jettyVersion = '6.1.11'
 jythonVersion = '2.5.1'
 resteasyVersion = '2.0.0.GA'
-slf4jVersion = '1.6.1'
+slf4jVersion = '1.6.3'
 springVersion = '3.0.5.RELEASE'
-trueZipVersion = '7.3.1'
-overthereVersion = '1.0.1'
+trueZipVersion = '7.3.4'
+overthereVersion = '1.0.4'
 
 deps = [
 	apacheds_client: "org.apache.directory.server:apacheds-core-integ:${apacheDsVersion}",
@@ -21,8 +21,10 @@ deps = [
 	commons_lang: "commons-lang:commons-lang:2.5",
 	dom4j: "dom4j:dom4j:1.6",
 	freemarker: 'org.freemarker:freemarker:2.3.18',
-	guava: "com.google.guava:guava:r09",
+	guava: "com.google.guava:guava:10.0.1",
 	hamcrest_all: "org.hamcrest:hamcrest-all:1.1",
+	hamcrest_core: "org.hamcrest:hamcrest-core:1.2.1",
+	hamcrest_lib: "org.hamcrest:hamcrest-library:1.2.1",
 	httpunit: "httpunit:httpunit:1.6.2",
 	icu4j: "com.ibm.icu:icu4j:3.4.4",
 	itest_support: "com.xebialabs.overthere:itest-support:${overthereVersion}",
@@ -34,6 +36,7 @@ deps = [
 	jackrabbit_spi: "org.apache.jackrabbit:jackrabbit-spi:${jackrabbitVersion}",
 	jackrabbit_webapp: "org.apache.jackrabbit:jackrabbit-webapp:${jackrabbitVersion}@jar",
 	jackrabbit_webdav: "org.apache.jackrabbit:jackrabbit-webdav:${jackrabbitVersion}",
+	javassist: "org.javassist:javassist:3.15.0-GA",
 	javax_transaction: "javax.transaction:jta:1.1",
 	javaxmail: 'javax.mail:mail:1.4',
 	jaxen: "jaxen:jaxen:1.1.1",
@@ -46,12 +49,12 @@ deps = [
 	jline: "jline:jline:0.9.94",
 	jms: "javax.jms:jms:1.1",
 	joda_time: "joda-time:joda-time:1.6.2",
-	junit: "junit:junit:4.8.2",
+	junit: "junit:junit:4.10",
 	junit_params: "pl.pragmatists:JUnitParams:0.3.0",
 	jython: "org.python:jython:${jythonVersion}",
 	jython_standalone: "org.python:jython-standalone:${jythonVersion}",
 	log4j_over_slf4j: "org.slf4j:log4j-over-slf4j:${slf4jVersion}",
-	logback_classic: "ch.qos.logback:logback-classic:0.9.24",
+	logback_classic: "ch.qos.logback:logback-classic:0.9.30",
 	mockito: "org.mockito:mockito-all:1.8.5",
 	mustache: "com.samskivert:jmustache:1.3",
 	overthere: "com.xebialabs.overthere:overthere:${overthereVersion}",
@@ -60,7 +63,7 @@ deps = [
 	resteasy_multipart_provider: "org.jboss.resteasy:resteasy-multipart-provider:${resteasyVersion}",
 	resteasy_spring: "org.jboss.resteasy:resteasy-spring:${resteasyVersion}",
 	resteasy: "org.jboss.resteasy:resteasy-spring:${resteasyVersion}",
-	scannit: "nl.javadude.scannit:scannit:0.12",
+	scannit: "nl.javadude.scannit:scannit:0.13",
 	servletapi: "javax.servlet:servlet-api:2.5",
 	shrinkwrap_api: "org.jboss.shrinkwrap:shrinkwrap-api:1.0.0-alpha-12",
 	shrinkwrap_impl: "org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.0-alpha-12",

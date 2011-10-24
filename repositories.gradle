@@ -8,5 +8,6 @@ repositories {
 		mavenRepo urls: "${nexusBaseUrl}/repositories/releases"
 		org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials("Sonatype Nexus Repository Manager", nexusHost, nexusUserName, nexusPassword);
 		mavenCentral()
+		mavenRepo urls: 'https://oss.sonatype.org/service/local/repositories/nljavadude-593/content/'
 	}
 }
