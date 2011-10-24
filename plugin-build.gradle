@@ -19,7 +19,7 @@ configurations {
 
 dependencies {
     compile deps.slf4j_api
-    testCompile deps.junit, deps.hamcrest_core, deps.hamcrest_library
+    testCompile deps.junit, deps.hamcrest_core, deps.hamcrest_lib
     testRuntime deps.logback_classic
 }
 
