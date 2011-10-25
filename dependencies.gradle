@@ -1,12 +1,14 @@
 apacheDsVersion = '1.5.7'
+apiVersion = '3.6.0-beta-9'
+bundledPluginsVersion = '3.6.0-beta-9'
 jackrabbitVersion = '2.2.0'
 jettyVersion = '6.1.11'
 jythonVersion = '2.5.1'
+overthereVersion = '1.0.4'
 resteasyVersion = '2.0.0.GA'
 slf4jVersion = '1.6.3'
 springVersion = '3.0.5.RELEASE'
 trueZipVersion = '7.3.4'
-overthereVersion = '1.0.4'
 
 deps = [
 	apacheds_client: "org.apache.directory.server:apacheds-core-integ:${apacheDsVersion}",
@@ -19,6 +21,18 @@ deps = [
 	commons_httpclient: "commons-httpclient:commons-httpclient:3.1",
 	commons_io: "commons-io:commons-io:1.4",
 	commons_lang: "commons-lang:commons-lang:2.5",
+	deployit_command_plugin: "com.xebialabs.deployit.plugins:command-plugin:$apiVersion",
+	deployit_database_plugin: "com.xebialabs.deployit.plugins:database-plugin:$apiVersion",
+	deployit_file_plugin: "com.xebialabs.deployit.plugins:file-plugin:$apiVersion",
+	deployit_generic_plugin: "com.xebialabs.deployit.plugins:generic-plugin:$apiVersion",
+	deployit_jee_plugin: "com.xebialabs.deployit.plugins:jee-plugin:$apiVersion",
+	deployit_overthere_plugin: "com.xebialabs.deployit.plugins:overthere-plugin:$apiVersion",
+	deployit_planner: "com.xebialabs.deployit:planner:$apiVersion",
+	deployit_python_plugin: "com.xebialabs.deployit.plugins:python-plugin:$apiVersion",
+	deployit_server_plugin_api: "com.xebialabs.deployit:server-plugin-api:$apiVersion",
+	deployit_udm_plugin_api: "com.xebialabs.deployit:udm-plugin-api:$apiVersion",
+	deployit_udm_test_support: "com.xebialabs.deployit:udm-test-support:$apiVersion",
+	deployit_webserver_plugin: "com.xebialabs.deployit.plugins:webserver-plugin:$apiVersion",
 	dom4j: "dom4j:dom4j:1.6",
 	freemarker: 'org.freemarker:freemarker:2.3.18',
 	guava: "com.google.guava:guava:10.0.1",
