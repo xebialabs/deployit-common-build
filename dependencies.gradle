@@ -34,6 +34,7 @@ deps = [
 	deployit_udm_test_support: "com.xebialabs.deployit:udm-test-support:$apiVersion",
 	deployit_webserver_plugin: "com.xebialabs.deployit.plugins:webserver-plugin:$apiVersion",
 	dom4j: "dom4j:dom4j:1.6",
+	easymock: "org.easymock:easymock:3.0",
 	freemarker: 'org.freemarker:freemarker:2.3.18',
 	guava: "com.google.guava:guava:10.0.1",
 	hamcrest_all: "org.hamcrest:hamcrest-all:1.1",
