@@ -1,6 +1,6 @@
 apacheDsVersion = '1.5.7'
 apiVersion = '3.6.0-beta-14'
-bundledPluginsVersion = '3.6.0-beta-9'
+bundledPluginsVersion = '3.6.0-beta-10'
 jackrabbitVersion = '2.2.0'
 jettyVersion = '6.1.11'
 jythonVersion = '2.5.1'
