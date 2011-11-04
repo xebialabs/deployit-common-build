@@ -64,7 +64,7 @@ deps = [
 	jline: "jline:jline:0.9.94",
 	jms: "javax.jms:jms:1.1",
 	joda_time: "joda-time:joda-time:1.6.2",
-	junit: "junit:junit-dep:4.10",
+	junit: "junit:junit:4.10",
 	junit_params: "pl.pragmatists:JUnitParams:0.3.0",
 	jython: "org.python:jython:${jythonVersion}",
 	jython_standalone: "org.python:jython-standalone:${jythonVersion}",
