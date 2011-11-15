@@ -38,6 +38,13 @@ task documentationZip(type: Zip, dependsOn: ['doGenerateDocumentation']) {
             exclude resolvedDocArchiveExludes
         }
     }
+    into(""){
+	from projectDir
+	include '*.txt'
+	if (resolvedDocArchiveExludes) {
+            exclude resolvedDocArchiveExludes
+        }
+    }
 }
 
 artifacts {
