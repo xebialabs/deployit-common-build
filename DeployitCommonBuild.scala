@@ -119,7 +119,7 @@ object DeployitCommonBuild extends Plugin {
   }
 
   val deployitRepositories = Seq(
-    "Local Maven2 Repo" at Path.userHome / ".m2/repository",
+    "Local Maven2 Repo" at Path.userHome + ".m2/repository",
     "Dexter Nexus Public" at nexus + "groups/public",
     "Dexter Nexus Releases" at nexus + "repositories/releases"
   )
