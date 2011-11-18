@@ -11,6 +11,7 @@ object PluginBuild extends Plugin {
 }
 
 object DeployitCommonBuild extends Plugin {
+  val nexus = "http://dexter.xebialabs.com/nexus/content/"
 
   def itest(projectRefs: Seq[Project]) = TaskKey[Unit]("itest","Run Itests") <<= projectRefs.map(ref => test in PluginBuild.Itest in ref).dependOn
 
@@ -24,7 +25,11 @@ object DeployitCommonBuild extends Plugin {
     parallelExecution in Test := false,
     logLevel := Level.Info,
     ivyLoggingLevel := UpdateLogging.Quiet,
-    credentials += Credentials(Path.userHome / ".sbt" / "credentials")
+    credentials += Credentials(Path.userHome / ".sbt" / "credentials"),
+    publishTo <<= (version) { _ match {
+      case x if x.endsWith("SNAPSHOT") => Some("snapshots" at nexus + "repositories/snapshots/")
+      case _ => Some("releases" at nexus + "repositories/releases/")
+    } }
   )
  
   object PluginProject {
@@ -114,8 +119,9 @@ object DeployitCommonBuild extends Plugin {
   }
 
   val deployitRepositories = Seq(
-    "Dexter Nexus Public" at "http://dexter.xebialabs.com/nexus/content/groups/public",
-    "Dexter Nexus Releases" at "http://dexter.xebialabs.com/nexus/content/repositories/releases"
+    "Local Maven2 Repo" at Path.userHome / ".m2/repository",
+    "Dexter Nexus Public" at nexus + "groups/public",
+    "Dexter Nexus Releases" at nexus + "repositories/releases"
   )
 
   object ShellPrompt {
