@@ -1,12 +1,14 @@
 apply plugin: 'maven'
 
 uploadArchives {
-    repositories.mavenDeployer {
-        repository(url: "${nexusBaseUrl}/repositories/releases") {
-            authentication(userName: "${nexusUserName}", password: "${nexusPassword}")
-        }
-        snapshotRepository(url: "${nexusBaseUrl}/repositories/snapshots") {
-            authentication(userName: "${nexusUserName}", password: "${nexusPassword}")
-        }
-    }
+	if(hasProperty("nexusBaseUrl")) {
+		repositories.mavenDeployer {
+			repository(url: "${nexusBaseUrl}/repositories/releases") {
+				authentication(userName: "${nexusUserName}", password: "${nexusPassword}")
+			}
+			snapshotRepository(url: "${nexusBaseUrl}/repositories/snapshots") {
+				authentication(userName: "${nexusUserName}", password: "${nexusPassword}")
+			}
+		}
+	}
 }
