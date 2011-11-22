@@ -57,7 +57,7 @@ object DeployitCommonBuild extends Plugin {
     val resteasy = excludeFromAll(Seq(resteasyJaxrs, resteasyMultipart, resteasyJaxb))
     val standardDeps = Seq(slf4jApi, guava)
     val springDeps = Seq(springCore, springSecurity)
-    val testDeps = Seq(Test.junit) ++ excludeFromAll(Seq(Test.junitInterface, Test.hamcrestCore, Test.hamcrestLib, Test.logbackClassic, Test.scalaTest))
+    val testDeps = Seq(Test.junit) ++ excludeFromAll(Seq(Test.junitInterface, Test.hamcrestCore, Test.hamcrestLib, Test.logbackClassic))
     val truezip = Seq(truezipFile, truezipKernel, truezipDriverFile)
   }
 
@@ -109,7 +109,7 @@ object DeployitCommonBuild extends Plugin {
       val deployitUdmTestSupport = "com.xebialabs.deployit" % "udm-test-support" % V.Api % "test"
       val itestSupport = "com.xebialabs.overthere" % "itest-support" % V.Overthere
       val junit = "junit" % "junit-dep" % "4.10" % "test"
-      val junitInterface = "com.novocode" % "junit-interface" % "0.7" % "test"
+      val junitInterface = "com.novocode" % "junit-interface" % "0.7" % "test" exclude("junit", "junit")
       val hamcrestCore = "org.hamcrest" % "hamcrest-core" % "1.2.1" % "test"
       val hamcrestLib = "org.hamcrest" % "hamcrest-library" % "1.2.1" % "test"
       val logbackClassic = "ch.qos.logback" % "logback-classic" % "0.9.30" % "test"
