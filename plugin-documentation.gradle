@@ -18,7 +18,7 @@ docSrcDir = 'src/main/markdown'
 docTempDir = file("${buildDir}/doc-temp")
 docBuildDir = file("${buildDir}/doc")
 docName = "${name}-manual"
-docCommonUrl = 'https://github.com/xebialabs/deployit-common-build/raw/master/documentation/common'
+docCommonUrl = 'https://github.com/xebialabs/deployit-common-build/raw/3.6.x-maintenance/documentation/common'
 
 configurations {
 	ciMarkdownGenerator
