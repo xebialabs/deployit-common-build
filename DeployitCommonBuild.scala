@@ -58,13 +58,16 @@ object DeployitCommonBuild extends Plugin {
     val standardDeps = Seq(slf4jApi, guava)
     val springDeps = Seq(springCore, springSecurity)
     val testDeps = Seq(Test.junit) ++ excludeFromAll(Seq(Test.junitInterface, Test.hamcrestCore, Test.hamcrestLib, Test.logbackClassic))
+    val testApacheDs = excludeFromAll(Seq(Test.apacheDsServer, Test.apacheDsClient))
     val truezip = Seq(truezipFile, truezipKernel, truezipDriverFile)
   }
 
   object Dependency {
     object V {
+      val ApacheDs = "2.0.0-M3"
       val Api = "3.6.0-beta-14"
       val Jackrabbit = "2.2.0"
+      val Jetty = "6.1.11"
       val Jython = "2.5.1"
       val Overthere = "1.0.7"
       val Resteasy = "2.0.0.GA"
@@ -80,14 +83,16 @@ object DeployitCommonBuild extends Plugin {
     val deployitPluginApi = "com.xebialabs.deployit" % "udm-plugin-api" % V.Api
     val deployitPlanner = "com.xebialabs.deployit" % "planner" % V.Api
     val deployitPythonPlugin = "com.xebialabs.deployit.plugins" % "python-plugin" % V.Api
-    val deployitUdmServerApi = "com.xebialabs.deployit" % "udm-server-api" % V.Api
+    val deployitServerPluginApi = "com.xebialabs.deployit" % "server-plugin-api" % V.Api
     val freemarker = "org.freemarker" % "freemarker" % "2.3.18"
     val guava = "com.google.guava" % "guava" % "10.0.1"
     val jackrabbitApi = "org.apache.jackrabbit" % "jackrabbit-api" % V.Jackrabbit
     val jackrabbitCore = "org.apache.jackrabbit" % "jackrabbit-core" % V.Jackrabbit
     val jaxRsApi = "org.jboss.resteasy" % "jaxrs-api" % V.Resteasy
     val jcr = "javax.jcr" % "jcr" % "2.0"
+    val jettyServletApi = "org.mortbay.jetty" % "jetty" % V.Jetty
     val jmustache = "com.samskivert" % "jmustache" % "1.3"
+    val jodaTime = "joda-time" % "joda-time" % "1.6.2"
     val jython = "org.python" % "jython" % V.Jython
     val jythonStandalone = "org.python" % "jython-standalone" % V.Jython
     val overthere = "com.xebialabs.overthere" % "overthere" % V.Overthere
@@ -99,6 +104,8 @@ object DeployitCommonBuild extends Plugin {
     val slf4jApi = "org.slf4j" % "slf4j-api" % V.Slf4j
     val scannit = "nl.javadude.scannit" % "scannit" % "0.13"
     val springCore = "org.springframework" % "spring-core" % V.Spring
+    val springWeb = "org.springframework" % "spring-web" % V.Spring
+    val springWebMvc = "org.springframework" % "spring-webmvc" % V.Spring
     val springSecurity = "org.springframework.security" % "spring-security-core" % V.Spring
     val truezipFile = "de.schlichtherle.truezip" % "truezip-file" % V.Truezip
     val truezipDriverFile = "de.schlichtherle.truezip" % "truezip-driver-file" % V.Truezip
@@ -106,6 +113,8 @@ object DeployitCommonBuild extends Plugin {
     val truezipKernel = "de.schlichtherle.truezip" % "truezip-kernel" % V.Truezip
 
     object Test {
+      val apacheDsClient = "org.apache.directory.server" % "apacheds-core-integ" % V.ApacheDs % "test"
+      val apacheDsServer = "org.apache.directory.server" % "apacheds-server-integ" % V.ApacheDs % "test"
       val deployitUdmTestSupport = "com.xebialabs.deployit" % "udm-test-support" % V.Api % "test"
       val itestSupport = "com.xebialabs.overthere" % "itest-support" % V.Overthere
       val junit = "junit" % "junit-dep" % "4.10" % "test"
@@ -113,8 +122,8 @@ object DeployitCommonBuild extends Plugin {
       val hamcrestCore = "org.hamcrest" % "hamcrest-core" % "1.2.1" % "test"
       val hamcrestLib = "org.hamcrest" % "hamcrest-library" % "1.2.1" % "test"
       val logbackClassic = "ch.qos.logback" % "logback-classic" % "0.9.30" % "test"
-      val scalaTest = "org.scalatest" %% "scalatest" % "1.6.1" % "test"
       val mockito = "org.mockito" % "mockito-all" % "1.8.5" % "test"
+      val springTest = "org.springframework" % "spring-test" % V.Spring % "test"
     }
   }
 
