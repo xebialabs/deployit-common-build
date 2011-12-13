@@ -71,6 +71,7 @@ deps = [
 	jython_standalone: "org.python:jython-standalone:${jythonVersion}",
 	log4j_over_slf4j: "org.slf4j:log4j-over-slf4j:${slf4jVersion}",
 	logback_classic: "ch.qos.logback:logback-classic:0.9.30",
+	mime4j: "org.apache.james:apache-mime4j:0.6",
 	mockito: "org.mockito:mockito-all:1.8.5",
 	mustache: "com.samskivert:jmustache:1.3",
 	overthere: "com.xebialabs.overthere:overthere:${overthereVersion}",
