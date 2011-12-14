@@ -4,7 +4,7 @@
 <script type="text/javascript" src="js/jquery.tableofcontents.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
-    document.body.id = "top-toc";
+    $("body").attr('id', 'top-toc');
     var title = $("<div class='manual-title'/>")
     title.html("<div class='title'>{{title}}</div><div class='version'>Version <span class='version-number'>{{version}}</span></div>");
     $("body").css('width', '100%');
