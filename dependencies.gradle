@@ -1,5 +1,5 @@
 apacheDsVersion = '1.5.5'
-apiVersion = '3.7.0-beta-10'
+apiVersion = '3.7.0-beta-11'
 bundledPluginsVersion = '3.6.0'
 jackrabbitVersion = '2.2.10'
 jettyVersion = '6.1.11'
@@ -27,9 +27,10 @@ deps = [
 	deployit_file_plugin: "com.xebialabs.deployit.plugins:file-plugin:$bundledPluginsVersion",
 	deployit_generic_plugin: "com.xebialabs.deployit.plugins:generic-plugin:$apiVersion",
 	deployit_jee_plugin: "com.xebialabs.deployit.plugins:jee-plugin:$apiVersion",
-	deployit_overthere_plugin: "com.xebialabs.deployit.plugins:overthere-plugin:$apiVersion",
 	deployit_planner: "com.xebialabs.deployit:planner:$apiVersion",
 	deployit_python_plugin: "com.xebialabs.deployit.plugins:python-plugin:$apiVersion",
+	deployit_powershell_plugin: "com.xebialabs.deployit.plugins:powershell-plugin:$apiVersion",
+	deployit_remoting_plugin: "com.xebialabs.deployit.plugins:remoting-plugin:$apiVersion",
 	deployit_server_plugin_api: "com.xebialabs.deployit:server-plugin-api:$apiVersion",
 	deployit_udm_plugin_api: "com.xebialabs.deployit:udm-plugin-api:$apiVersion",
 	deployit_udm_test_support: "com.xebialabs.deployit:udm-test-support:$apiVersion",
