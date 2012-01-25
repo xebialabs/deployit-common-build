@@ -1,6 +1,5 @@
 repositories {
-	mavenLocal()
-	if (!rootProject.hasProperty('offline')) {
+  if (!rootProject.hasProperty('offline')) {
     maven {
       url "${nexusBaseUrl}/groups/public"
     }
@@ -25,8 +24,7 @@ repositories {
       }
       url "${nexusBaseUrl}/repositories/hidden-thirdparty"
     }
-
-		//org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials("Sonatype Nexus Repository Manager", nexusHost, nexusUserName, nexusPassword);
-		mavenCentral()
-	}
+  		//org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials("Sonatype Nexus Repository Manager", nexusHost, nexusUserName, nexusPassword);
+    mavenCentral()
+  }
 }
