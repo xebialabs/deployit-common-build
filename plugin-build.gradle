@@ -30,6 +30,9 @@ dependencies {
 
 task createPluginVersionProperties << {
 	def classesDir = sourceSets.main.output.classesDir
+	if (!classesDir.exists()) {
+		classesDir.mkdirs()
+	}
 	def file = new File(classesDir, "plugin-version.properties")
 	file.createNewFile()
 	file.withWriter { w -> 
@@ -38,6 +41,7 @@ task createPluginVersionProperties << {
 	}
 }
 
+createPluginVersionProperties.dependsOn(processResources)
 jar.dependsOn(createPluginVersionProperties)
 
 task itest(type: Test) {
