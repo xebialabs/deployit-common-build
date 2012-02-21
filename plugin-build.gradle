@@ -28,6 +28,18 @@ dependencies {
 	testRuntime deps.logback_classic
 }
 
+task createPluginVersionProperties << {
+	def classesDir = sourceSets.main.output.classesDir
+	def file = new File(classesDir, "plugin-version.properties")
+	file.createNewFile()
+	file.withWriter { w -> 
+		w.writeLine("plugin=" + project.name)
+		w.writeLine("version=" + project.version)
+	}
+}
+
+jar.dependsOn(createPluginVersionProperties)
+
 task itest(type: Test) {
 	includes = ['**/*Itest.*', '**/*ItestSuite.*']
 	testResultsDir = file("${buildDir}/itest-results")
