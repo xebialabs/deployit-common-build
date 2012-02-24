@@ -63,7 +63,7 @@ deps = [
 	jetty_servlet_api: "org.mortbay.jetty:servlet-api-2.5:${jettyVersion}",
 	jetty_util: "org.mortbay.jetty:jetty-util:${jettyVersion}",
 	jetty: "org.mortbay.jetty:jetty:${jettyVersion}",
-	jline: "jline:jline:0.9.94",
+	jline: "jline:jline:2.6",
 	jms: "javax.jms:jms:1.1",
 	joda_time: "joda-time:joda-time:1.6.2",
 	junit: "junit:junit:4.10",
