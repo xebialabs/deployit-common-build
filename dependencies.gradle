@@ -1,5 +1,5 @@
 apacheDsVersion = '1.5.5'
-apiVersion = '3.7.0-beta-27'
+apiVersion = '3.7.0-beta-28'
 bundledPluginsVersion = '3.7.0-beta-1'
 jackrabbitVersion = '2.2.10'
 jettyVersion = '6.1.11'
