@@ -36,6 +36,7 @@ deps = [
 	deployit_udm_test_support: "com.xebialabs.deployit:udm-test-support:$apiVersion",
 	deployit_webserver_plugin: "com.xebialabs.deployit.plugins:webserver-plugin:$bundledPluginsVersion",
 	deployit_releaseauth_plugin: "com.xebialabs.deployit.plugins:release-auth-plugin:$bundledPluginsVersion",
+	deployit_group_orchestrator_plugin: "com.xebialabs.deployit.plugins:group-orchestrator-plugin:$bundledPluginsVersion",
 	dom4j: "dom4j:dom4j:1.6",
 	easymock: "org.easymock:easymock:3.0",
 	freemarker: 'org.freemarker:freemarker:2.3.18',
