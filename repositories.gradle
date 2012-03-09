@@ -1,15 +1,3 @@
 version = rootProject.gradle.gradleVersion
 
-def isMilestone(version) {
-  return version.contains("milestone")
-}
-
-def isGreaterThanMilestone5(version) {
-  return !isMilestone(version) || Integer.parseInt(version.substring(version.lastIndexOf("-") + 1)) > 5
-}
-
-if (isGreaterThanMilestone5(version)) {
-  apply from: "$commonBuildPath/repositories-new.gradle"
-} else {
-  apply from: "$commonBuildPath/repositories-old.gradle"
-}
+apply from: "$commonBuildPath/repositories-new.gradle"
