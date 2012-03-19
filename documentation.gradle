@@ -100,7 +100,7 @@ private def registerDocumentationProject(docProject, config, docClassPath) {
     if (docProject.equals(project)) {
           docClassPath.addAll("$buildDir/classes/main")
     } else {
-          docClassPath.addAll(0,docProject.configurations.archives.allArtifactFiles.files)
+          docClassPath.addAll(0,docProject.configurations.archives.allArtifacts.files)
           docClassPath.addAll(docProject.configurations.compile.resolve())
     }
     copyMarkdownAndResourcesToDocTemp(new File("${docProject.projectDir}/src/main/markdown"))
