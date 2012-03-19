@@ -60,22 +60,22 @@ task doGenerateDocumentation(dependsOn: configurations.docgen) {
     inputs.dir "${projectDir}/src/main"
     outputs.dir docTempDir
 
-    configurations.docgen.getDependencies(ProjectDependency.class).each {
+    configurations.docgen.getDependencies().withType(ProjectDependency).each {
         inputs.dir = "${docProject.projectDir}/src/main"
     }
 
     doLast {
         docTempDir.mkdirs()
-        config = new groovy.util.ConfigObject()
-        docClassPath = new LinkedHashSet()
+        def config = new groovy.util.ConfigObject()
+        def docClassPath = new LinkedHashSet()
         registerDocumentationProject(project, config, docClassPath)
-        configurations.docgen.getDependencies(ProjectDependency.class).each {
+        configurations.docgen.getDependencies().withType(ProjectDependency).each {
             registerDocumentationProject(it.dependencyProject, config, docClassPath)
         }
         config.version = project.version
         config.toProperties().store(file("$docTempDir/props.properties").newWriter(),"")
 
-        cmdArgs = ['-workingDir', "$docTempDir", '-properties', "$docTempDir/props.properties", '-wkhtmltopdf', resolvedWkhtmltopdf,
+        def cmdArgs = ['-workingDir', "$docTempDir", '-properties', "$docTempDir/props.properties", '-wkhtmltopdf', resolvedWkhtmltopdf,
                    '-pdfCover', pdfCover, '-pdfFooter', pdfFooter, '-pdfHeader', pdfHeader, '-pdfTocXsl', pdfTocXsl, "-htmlHeader", htmlHeader]
         if ("$pdfGenerationEnabled" == "true") cmdArgs << '-generatePdf'
         docResources.each({cmdArgs << '-resource' << it})
@@ -109,7 +109,7 @@ private def registerDocumentationProject(docProject, config, docClassPath) {
 private def copyMarkdownAndResourcesToDocTemp(srcDir) {
     if (!srcDir.exists()) return
     srcDir.eachDir { dir ->
-        targetDest = docTempDir
+        def targetDest = docTempDir
         if (fileTree(dir).include('*.markdown').isEmpty()) {
             targetDest = new File("$docTempDir/${dir.name}")
             targetDest.mkdir()
