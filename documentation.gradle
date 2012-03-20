@@ -83,6 +83,7 @@ task doGenerateDocumentation(dependsOn: configurations.docgen) {
         println "Executing DocumentGenerator with following args :\n $cmdArgs"
         docClassPath.addAll(configurations.docgenerator.resolve())
         docClassPath.addAll(configurations.runtime.resolve())
+	println "DocumentGenerator classpath: $docClassPath"
         javaexec {
             classpath docClassPath
             setMain 'com.xebialabs.deployit.documentation.DocumentGenerator'
@@ -99,6 +100,7 @@ private def registerDocumentationProject(docProject, config, docClassPath) {
 
     if (docProject.equals(project)) {
           docClassPath.addAll("$buildDir/classes/main")
+          docClassPath.addAll("$buildDir/resources/main")
     } else {
           docClassPath.addAll(0,docProject.configurations.archives.allArtifacts.files)
           docClassPath.addAll(docProject.configurations.compile.resolve())
