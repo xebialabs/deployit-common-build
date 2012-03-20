@@ -60,7 +60,7 @@ task doGenerateDocumentation(dependsOn: configurations.docgen) {
     inputs.dir "${projectDir}/src/main"
     outputs.dir docTempDir
 
-    configurations.docgen.getDependencies(ProjectDependency.class).each {
+    configurations.docgen.getDependencies().withType(ProjectDependency.class).each {
         inputs.dir = "${docProject.projectDir}/src/main"
     }
 
@@ -69,7 +69,7 @@ task doGenerateDocumentation(dependsOn: configurations.docgen) {
         config = new groovy.util.ConfigObject()
         docClassPath = new LinkedHashSet()
         registerDocumentationProject(project, config, docClassPath)
-        configurations.docgen.getDependencies(ProjectDependency.class).each {
+        configurations.docgen.getDependencies().withType(ProjectDependency.class).each {
             registerDocumentationProject(it.dependencyProject, config, docClassPath)
         }
         config.version = project.version
