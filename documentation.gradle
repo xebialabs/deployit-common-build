@@ -1,19 +1,21 @@
-commonBuildPath = hasProperty("localCommonBuildRepo") ? file(localCommonBuildRepo).toURL().toString() : 'https://github.com/xebialabs/deployit-common-build/raw/master'
+project.ext {
+    commonBuildPath = hasProperty("localCommonBuildRepo") ? file(localCommonBuildRepo).toURL().toString() : 'https://github.com/xebialabs/deployit-common-build/raw/master'
 
-docTempDir = file("${buildDir}/doc")
-docCommonUrl = "${commonBuildPath}/documentation/generation"
+    docTempDir = file("${buildDir}/doc")
+    docCommonUrl = "${commonBuildPath}/documentation/generation"
 
-pdfGenerationEnabled = hasProperty("pdfGenerationEnabled") ? pdfGenerationEnabled : true
-pdfCover = "$docCommonUrl/pdfCover.html"
-pdfFooter = "$docCommonUrl/pdfPageFooter.html"
-pdfHeader = "$docCommonUrl/pdfPageHeader.html"
-pdfTocXsl = "$docCommonUrl/pdfToc.xsl"
-htmlHeader = "$docCommonUrl/htmlHeader.html"
-docResources = ["$docCommonUrl/css.zip", "$docCommonUrl/image.zip", "$docCommonUrl/js.zip"]
-resolvedMarkdownSources = hasProperty('markdownSources') ? markdownSources : '*.markdown'
-resolvedWkhtmltopdf= hasProperty("wkhtmltopdf") ? wkhtmltopdf : 'wkhtmltopdf'
-resolvedDocArchiveClassifier = hasProperty("docArchiveClassifier") ? docArchiveClassifier : 'doc'
-resolvedDocArchiveExludes = hasProperty("docArchiveExcludes") ? docArchiveExcludes : [ ]
+    pdfGenerationEnabled = hasProperty("pdfGenerationEnabled") ? pdfGenerationEnabled : true
+    pdfCover = "$docCommonUrl/pdfCover.html"
+    pdfFooter = "$docCommonUrl/pdfPageFooter.html"
+    pdfHeader = "$docCommonUrl/pdfPageHeader.html"
+    pdfTocXsl = "$docCommonUrl/pdfToc.xsl"
+    htmlHeader = "$docCommonUrl/htmlHeader.html"
+    docResources = ["$docCommonUrl/css.zip", "$docCommonUrl/image.zip", "$docCommonUrl/js.zip"]
+    resolvedMarkdownSources = hasProperty('markdownSources') ? markdownSources : '*.markdown'
+    resolvedWkhtmltopdf= hasProperty("wkhtmltopdf") ? wkhtmltopdf : 'wkhtmltopdf'
+    resolvedDocArchiveClassifier = hasProperty("docArchiveClassifier") ? docArchiveClassifier : 'doc'
+    resolvedDocArchiveExludes = hasProperty("docArchiveExcludes") ? docArchiveExcludes : [ ]
+}
 
 configurations {
     docgen
