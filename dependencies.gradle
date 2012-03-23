@@ -1,14 +1,16 @@
-def apacheDsVersion = '1.5.5'
-def apiVersion = '3.7.0-beta-37'
-def bundledPluginsVersion = '3.7.0-beta-5'
-def jackrabbitVersion = '2.2.10'
-def jettyVersion = '6.1.11'
-def jythonVersion = '2.5.1'
-def overthereVersion = '2.0.0-beta-1'
-def resteasyVersion = '2.3.2.Final'
-def slf4jVersion = '1.6.3'
-def springVersion = '3.0.5.RELEASE'
-def trueZipVersion = '7.3.4'
+project.ext {
+	apacheDsVersion = '1.5.5'
+	apiVersion = '3.7.0-beta-37'
+	bundledPluginsVersion = '3.7.0-beta-5'
+	jackrabbitVersion = '2.2.10'
+	jettyVersion = '6.1.11'
+	jythonVersion = '2.5.1'
+	overthereVersion = '2.0.0-beta-1'
+	resteasyVersion = '2.3.2.Final'
+	slf4jVersion = '1.6.3'
+	springVersion = '3.0.5.RELEASE'
+	trueZipVersion = '7.3.4'
+}
 
 project.ext.deps = [
 	apacheds_client: "org.apache.directory.server:apacheds-core-integ:${apacheDsVersion}",
