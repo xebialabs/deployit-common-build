@@ -11,10 +11,10 @@ project.ext {
     pdfTocXsl = "$docCommonUrl/pdfToc.xsl"
     htmlHeader = "$docCommonUrl/htmlHeader.html"
     docResources = ["$docCommonUrl/css.zip", "$docCommonUrl/image.zip", "$docCommonUrl/js.zip"]
-    resolvedMarkdownSources = hasProperty('markdownSources') ? markdownSources : '*.markdown'
-    resolvedWkhtmltopdf= hasProperty("wkhtmltopdf") ? wkhtmltopdf : 'wkhtmltopdf'
-    resolvedDocArchiveClassifier = hasProperty("docArchiveClassifier") ? docArchiveClassifier : 'doc'
-    resolvedDocArchiveExludes = hasProperty("docArchiveExcludes") ? docArchiveExcludes : [ ]
+    resolvedMarkdownSources = project.ext.properties.containsKey('markdownSources') ? project.ext.properties.markdownSources : '*.markdown'
+    resolvedWkhtmltopdf= project.ext.properties.containsKey("wkhtmltopdf") ? project.ext.properties.wkhtmltopdf : 'wkhtmltopdf'
+    resolvedDocArchiveClassifier = project.ext.properties.containsKey("docArchiveClassifier") ? project.ext.properties.docArchiveClassifier : 'doc'
+    resolvedDocArchiveExludes = project.ext.properties.containsKey("docArchiveExcludes") ? project.ext.properties.docArchiveExcludes : [ ]
 }
 
 configurations {
