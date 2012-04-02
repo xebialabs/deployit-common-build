@@ -104,7 +104,9 @@ private def registerDocumentationProject(docProject, config, docClassPath) {
           docClassPath.addAll("$buildDir/classes/main")
           docClassPath.addAll("$buildDir/resources/main")
     } else {
-          docClassPath.addAll(0,docProject.configurations.archives.allArtifacts.files)
+          docClassPath.addAll(0,docProject.configurations.archives.allArtifacts.files.filter { f ->
+            !f.name.contains("-sources") && !f.name.contains("-javadoc")
+          })
           docClassPath.addAll(docProject.configurations.compile.resolve())
     }
     copyMarkdownAndResourcesToDocTemp(new File("${docProject.projectDir}/src/main/markdown"))
