@@ -1,6 +1,6 @@
-project.ext {
-    commonBuildPath = hasProperty("localCommonBuildRepo") ? file(localCommonBuildRepo).toURL().toString() : 'https://github.com/xebialabs/deployit-common-build/raw/master'
+def commonBuildPath = hasProperty("localCommonBuildRepo") ? file(localCommonBuildRepo).toURL().toString() : 'https://github.com/xebialabs/deployit-common-build/raw/3.7.x-maintenance'
 
+project.ext {
     docTempDir = file("${buildDir}/doc")
     docCommonUrl = "${commonBuildPath}/documentation/generation"
 
