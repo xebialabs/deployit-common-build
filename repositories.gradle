@@ -1,1 +1,30 @@
-apply from: "$commonBuildPath/repositories-new.gradle"
+repositories {
+  if (!rootProject.hasProperty('offline')) {
+    maven {
+      url "${nexusBaseUrl}/groups/public"
+    }
+    maven {
+      credentials {
+        username nexusUserName
+        password nexusPassword
+      }
+      url "${nexusBaseUrl}/repositories/releases"
+    }
+    maven {
+      credentials {
+        username nexusUserName
+        password nexusPassword
+      }
+      url "${nexusBaseUrl}/repositories/thirdparty"
+    }
+    maven {
+      credentials {
+        username nexusUserName
+        password nexusPassword
+      }
+      url "${nexusBaseUrl}/repositories/hidden-thirdparty"
+    }
+  		//org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials("Sonatype Nexus Repository Manager", nexusHost, nexusUserName, nexusPassword);
+    mavenCentral()
+  }
+}
