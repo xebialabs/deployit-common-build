@@ -98,6 +98,7 @@ project.ext.deps = [
 	spring_security_config: "org.springframework.security:spring-security-config:${springSecurityVersion}",
 	spring_security_core: "org.springframework.security:spring-security-core:${springSecurityVersion}",
 	spring_security_web: "org.springframework.security:spring-security-web:${springSecurityVersion}",
+	spring_security_ldap: "org.springframework.security:spring-security-ldap:${springSecurityVersion}",
 	spring_test: "org.springframework:spring-test:${springVersion}",
 	spring_web: "org.springframework:spring-web:${springVersion}",
 	spring_webmvc: "org.springframework:spring-webmvc:${springVersion}",
