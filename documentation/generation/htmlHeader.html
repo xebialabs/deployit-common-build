@@ -7,10 +7,9 @@ $(document).ready(function(){
     $("body").attr('id', 'top-toc');
     var title = $("<div class='manual-title'/>")
     title.html("<div class='title'>{{title}}</div><div class='version'>Version <span class='version-number'>{{version}}</span></div>");
-    $("body").css('width', '100%');
     $("body").prepend(title);
     $("body").prepend($("<ol id='toc'/>"));
-    $("#toc").tableOfContents("body", { topLinks: true, } );
+    $("#toc").tableOfContents("body", { topLinks: false, } );
 });
 
 </script>
