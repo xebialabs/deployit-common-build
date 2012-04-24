@@ -9,7 +9,7 @@
   <xsl:template match="outline:outline">
     <html>
       <head>
-        <title>Table of Content</title>
+        <title>Table of Contents</title>
         <style>
             body {
              font-family: Arial,sans-serif;
@@ -34,7 +34,7 @@
         </style>
       </head>
       <body>
-        <div style="font-size: 26px; font-weight: bold; color: #75c454; padding-top:2px">Table of Content</div>
+        <h1>Table of Contents</h1>
         <ul><xsl:apply-templates select="outline:item/outline:item"/></ul>
       </body>
     </html>

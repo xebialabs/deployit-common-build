@@ -1,12 +1,12 @@
-<LINK REL=StyleSheet HREF="css/deployit.css" TYPE="text/css" MEDIA=screen>
-<LINK REL=StyleSheet HREF="css/ci-reference-api.css" TYPE="text/css" MEDIA=screen>
+<LINK REL=StyleSheet HREF="css/deployit.css" TYPE="text/css" >
+<LINK REL=StyleSheet HREF="css/ci-reference-api.css" TYPE="text/css">
 <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="js/jquery.tableofcontents.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
     $("body").attr('id', 'top-toc');
     var title = $("<div class='manual-title'/>")
-    title.html("<div class='title'>{{title}}</div><div class='version'>Version <span class='version-number'>{{version}}</span></div>");
+    title.html("<div class='title'>{{title}}</div><div class='version'>Deployit <span class='version-number'>{{version}}</span></div>");
     $("body").prepend(title);
     $("body").prepend($("<ol id='toc'/>"));
     $("#toc").tableOfContents("body", { topLinks: false, } );
