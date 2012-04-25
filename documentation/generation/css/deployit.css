@@ -56,7 +56,7 @@ a.toc-top-link {
 }
 
 pre {
-	background: url("../image/pre_bg.gif") repeat scroll left top #FFFFFF;
+	background: url("image/pre_bg.gif") repeat scroll left top #FFFFFF;
     border: 1px solid #999999;
     color: #000000;
     display: block;
