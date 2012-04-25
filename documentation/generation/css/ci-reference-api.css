@@ -1,0 +1,134 @@
+body, td, th {
+    line-height: 150%;
+}
+
+table {
+    background-color: white;
+    width: 1024px;
+}
+
+th {
+    font-weight: bold;
+    text-align: left;
+    vertical-align: bottom;
+}
+
+.ci-toc-category {
+    font-weight: bold;
+    padding-bottom: 5px;
+    padding-top: 20px;
+}
+
+.ci-toc {
+    border: 1px solid #999999;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.ci-toc  th {
+    background-color:  #75c454;
+    color: #FFFFFF;
+    white-space: nowrap;
+}
+
+.ci-toc  th:first-child {
+    width:30%;
+}
+
+
+.ci-details-title {
+    font-weight: bold;
+}
+
+.ci-detail-title {
+    color: #0000CC;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.ci-details-separator {
+    width: 100%;
+    height: 2px;
+    background-color: #75c454;
+}
+
+.ci-relations-table th {
+    vertical-align: top;
+}
+
+.ci-properties {
+    border: 1px solid #999999;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.ci-properties  th {
+    background-color:  #75c454;
+    color: #FFFFFF;
+    white-space: nowrap;
+}
+
+.ci-description {
+
+}
+
+.ci-property-req {
+    color: red;
+    font-size: 12px;
+    vertical-align: top;
+    text-align: right;
+}
+
+.ci-property-default {
+ color: #65b447;
+ font-style: italic;
+
+}
+.ci-property-name {
+ color: #0000CC;
+ font-weight: bold;
+}
+
+.ci-property-kind {
+ color:  #75c454;
+}
+
+.ci-property-desc {
+ color: #333333;
+
+
+}
+
+.odd {
+  background-color: #E6E4E4;
+}
+
+.even {
+  background-color: #F3F2F2;
+}
+
+.nobreak {
+    page-break-inside: avoid;
+}
+
+.required {
+background-image:url(../image/required.png);
+background-position:top right;
+background-repeat:no-repeat;
+padding-right:10px;
+}
+
+.containerImg {
+width: 32px;
+height: 32px;
+}
+
+.inspectImg {
+	width: 32px;
+	height: 32px;
+	
+}

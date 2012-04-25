@@ -10,7 +10,7 @@ project.ext {
     pdfHeader = "$docCommonUrl/pdfPageHeader.html"
     pdfTocXsl = "$docCommonUrl/pdfToc.xsl"
     htmlHeader = "$docCommonUrl/htmlHeader.html"
-    docResources = ["$docCommonUrl/css.zip", "$docCommonUrl/image.zip", "$docCommonUrl/js.zip"]
+    docResources = ["$docCommonUrl/css/deployit.css", "$docCommonUrl/css/ci-reference-api.css", "$docCommonUrl/image.zip", "$docCommonUrl/js.zip"]
     resolvedMarkdownSources = project.ext.properties.containsKey('markdownSources') ? project.ext.properties.markdownSources : '*.markdown'
     resolvedWkhtmltopdf= project.ext.properties.containsKey("wkhtmltopdf") ? project.ext.properties.wkhtmltopdf : 'wkhtmltopdf'
     resolvedDocArchiveClassifier = project.ext.properties.containsKey("docArchiveClassifier") ? project.ext.properties.docArchiveClassifier : 'doc'
