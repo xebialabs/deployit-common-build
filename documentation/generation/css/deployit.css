@@ -103,6 +103,10 @@ pre code {
     list-style: none;
 }
 
+#toc ol {
+	padding-left: 16pt;
+}
+
 @media print {
 	#toc {
 		visibility: hidden;
