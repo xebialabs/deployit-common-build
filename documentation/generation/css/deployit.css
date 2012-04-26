@@ -64,7 +64,7 @@ pre {
     font-size: 13px;
     line-height: 18px;
     margin: 10px 0 20px;
-    overflow-x: none;
+    overflow-x: auto;
     overflow-y: none;
     padding: 18px 10px 17px;
     position: relative; 
