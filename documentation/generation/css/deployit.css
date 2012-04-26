@@ -64,10 +64,16 @@ pre {
     font-size: 13px;
     line-height: 18px;
     margin: 10px 0 20px;
-    overflow-x: auto;
+    overflow-x: none;
     overflow-y: none;
     padding: 18px 10px 17px;
     position: relative; 
+}
+
+@media screen {
+	pre {
+		overflow-x: auto;
+	}
 }
 
 pre code {
