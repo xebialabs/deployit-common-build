@@ -1,7 +1,8 @@
 project.ext {
 	apacheDsVersion = '1.5.5'
-	apiVersion = '3.8.0-alpha-1'
-	bundledPluginsVersion = '3.7.0'
+	apiVersion = '3.8.0-alpha-3'
+	bundledPluginsVersion = '3.8.0-alpha-3'
+	engineVersion = '3.8.0-alpha-2'
 	jackrabbitVersion = '2.2.10'
 	jettyVersion = '6.1.11'
 	jythonVersion = '2.5.1'
@@ -26,17 +27,21 @@ project.ext.deps = [
 	commons_lang: "commons-lang:commons-lang:2.5",
 	deployit_command_plugin: "com.xebialabs.deployit.plugins:command-plugin:$bundledPluginsVersion",
 	deployit_database_plugin: "com.xebialabs.deployit.plugins:database-plugin:$bundledPluginsVersion",
-	deployit_doc_generator: "com.xebialabs.deployit:doc-generator:$apiVersion",
+	deployit_doc_generator: "com.xebialabs.deployit.engine:doc-generator:$engineVersion",
+	deployit_engine_api: "com.xebialabs.deployit:engine-api:$apiVersion",
+	deployit_engine_spi: "com.xebialabs.deployit:engine-spi:$apiVersion",
 	deployit_file_plugin: "com.xebialabs.deployit.plugins:file-plugin:$bundledPluginsVersion",
-	deployit_generic_plugin: "com.xebialabs.deployit.plugins:generic-plugin:$apiVersion",
-	deployit_jee_plugin: "com.xebialabs.deployit.plugins:jee-plugin:$apiVersion",
-	deployit_planner: "com.xebialabs.deployit:planner:$apiVersion",
-	deployit_python_plugin: "com.xebialabs.deployit.plugins:python-plugin:$apiVersion",
-	deployit_powershell_plugin: "com.xebialabs.deployit.plugins:powershell-plugin:$apiVersion",
-	deployit_remoting_plugin: "com.xebialabs.deployit.plugins:remoting-plugin:$apiVersion",
-	deployit_server_plugin_api: "com.xebialabs.deployit:server-plugin-api:$apiVersion",
+	deployit_generic_plugin: "com.xebialabs.deployit.plugins:generic-plugin:$bundledPluginsVersion",
+	deployit_jee_plugin: "com.xebialabs.deployit.plugins:jee-plugin:$bundledPluginsVersion",
+	deployit_local_booter: "com.xebialabs.deployit.engine:local-booter:$engineVersion",
+	deployit_planner: "com.xebialabs.deployit.engine:planner:$engineVersion",
+	deployit_python_plugin: "com.xebialabs.deployit.plugins:python-plugin:$bundledPluginsVersion",
+	deployit_powershell_plugin: "com.xebialabs.deployit.plugins:powershell-plugin:$bundledPluginsVersion",
+	deployit_remote_booter: "com.xebialabs.deployit.engine:remote-booter:$engineVersion",
+	deployit_remoting_plugin: "com.xebialabs.deployit.plugins:remoting-plugin:$bundledPluginsVersion",
+	deployit_replacer: "com.xebialabs.deployit.engine:replacer:$engineVersion",
+	deployit_test_engine: "com.xebialabs.deployit.engine:test-engine:$engineVersion",
 	deployit_udm_plugin_api: "com.xebialabs.deployit:udm-plugin-api:$apiVersion",
-	deployit_udm_test_support: "com.xebialabs.deployit:udm-test-support:$apiVersion",
 	deployit_webserver_plugin: "com.xebialabs.deployit.plugins:webserver-plugin:$bundledPluginsVersion",
 	deployit_deployment_checklist_plugin: "com.xebialabs.deployit.plugins:deployment-checklist-plugin:$bundledPluginsVersion",
 	deployit_group_orchestrator_plugin: "com.xebialabs.deployit.plugins:group-orchestrator-plugin:$bundledPluginsVersion",
@@ -82,6 +87,7 @@ project.ext.deps = [
 	mockito_core: "org.mockito:mockito-core:1.8.5",
 	mustache: "com.samskivert:jmustache:1.3",
 	overthere: "com.xebialabs.overthere:overthere:${overthereVersion}",
+	overcast: "com.xebialabs.cloud:overcast:1.0.0",
 	resteasy_jaxbprovider: "org.jboss.resteasy:resteasy-jaxb-provider:${resteasyVersion}",
 	resteasy_jaxrs: "org.jboss.resteasy:resteasy-jaxrs:${resteasyVersion}",
 	resteasy_multipart_provider: "org.jboss.resteasy:resteasy-multipart-provider:${resteasyVersion}",
