@@ -22,7 +22,7 @@ dependencies {
 	compile deps.guava
 	compile deps.slf4j_api
 
-	testCompile deps.deployit_udm_test_support
+	testCompile deps.deployit_test_engine
 	testCompile deps.hamcrest_core, deps.junit, deps.hamcrest_lib
 
 	testRuntime deps.logback_classic
