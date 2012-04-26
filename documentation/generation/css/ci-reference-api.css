@@ -1,17 +1,4 @@
-body, td, th {
-    line-height: 150%;
-}
-
-table {
-    background-color: white;
-    width: 1024px;
-}
-
-th {
-    font-weight: bold;
-    text-align: left;
-    vertical-align: bottom;
-}
+/* TOC */
 
 .ci-toc-category {
     font-weight: bold;
@@ -20,30 +7,36 @@ th {
 }
 
 .ci-toc {
-    border: 1px solid #999999;
+    border: 1px solid #106931;
     margin-bottom: 20px;
     margin-right: 10px;
     margin-top: 10px;
     width: 100%;
 }
 
-.ci-toc  th {
-    background-color:  #75c454;
-    color: #FFFFFF;
+.ci-toc th {
+    background-color: #106931;
+    color: white;
     white-space: nowrap;
 }
 
-.ci-toc  th:first-child {
-    width:30%;
+.ci-toc th:first-child {
+    width: 30%;
 }
 
+.ci-toc th, .ci-toc td {
+	padding-left: 6px;
+}
+
+
+/* Details */
 
 .ci-details-title {
     font-weight: bold;
 }
 
 .ci-detail-title {
-    color: #0000CC;
+    color: black;
     font-weight: bold;
     font-size: 24px;
 }
@@ -51,15 +44,22 @@ th {
 .ci-details-separator {
     width: 100%;
     height: 2px;
-    background-color: #75c454;
+    background-color: #106931;
+    border: 0;
 }
 
 .ci-relations-table th {
     vertical-align: top;
 }
 
+.ci-relations-table th, .ci-relations-table td {
+	padding-left: 6px;
+}
+
+
+/* Properties */
 .ci-properties {
-    border: 1px solid #999999;
+    border: 1px solid #106931;
     margin-bottom: 20px;
     margin-right: 10px;
     margin-top: 10px;
@@ -67,13 +67,16 @@ th {
 }
 
 .ci-properties  th {
-    background-color:  #75c454;
-    color: #FFFFFF;
+    background-color: #106931;
+    color: white;
     white-space: nowrap;
 }
 
-.ci-description {
+.ci-properties th, .ci-properties td {
+	padding-left: 6px;
+}
 
+.ci-description {
 }
 
 .ci-property-req {
@@ -84,24 +87,22 @@ th {
 }
 
 .ci-property-default {
- color: #65b447;
- font-style: italic;
-
+ color: #106931;
 }
+
 .ci-property-name {
- color: #0000CC;
+ color: black;
  font-weight: bold;
 }
 
 .ci-property-kind {
- color:  #75c454;
+ color: #106931;
 }
 
 .ci-property-desc {
  color: #333333;
-
-
 }
+
 
 .odd {
   background-color: #E6E4E4;
@@ -116,19 +117,18 @@ th {
 }
 
 .required {
-background-image:url(../image/required.png);
-background-position:top right;
-background-repeat:no-repeat;
-padding-right:10px;
+	background-image:url(../image/required.png);
+	background-position:top right;
+	background-repeat:no-repeat;
+	padding-right:10px;
 }
 
 .containerImg {
-width: 32px;
-height: 32px;
+	width: 32px;
+	height: 32px;
 }
 
 .inspectImg {
 	width: 32px;
 	height: 32px;
-	
 }
