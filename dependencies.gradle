@@ -17,6 +17,7 @@ project.ext {
 project.ext.deps = [
 	apache_httpclient4: "org.apache.httpcomponents:httpclient:4.1.3",
 	apache_httpcore4: "org.apache.httpcomponents:httpcore:4.1.3",
+	apache_httpmime4: "org.apache.httpcomponents:httpmime:4.1.3",
 	apacheds_client: "org.apache.directory.server:apacheds-core-integ:${apacheDsVersion}",
 	apacheds_server: "org.apache.directory.server:apacheds-server-integ:${apacheDsVersion}",
 	args4j: "args4j:args4j:2.0.16",
