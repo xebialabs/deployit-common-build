@@ -7,7 +7,7 @@ configurations {
     integrationTestServer
 }
 
-def shutdownIntegrationServer() {
+def shutdownServer() {
     println "Shutting down the Deployit server"
     def url = new URL("http://localhost:$project.ext.deployitPort/deployit/server/shutdown")
     try {
@@ -38,6 +38,8 @@ task initRepository(type: JavaExec, dependsOn: writeDeployitConf) {
     main = "com.xebialabs.deployit.DeployitBootstrapper"
     args "-setup", "-reinitialize", "-force", "-setup-defaults", "conf/deployit.conf"
 }
+
+task shutdownIntegrationServer << { shutdownServer() }
 
 task startIntegrationServer << {
     def serverClasspath = configurations.integrationTestServer.filter({ !it.name.endsWith('-sources.jar') }).asPath
@@ -70,7 +72,7 @@ task startIntegrationServer << {
     log "Deployit Server has started."
 }
 
-startIntegrationServer.doFirst {shutdownIntegrationServer()}
+startIntegrationServer.doFirst {shutdownServer()}
 startIntegrationServer.dependsOn(initRepository)
 
 def waitForServerShutdown() {
