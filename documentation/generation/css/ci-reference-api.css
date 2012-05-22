@@ -26,6 +26,10 @@
     width: 100%;
 }
 
+.ci-toc .virtual-type {
+	font-style: italic;
+}
+
 .ci-toc th {
     background-color: #106931;
     color: white;
