@@ -19,8 +19,10 @@ project.ext {
 
 configurations {
     docgen
-	docgenerator
+    docgenerator
 }
+
+configurations.docgen.ext.requiresFlattening = false
 
 task documentationZip(type: Zip, dependsOn: ['doGenerateDocumentation']) {
     classifier = "$resolvedDocArchiveClassifier"
@@ -51,6 +53,11 @@ task documentationZip(type: Zip, dependsOn: ['doGenerateDocumentation']) {
 
 artifacts {
     archives documentationZip
+}
+
+dependencies {
+        docgenerator deps.deployit_doc_generator
+        docgen deps.deployit_doc_generator
 }
 
 task cleanDoc(type: Delete) {
@@ -132,3 +139,25 @@ private def copyMarkdownAndResourcesToDocTemp(srcDir) {
 
 }
 
+private def getDocumentationTarget(path, version, project) {
+    // use only the major version to publish docs (i.e. 3.8 for 3.8.0-SNAPSHOT, etc.)
+    def m = version =~ /(\d+\.\d+)/
+    def target = "${path}/" + m[0][0] + "/${project}"
+
+    if (configurations.docgen.hasProperty('requiresFlattening') && configurations.docgen.ext.requiresFlattening) {
+        target = "${path}/" + m[0][0] + "/deployit"
+    }
+
+    println "Uploading documentation to target path ${target}"
+
+    return target
+}
+
+uploadArchives.dependsOn(uploadDocgen)
+uploadDocgen << {
+    javaexec {
+        main = 'com.xebialabs.deployit.documentation.DocumentationUploader'
+        classpath = configurations.docgen
+        args = ["${docHost}", "${docUserName}", "${docPassword}", getDocumentationTarget(docPath, version, project.name), "${docTempDir}"]
+    }
+}
