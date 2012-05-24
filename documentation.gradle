@@ -154,6 +154,7 @@ private def getDocumentationTarget(path, version, project) {
 }
 
 uploadArchives.dependsOn(uploadDocgen)
+uploadDocgen.dependsOn(documentationZip)
 uploadDocgen << {
     javaexec {
         main = 'com.xebialabs.deployit.documentation.DocumentationUploader'
