@@ -2,7 +2,7 @@ project.ext {
 	apacheDsVersion = '1.5.5'
 	apiVersion = '3.8.0-alpha-13'
 	bundledPluginsVersion = '3.8.0-alpha-6'
-	engineVersion = '3.8.0-alpha-13'
+	engineVersion = '3.8.0-alpha-14'
 	jackrabbitVersion = '2.2.10'
 	jettyVersion = '6.1.11'
 	jythonVersion = '2.5.2'
@@ -48,6 +48,7 @@ project.ext.deps = [
 	deployit_webserver_plugin: "com.xebialabs.deployit.plugins:webserver-plugin:$bundledPluginsVersion",
 	deployit_deployment_checklist_plugin: "com.xebialabs.deployit.plugins:deployment-checklist-plugin:$bundledPluginsVersion",
 	deployit_group_orchestrator_plugin: "com.xebialabs.deployit.plugins:group-orchestrator-plugin:$bundledPluginsVersion",
+	deployit_engine_xml: "com.xebialabs.deployit.engine:engine-xml:$engineVersion",
 	dom4j: "dom4j:dom4j:1.6",
 	easymock: "org.easymock:easymock:3.0",
 	freemarker: 'org.freemarker:freemarker:2.3.18',

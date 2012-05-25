@@ -52,7 +52,7 @@ task startIntegrationServer << {
     }
 
     int startupDelay = 2
-    waitForServerStart = true
+    def waitForServerStart = true
     while(waitForServerStart) {
         def url = new URL("http://localhost:$project.ext.deployitPort")
         try {
@@ -77,12 +77,12 @@ startIntegrationServer.dependsOn(initRepository)
 
 def waitForServerShutdown() {
     int shutdownDelay = 2
-    waitForServerShutdown = true;
+    def waitForServerShutdown = true;
     def url = new URL("http://localhost:$project.ext.deployitPort")
     while(waitForServerShutdown) {
         try {
             def connection = getConnectedPost(url)
-            code = connection.getResponseCode();
+            def code = connection.getResponseCode();
             print code
             if(code == 404) {
                 waitForServerShutdown = false;
