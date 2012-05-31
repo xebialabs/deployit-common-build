@@ -111,9 +111,7 @@ td {
 	background: #EEE;
 	border: 1px solid lightgray;
 	font-size: 10pt;
-	padding-right: 1em;
-	padding-top: 1em;
-	padding-bottom: 1em;
+	padding: 1em;
 }
 
 #toc, #toc ol {
