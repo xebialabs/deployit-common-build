@@ -2,7 +2,7 @@ project.ext {
 	apacheDsVersion = '1.5.5'
 	apiVersion = '3.8.0-alpha-14'
 	bundledPluginsVersion = '3.8.0-alpha-6'
-	engineVersion = '3.8.0-alpha-15'
+	engineVersion = '3.8.0-alpha-16'
 	jackrabbitVersion = '2.2.10'
 	jettyVersion = '6.1.11'
 	jythonVersion = '2.5.2'
@@ -33,6 +33,7 @@ project.ext.deps = [
 	deployit_doc_generator: "com.xebialabs.deployit.engine:doc-generator:$engineVersion",
 	deployit_engine_api: "com.xebialabs.deployit:engine-api:$apiVersion",
 	deployit_engine_spi: "com.xebialabs.deployit:engine-spi:$apiVersion",
+	deployit_engine_xml: "com.xebialabs.deployit:engine-xml:$apiVersion",
 	deployit_file_plugin: "com.xebialabs.deployit.plugins:file-plugin:$bundledPluginsVersion",
 	deployit_generic_plugin: "com.xebialabs.deployit.plugins:generic-plugin:$bundledPluginsVersion",
 	deployit_jee_plugin: "com.xebialabs.deployit.plugins:jee-plugin:$bundledPluginsVersion",
