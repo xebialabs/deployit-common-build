@@ -11,7 +11,7 @@ html, body, span, applet, object, iframe, blockquote, pre, a, abbr, acronym, add
 a{text-decoration:none!important;}
 body {
 	background: url(image/body_bg.gif);
-	font-family:HelveticaNeue, Arial, Helvetica, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size:12px; color:#3a3a3a; line-height:1.5em
 }
 html, body {
@@ -23,7 +23,7 @@ h3{font-size:14px;}
 h4{font-size:12px;}
 td, th{padding:2px 0 2px 10px!important;}
 h2, h1 {
-  font-family:HelveticaNeue, Arial, Helvetica!important;
+  font-family: Arial, Helvetica!important;
   font-weight:bold; padding:0 0 3px; clear:both
 }
 h1 a{font-size:16px;}
@@ -31,16 +31,19 @@ h1 a{font-size:16px;}
     visibility: hidden;
 }
 
+#header{
+  height:78px;
+}
 #header,#top_Subnav a{
-  font-family:HelveticaNeue, Arial, Helvetica !important;
+  font-family: Arial, Helvetica !important;
 }
 button, .redbigbtn a, .blackBtn a, .btn a , .blackbtn_big a{
- font-family:HelveticaNeue, Arial, Helvetica !important;
+ font-family: Arial, Helvetica !important;
  font-weight:normal !important;
  font-size:12px !important;
 }
 .maintitle,  .accordion-header, .col_1 h4, .col_2 h4, .partner_page_data h1{
-  font-family:HelveticaNeue, Arial, Helvetica !important;
+  font-family: Arial, Helvetica !important;
   font-weight:bold;
 }
 #toc, #toc ol {
@@ -82,7 +85,8 @@ a:hover{color:#156932}
 
 .logo{position:absolute; top:-25px; left:-46px; float: left; margin-left: 23px;}
 #page{background:url(image/main_bg.png) no-repeat center top; width:100%; float:left; }
-#Main_container {width:985px; min-height:100%; height:auto!important; height:100%; margin:0 auto; font-size:12px; position:relative;}
+#page{background:none; width:100%; float:left; }
+#Main_container {width:985px; min-height:100%; height:auto!important; height:100%; margin:0 auto; position:relative;}
 #top_Subnav {float:right; margin-top:5px; color:#2b2b2b; font-weight:bold; text-transform:uppercase; font-size:10px; margin-right:1px;}
 #top_Subnav div {float:left}
 
@@ -560,3 +564,42 @@ img {
     max-width: 650px;
 }
 
+/* PDF & Printing */
+
+@media print {
+	#page {
+		background: none;
+	}
+	body {
+		background: none;
+		color: black;
+		font-size: 12pt;
+		margin-left: 10em;
+	}
+	
+	#header {
+		height:0;
+	}
+	#header, .top_left_corner, .top_right_corner, .rightcol, .footer {
+		visibility: hidden;
+	}
+	
+	h1 {
+		font-size: 16pt;
+	}
+	h2 {
+		font-size: 16pt;
+	}
+	h3 {
+		font-size: 14pt;
+	}
+	h4 {
+		font-size: 12pt;
+	}
+}
+
+/* Page margins for printing form browser. */
+@page {
+	 margin-top: 2cm;
+	 margin-bottom: 2cm;
+}
