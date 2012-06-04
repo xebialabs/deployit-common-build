@@ -5,7 +5,7 @@ project.ext {
     docCommonUrl = "${commonBuildPath}/documentation/generation"
 
     pdfGenerationEnabled = hasProperty("pdfGenerationEnabled") ? pdfGenerationEnabled : true
-    htmlTemplate = configurations.docgen.ext.hasProperty("htmlTemplate") ? configurations.docgen.ext.htmlTemplate : "$docCommonUrl/htmlTemplate.html"
+    htmlTemplate = "$docCommonUrl/htmlTemplate.html"
     pdfCover = "$docCommonUrl/pdfCover.html"
     pdfFooter = "$docCommonUrl/pdfPageFooter.html"
     pdfHeader = "$docCommonUrl/pdfPageHeader.html"
