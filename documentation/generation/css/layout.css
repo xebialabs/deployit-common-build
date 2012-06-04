@@ -1,6 +1,6 @@
 /*  qcl new css */
 
-html, body, span, applet, object, iframe, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, fieldset, form, label, legend, button, table, caption, tbody, tfoot, thead, tr, th, td {
+html, body, span, applet, object, iframe, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, fieldset, form, label, legend, button, table, caption, tbody, tfoot, thead, tr, th, td,  {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -35,7 +35,7 @@ h1 a{font-size:16px;}
   height:78px;
 }
 #header,#top_Subnav a{
-  font-family: Arial, Helvetica !important;
+  font-family: HelveticaNeue, Arial, Helvetica !important;
 }
 button, .redbigbtn a, .blackBtn a, .btn a , .blackbtn_big a{
  font-family: Arial, Helvetica !important;
@@ -45,6 +45,13 @@ button, .redbigbtn a, .blackBtn a, .btn a , .blackbtn_big a{
 .maintitle,  .accordion-header, .col_1 h4, .col_2 h4, .partner_page_data h1{
   font-family: Arial, Helvetica !important;
   font-weight:bold;
+}
+.content ol, .content ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 #toc, #toc ol {
     list-style: none;
@@ -85,7 +92,6 @@ a:hover{color:#156932}
 
 .logo{position:absolute; top:-25px; left:-46px; float: left; margin-left: 23px;}
 #page{background:url(image/main_bg.png) no-repeat center top; width:100%; float:left; }
-#page{background:none; width:100%; float:left; }
 #Main_container {width:985px; min-height:100%; height:auto!important; height:100%; margin:0 auto; position:relative;}
 #top_Subnav {float:right; margin-top:5px; color:#2b2b2b; font-weight:bold; text-transform:uppercase; font-size:10px; margin-right:1px;}
 #top_Subnav div {float:left}
@@ -101,11 +107,11 @@ a:hover{color:#156932}
 #block-nice_menus-1 {float:right; color:#FFF; padding-left:11px; height:34px; margin-top:4px; margin-right:0;}
 #block-nice_menus-1 ul {float:left;}
 #block-nice_menus-1 ul li {height:34px; line-height:34px; float:left; font-style:normal; margin-left:3px; font-size:12px; list-style:none; background:url(image/menu_left.gif) no-repeat 0 0!important; padding:0 0 0 7px!important;}
-#block-nice_menus-1 ul li  a{color:#404040; background:url(image/menu_right.gif) no-repeat top right; padding:9px 14px 7px 4px; display:block; font-size:13px; line-height:18px; text-transform:uppercase;}
+#block-nice_menus-1 ul li  a{color:#404040; background:url(image/menu_right.gif) no-repeat top right; padding:9px 14px 7px 5px; display:block; font-size:13px; line-height:18px; text-transform:uppercase;}
 
 
-#block-nice_menus-1 ul li a:hover{background:url(image/menu_right.gif) no-repeat right -34px!important; }
-#block-nice_menus-1 ul li.active  a{background:url(image/menu_right.gif) no-repeat right -34px!important; }
+#block-nice_menus-1 ul li a:hover{background:url(image/menu_right.gif) no-repeat right -35px!important; }
+#block-nice_menus-1 ul li.active  a{background:url(image/menu_right.gif) no-repeat right -35px!important; }
 #block-nice_menus-1 .rightRounedcorner {padding-right:0px; height:47px; float:left;}
 #block-nice_menus-1 li  a:visited {color:#404040; display:block; font-weight:normal}
 #block-search-0{float:left; width:auto;}
