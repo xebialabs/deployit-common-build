@@ -1,6 +1,6 @@
 repositories {
   
-  mavenLocal();
+  //mavenLocal();
   
   if (!rootProject.hasProperty('offline')) {
     maven {
