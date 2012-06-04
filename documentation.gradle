@@ -5,12 +5,14 @@ project.ext {
     docCommonUrl = "${commonBuildPath}/documentation/generation"
 
     pdfGenerationEnabled = hasProperty("pdfGenerationEnabled") ? pdfGenerationEnabled : true
+    htmlTemplate = "$docCommonUrl/htmlTemplate.html"
     pdfCover = "$docCommonUrl/pdfCover.html"
     pdfFooter = "$docCommonUrl/pdfPageFooter.html"
     pdfHeader = "$docCommonUrl/pdfPageHeader.html"
     pdfTocXsl = "$docCommonUrl/pdfToc.xsl"
     htmlHeader = "$docCommonUrl/htmlHeader.html"
-    docResources = ["$docCommonUrl/css/deployit.css", "$docCommonUrl/css/ci-reference-api.css", "$docCommonUrl/image.zip", "$docCommonUrl/js.zip"]
+    htmlFooter = "$docCommonUrl/htmlFooter.html"
+    docResources = ["$docCommonUrl/css/deployit.css", "$docCommonUrl/css/ci-reference-api.css", "$docCommonUrl/css/layout.css", "$docCommonUrl/image.zip", "$docCommonUrl/js.zip"]
     resolvedMarkdownSources = project.ext.properties.containsKey('markdownSources') ? project.ext.properties.markdownSources : '*.markdown'
     resolvedWkhtmltopdf= project.ext.properties.containsKey("wkhtmltopdf") ? project.ext.properties.wkhtmltopdf : 'wkhtmltopdf'
     resolvedDocArchiveClassifier = project.ext.properties.containsKey("docArchiveClassifier") ? project.ext.properties.docArchiveClassifier : 'doc'
@@ -84,8 +86,8 @@ task doGenerateDocumentation(dependsOn: configurations.docgen) {
         config.version = project.version
         config.toProperties().store(file("$docTempDir/props.properties").newWriter(),"")
 
-        def cmdArgs = ['-workingDir', "$docTempDir", '-properties', "$docTempDir/props.properties", '-wkhtmltopdf', resolvedWkhtmltopdf,
-                   '-pdfCover', pdfCover, '-pdfFooter', pdfFooter, '-pdfHeader', pdfHeader, '-pdfTocXsl', pdfTocXsl, "-htmlHeader", htmlHeader]
+        def cmdArgs = ['-workingDir', "$docTempDir", '-htmlTemplate', htmlTemplate, '-properties', "$docTempDir/props.properties", '-wkhtmltopdf', resolvedWkhtmltopdf,
+                   '-pdfCover', pdfCover, '-pdfFooter', pdfFooter, '-pdfHeader', pdfHeader, '-pdfTocXsl', pdfTocXsl, "-htmlHeader", htmlHeader, '-htmlFooter', htmlFooter]
         if ("$pdfGenerationEnabled" == "true") cmdArgs << '-generatePdf'
         docResources.each({cmdArgs << '-resource' << it})
         fileTree("$docTempDir").include(resolvedMarkdownSources).each { cmdArgs << '-source' << "$it"}
@@ -140,12 +142,18 @@ private def copyMarkdownAndResourcesToDocTemp(srcDir) {
 }
 
 private def getDocumentationTarget(path, version, project) {
-    // use only the major version to publish docs (i.e. 3.8 for 3.8.0-SNAPSHOT, etc.)
-    def m = version =~ /(\d+\.\d+)/
-    def target = "${path}/" + m[0][0] + "/${project}"
+    def target = "${path}"
+
+    if (! configurations.docgen.hasProperty('unversioned') || !configurations.docgen.ext.unversioned) {
+        // use only the major version to publish docs (i.e. 3.8 for 3.8.0-SNAPSHOT, etc.)
+        def m = version =~ /(\d+\.\d+)/
+        target += "/releases/" + m[0][0]
+    }
 
     if (configurations.docgen.hasProperty('requiresFlattening') && configurations.docgen.ext.requiresFlattening) {
-        target = "${path}/" + m[0][0] + "/deployit"
+        target += "/deployit"
+    } else {
+        target += "/${project}"
     }
 
     println "Uploading documentation to target path ${target}"
