@@ -5,7 +5,8 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
     var title = $(".manual-title")
-    title.html("<div class='title'>{{title}}</div><div class='version'>Deployit <span class='version-number'>{{version}}</span></div>");
+    var majorVersion = /((\d+)\.(\d+))/.exec('{{version}}')[0] + ".x"
+    title.html("<div class='title'>{{title}}</div><div class='version'>Deployit <span class='version-number'>" + majorVersion + "</span></div>");
     $("ol#toc").tableOfContents("body", { topLinks: false, startLevel: 2 } );
 });
 
