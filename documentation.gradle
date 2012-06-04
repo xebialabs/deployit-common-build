@@ -5,7 +5,7 @@ project.ext {
     docCommonUrl = "${commonBuildPath}/documentation/generation"
 
     pdfGenerationEnabled = hasProperty("pdfGenerationEnabled") ? pdfGenerationEnabled : true
-    htmlTemplate = "$docCommonUrl/htmlTemplate.html"
+    htmlTemplate = configurations.docgen.ext.hasProperty("htmlTemplate") ? configurations.docgen.ext.htmlTemplate : "$docCommonUrl/htmlTemplate.html"
     pdfCover = "$docCommonUrl/pdfCover.html"
     pdfFooter = "$docCommonUrl/pdfPageFooter.html"
     pdfHeader = "$docCommonUrl/pdfPageHeader.html"
@@ -86,7 +86,10 @@ task doGenerateDocumentation(dependsOn: configurations.docgen) {
         config.version = project.version
         config.toProperties().store(file("$docTempDir/props.properties").newWriter(),"")
 
-        def cmdArgs = ['-workingDir', "$docTempDir", '-htmlTemplate', htmlTemplate, '-properties', "$docTempDir/props.properties", '-wkhtmltopdf', resolvedWkhtmltopdf,
+        def myHtmlTemplate = configurations.docgen.hasProperty("htmlTemplate") ? configurations.docgen.ext.htmlTemplate : htmlTemplate
+        println "Using HTML template: \n $myHtmlTemplate"
+
+        def cmdArgs = ['-workingDir', "$docTempDir", '-htmlTemplate', myHtmlTemplate, '-properties', "$docTempDir/props.properties", '-wkhtmltopdf', resolvedWkhtmltopdf,
                    '-pdfCover', pdfCover, '-pdfFooter', pdfFooter, '-pdfHeader', pdfHeader, '-pdfTocXsl', pdfTocXsl, "-htmlHeader", htmlHeader, '-htmlFooter', htmlFooter]
         if ("$pdfGenerationEnabled" == "true") cmdArgs << '-generatePdf'
         docResources.each({cmdArgs << '-resource' << it})

@@ -503,7 +503,7 @@ th {
     vertical-align: bottom;
 }
 input[type="text"]{
-    background: url("image/search_bg.gif") no-repeat scroll 0 0 transparent;
+    background: url("image/search_bg1.gif") no-repeat scroll 0 0 transparent;
     border: 0 none;
     color: #666666;
     float: right;
