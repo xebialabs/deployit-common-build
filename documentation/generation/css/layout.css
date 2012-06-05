@@ -626,6 +626,15 @@ img {
 	h4 {
 		font-size: 12pt;
 	}
+	
+	#main_white_bg {
+		background: none;
+		width: 654px;
+	}
+	.leftcol {
+		width: 100%;
+	}
+
 }
 
 /* Page margins for printing form browser. */
