@@ -1,6 +1,6 @@
 /*  qcl new css */
 
-html, body, span, applet, object, iframe, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, fieldset, form, label, legend, button, table, caption, tbody, tfoot, thead, tr, th, td,  {
+html, body, span, applet, object, iframe, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, fieldset, form, label, legend, button, table, caption, tbody, tfoot, thead, tr, th, td, ol, ul, li {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -47,6 +47,20 @@ button, .redbigbtn a, .blackBtn a, .btn a , .blackbtn_big a{
   font-family: Arial, Helvetica !important;
   font-weight:bold;
 }
+
+/* Lists */
+ol, ul {
+  padding-bottom: 5px; 
+  padding-top: 5px;
+}
+ol li {
+  list-style: decimal inside none;
+}
+li {
+  padding-bottom: 4px;
+  padding-left: 4px;
+  list-style:disc inside none
+}
 .content ol, .content ul {
   margin: 0;
   padding: 0;
@@ -54,9 +68,18 @@ button, .redbigbtn a, .blackBtn a, .btn a , .blackbtn_big a{
   padding-bottom: 5px;
   padding-top: 5px;
 }
-#toc, #toc ol {
-    list-style: none;
+#toc, #toc ol, #toc li {
+  list-style: none;
 }
+.leftcol ul, .leftcol ol {
+  padding-left: 32px;
+}
+.leftcol li {
+  list-style: inherit;
+}
+
+
+
 blockquote, q {
 	quotes: none;
 }
