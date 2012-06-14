@@ -80,7 +80,7 @@ project.ext.deps = [
 	jetty: "org.mortbay.jetty:jetty:${jettyVersion}",
 	jline: "jline:jline:2.6",
 	jms: "javax.jms:jms:1.1",
-	joda_time: "joda-time:joda-time:1.6.2",
+	joda_time: "joda-time:joda-time:2.1",
 	junit: "junit:junit:4.10",
 	junit_dep: "junit:junit-dep:4.10",
 	junit_params: "pl.pragmatists:JUnitParams:0.3.0",
