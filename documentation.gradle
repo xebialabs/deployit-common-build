@@ -22,6 +22,7 @@ project.ext {
 configurations {
     docgen
     docgenerator
+    enunciate
 }
 
 configurations.docgen.ext.requiresFlattening = false
@@ -58,8 +59,11 @@ artifacts {
 }
 
 dependencies {
-        docgenerator deps.deployit_doc_generator
-        docgen deps.deployit_doc_generator
+    docgenerator deps.deployit_doc_generator
+    docgen deps.deployit_doc_generator
+    enunciate "org.codehaus.enunciate:enunciate-docs:1.25"
+    enunciate deps.log4j_over_slf4j
+    enunciate deps.logback_classic
 }
 
 task cleanDoc(type: Delete) {
@@ -172,4 +176,23 @@ uploadDocgen << {
         classpath = configurations.docgen
         args = ["${docHost}", "${docUserName}", "${docPassword}", getDocumentationTarget(docPath, version, project.name), "${docTempDir}"]
     }
+}
+
+task restdoc << {
+   ant.taskdef(
+     name: 'enunciate',
+     classname: 'org.codehaus.enunciate.main.EnunciateTask',
+     classpath: configurations.enunciate.asPath
+   )
+   
+   new File('build/doc/rest-api').mkdirs()
+   
+   ant.enunciate(
+     configFile: 'src/conf/enunciate.xml',
+     dir: 'src/main/java',
+     classpath: configurations.compile.asPath,
+     packageDir: 'build'
+   ) {
+       export(artifactId: 'docs', destination: 'build/doc/rest-api')
+   }
 }
