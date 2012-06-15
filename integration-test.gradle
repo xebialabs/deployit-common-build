@@ -60,18 +60,21 @@ task startIntegrationServer << {
     def waitForServerStart = true
     while(waitForServerStart) {
         def url = new URL("http://localhost:$project.ext.deployitPort")
+        def code
         try {
             connection = getConnectedPost(url)
             connection.connect();
-            def code = connection.getResponseCode();
-            if(code == 200) {
-                waitForServerStart = false;
-            } else {
-                log "Waiting ${startupDelay}s for the Deployit server to start"
-                TimeUnit.SECONDS.sleep(startupDelay)
-            }
+            code = connection.getResponseCode();
         } catch(ConnectException exc) {
+        	code = 404
         }
+        
+		if(code == 200) {
+			waitForServerStart = false;
+		} else {
+			log "Waiting ${startupDelay}s for the Deployit server to start"
+			TimeUnit.SECONDS.sleep(startupDelay)
+		}
     }
 
     log "Deployit Server has started."
