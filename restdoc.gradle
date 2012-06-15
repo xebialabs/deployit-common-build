@@ -15,7 +15,7 @@ task restdoc << {
      classpath: configurations.enunciate.asPath
    )
    
-   new File('build/doc/rest-api').mkdirs()
+   new File('build/docs/rest-api').mkdirs()
    
    ant.enunciate(
      configFile: 'src/conf/enunciate.xml',
@@ -23,6 +23,6 @@ task restdoc << {
      classpath: configurations.compile.asPath,
      packageDir: 'build'
    ) {
-       export(artifactId: 'docs', destination: 'build/doc/rest-api')
+       export(artifactId: 'docs', destination: 'build/docs/rest-api')
    }
 }
