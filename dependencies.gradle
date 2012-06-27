@@ -1,6 +1,6 @@
 project.ext {
 	apiVersion    = '3.8.0-alpha-20'
-	engineVersion = '3.8.0-alpha-26'
+	engineVersion = '3.8.0-alpha-27'
 	bundledPluginsVersion = '3.8.0-alpha-9'
 
 	apacheDsVersion = '1.5.5'
@@ -46,6 +46,7 @@ project.ext.deps = [
 	deployit_remoting_plugin: "com.xebialabs.deployit.plugins:remoting-plugin:$bundledPluginsVersion",
 	deployit_replacer: "com.xebialabs.deployit.engine:replacer:$engineVersion",
 	deployit_test_engine: "com.xebialabs.deployit.engine:test-engine:$engineVersion",
+	deployit_tasker: "com.xebialabs.deployit.engine:tasker:$engineVersion",
 	deployit_udm_plugin_api: "com.xebialabs.deployit:udm-plugin-api:$apiVersion",
 	deployit_webserver_plugin: "com.xebialabs.deployit.plugins:webserver-plugin:$bundledPluginsVersion",
 	deployit_deployment_checklist_plugin: "com.xebialabs.deployit.plugins:deployment-checklist-plugin:$bundledPluginsVersion",
@@ -55,7 +56,7 @@ project.ext.deps = [
 	easymock: "org.easymock:easymock:3.0",
 	freemarker: 'org.freemarker:freemarker:2.3.18',
 	grizzly_httpserver: 'org.glassfish.grizzly:grizzly-http-server:2.2.5',
-	guava: "com.google.guava:guava:10.0.1",
+	guava: "com.google.guava:guava:12.0",
 	hamcrest_core: "org.hamcrest:hamcrest-core:1.2.1",
 	hamcrest_lib: "org.hamcrest:hamcrest-library:1.2.1",
 	httpunit: "httpunit:httpunit:1.6.2",
