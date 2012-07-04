@@ -1,8 +1,7 @@
 project.ext {
-	apiVersion    = '3.8.0-alpha-23'
-	engineVersion = '3.8.0-alpha-30'
+	apiVersion = '3.8.0-alpha-24'
+	engineVersion = '3.8.0-alpha-31'
 	bundledPluginsVersion = '3.8.0-alpha-9'
-
 	apacheDsVersion = '1.5.5'
 	jackrabbitVersion = '2.2.10'
 	jettyVersion = '6.1.11'
@@ -11,6 +10,7 @@ project.ext {
 	resteasyVersion = '2.3.2.Final'
 	slf4jVersion = '1.6.3'
 	springVersion = '3.1.1.RELEASE'
+	springBatchVersion = "2.1.8.RELEASE"
 	springSecurityVersion = '3.1.0.RELEASE'
 	trueZipVersion = '7.3.4'
 }
@@ -83,6 +83,7 @@ project.ext.deps = [
 	jline: "jline:jline:2.6",
 	jms: "javax.jms:jms:1.1",
 	joda_time: "joda-time:joda-time:2.1",
+	joda_time_convert: "org.joda:joda-convert:1.2",
 	junit: "junit:junit:4.10",
 	junit_dep: "junit:junit-dep:4.10",
 	junit_params: "pl.pragmatists:JUnitParams:0.3.0",
@@ -106,6 +107,7 @@ project.ext.deps = [
 	shrinkwrap_api: "org.jboss.shrinkwrap:shrinkwrap-api:1.0.0-alpha-12",
 	shrinkwrap_impl: "org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.0-alpha-12",
 	slf4j_api: "org.slf4j:slf4j-api:${slf4jVersion}",
+	spring_batch_core: "org.springframework.batch:spring-batch-core:${springBatchVersion}",
 	spring_beans: "org.springframework:spring-beans:${springVersion}",
 	spring_context: "org.springframework:spring-context:${springVersion}",
 	spring_core: "org.springframework:spring-core:${springVersion}",
