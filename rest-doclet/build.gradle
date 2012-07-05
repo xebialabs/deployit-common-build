@@ -1,0 +1,31 @@
+
+defaultTasks 'build'
+
+project.ext.commonBuildPath = hasProperty("localCommonBuildRepo") ? file(localCommonBuildRepo).toURL().toString() : 'https://github.com/xebialabs/deployit-common-build/raw/master'
+
+group = 'com.xebialabs'
+version = '1.0'
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+apply from: "$commonBuildPath/releaseable.gradle"
+apply from: "$commonBuildPath/artifacts.gradle"
+apply from: "$commonBuildPath/repositories.gradle"
+apply from: "$commonBuildPath/dependencies.gradle"
+rootProject.repositories.each {repositories.add(it)}
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+if (project.hasProperty('debug')) {
+    compileJava.options.debugOptions.debugLevel = "source,lines,vars";
+}
+
+dependencies {
+    compile deps.xebialabs_html_writer
+    compile deps.guava
+    testCompile deps.junit_dep, deps.hamcrest_lib, deps.hamcrest_core
+}

@@ -1,0 +1,53 @@
+/*  CSS tweaks for the REST API doc. */
+pre {
+  width: 100%;
+  padding-left: 10px;
+}
+
+dl {
+  margin-top: 1em;
+}
+
+dt {
+  font-weight: bold;
+  margin-top: 1em;
+}
+
+dd {
+  margin-left: 2em;
+}
+
+h3 {
+  font-size: 12px;
+}
+
+h4 {
+  color: inherit;
+}
+
+td {
+  vertical-align: top;
+}
+
+.leftcol {
+  width: 100%;
+}
+
+.rightcol {
+  visibility: hidden;
+  width: 0;
+}
+
+@media screen
+{
+.resource-header {
+  margin-top: 2.5 em;
+  background: lightgray;
+  padding: 3px 6px;
+}
+
+}
+.parameter-table td {
+  padding-left: 0 !important;
+  padding-right: 10px !important;
+}
