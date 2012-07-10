@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.sun.javadoc.ClassDoc;
 
-public class OverviewWriter extends JavadocWriter {
+public class OverviewWriter extends RestdocWriter {
 
     public OverviewWriter(PrintWriter writer) {
         super(writer);

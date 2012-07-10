@@ -10,9 +10,9 @@ import com.sun.javadoc.Tag;
 import com.sun.javadoc.Type;
 import com.xebialabs.commons.html.HtmlWriter;
 
-public class JavadocWriter extends HtmlWriter {
+public class RestdocWriter extends HtmlWriter {
 
-    public JavadocWriter(PrintWriter writer) {
+    public RestdocWriter(PrintWriter writer) {
         super(writer);
     }
 
@@ -30,19 +30,17 @@ public class JavadocWriter extends HtmlWriter {
 
     private void appendLink(StringBuilder builder, SeeTag tag) {
         String file = RestDoclet.fileNameFor(tag.referencedClass());
-        if (file != null && FileCatalog.SINGLETON.getItems().contains(file)) {
-            builder.append(link(file, tag.text()));
+        String text = tag.label() != null ? tag.label() : tag.text();
+
+        if (file != null && FileCatalog.SINGLETON.check(file)) {
+            builder.append(link(file, text));
         } else {
-            builder.append(code(tag.text()));
+            builder.append(bold(text));
         }
     }
 
     protected String asText(Type type) {
         return asText(type, " of ", ", ", "");
-    }
-
-    protected String asReference(Type type) {
-        return asText(type, "-", "-", ".html");
     }
 
     private static String asText(Type type, String separator1, String separator2, String end) {
@@ -64,6 +62,26 @@ public class JavadocWriter extends HtmlWriter {
         return builder.toString();
     }
 
+    public static String firstWord(Tag tag) {
+        return tag.text().split("\\s")[0];
+    }
+
+    public static String restOfSentence(Tag tag) {
+        return tag.text().substring(firstWord(tag).length());
+    }
+
+    protected String asReference(Type type) {
+        List<Type> types = getParameterizedTypes(type);
+
+        // Default case: fully qualified name of non-parameterized type.
+        if (types.isEmpty()) {
+            return type.qualifiedTypeName() + ".html";
+        }
+
+        // Cook something up for 'List of'
+        return types.get(0) + "-" + type.simpleTypeName() + ".html";
+    }
+
     public List<Type> getParameterizedTypes(Type type) {
 
         List<Type> types = new ArrayList<Type>();
@@ -76,5 +94,20 @@ public class JavadocWriter extends HtmlWriter {
         }
 
         return types;
+    }
+
+    protected Object renderType(Type type) {
+        Object returnTypeText = asText(type);
+        String externalFile = asReference(type);
+
+        // Add references to catalog
+        if (FileCatalog.SINGLETON.check(externalFile)) {
+            returnTypeText = link(externalFile, returnTypeText);
+        }
+        for (Type paramType : getParameterizedTypes(type)) {
+            FileCatalog.SINGLETON.check(asReference(paramType));
+        }
+
+        return returnTypeText;
     }
 }

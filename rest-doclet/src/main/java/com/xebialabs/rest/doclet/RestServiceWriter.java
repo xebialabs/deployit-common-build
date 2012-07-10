@@ -12,7 +12,7 @@ import com.sun.javadoc.*;
 import com.sun.javadoc.AnnotationDesc.ElementValuePair;
 import com.xebialabs.commons.html.Element;
 
-public class RestServiceWriter extends JavadocWriter {
+public class RestServiceWriter extends RestdocWriter {
 
     private final ClassDoc service;
     private final String path;
@@ -93,7 +93,7 @@ public class RestServiceWriter extends JavadocWriter {
         if (permissions.length > 0) {
             Element dt = definitionList("Permissions");
             for (Tag permission : permissions) {
-                dt.add(element("dd", code(permission.text())));
+                dt.add(element("dd", code(firstWord(permission)), " - ",restOfSentence(permission)));
             }
             dt.write();
         }
@@ -113,21 +113,6 @@ public class RestServiceWriter extends JavadocWriter {
                     "Content type: " + getMethodProduces(method)
             ).write();
         }
-    }
-
-    private Object renderType(Type type) {
-        Object returnTypeText = asText(type);
-        String externalFile = asReference(type);
-
-        // Add references to catalog
-        if (FileCatalog.SINGLETON.check(externalFile)) {
-            returnTypeText = link(externalFile, returnTypeText);
-        }
-        for (Type paramType : getParameterizedTypes(type)) {
-            FileCatalog.SINGLETON.check(asReference(paramType));
-        }
-
-        return returnTypeText;
     }
 
     private void writeParameters(MethodDoc method) {
