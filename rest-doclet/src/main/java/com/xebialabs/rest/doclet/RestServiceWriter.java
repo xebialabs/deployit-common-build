@@ -93,7 +93,11 @@ public class RestServiceWriter extends RestdocWriter {
         if (permissions.length > 0) {
             Element dt = definitionList("Permissions");
             for (Tag permission : permissions) {
-                dt.add(element("dd", code(firstWord(permission)), " - ",restOfSentence(permission)));
+                String rest = restOfSentence(permission);
+                if (!Strings.isNullOrEmpty(rest)) {
+                    rest = " - " + rest;
+                }
+                dt.add(element("dd", code(firstWord(permission)), rest));
             }
             dt.write();
         }

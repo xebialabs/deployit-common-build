@@ -1,9 +1,12 @@
 package com.xebialabs.rest.doclet;
 
 import java.io.PrintWriter;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.PackageDoc;
 
 public class OverviewWriter extends RestdocWriter {
 
@@ -13,8 +16,22 @@ public class OverviewWriter extends RestdocWriter {
 
     public void write(List<ClassDoc> services) {
         writeHeader();
+        writePackageInfo(services);
         writeServices(services);
         writeFooter();
+    }
+
+    private void writePackageInfo(List<ClassDoc> services) {
+        // Collect packages
+        Set<PackageDoc> packages = new LinkedHashSet<PackageDoc>();
+        for (ClassDoc service : services) {
+            packages.add(service.containingPackage());
+        }
+
+        // Write packages
+        for (PackageDoc pack : packages) {
+            p(asText(pack.inlineTags())).write();
+        }
     }
 
     private void writeServices(List<ClassDoc> services) {

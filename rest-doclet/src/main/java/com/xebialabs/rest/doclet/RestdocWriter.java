@@ -21,6 +21,8 @@ public class RestdocWriter extends HtmlWriter {
         for (Tag tag : tags) {
             if (tag instanceof SeeTag) {
                 appendLink(builder, (SeeTag) tag);
+            } else if (tag.name().equals("@code")) {
+               builder.append(code(tag.text()));
             } else {
                 builder.append(tag.text());
             }
@@ -29,7 +31,7 @@ public class RestdocWriter extends HtmlWriter {
     }
 
     private void appendLink(StringBuilder builder, SeeTag tag) {
-        String file = RestDoclet.fileNameFor(tag.referencedClass());
+        String file = RestDoclet.fileNameFor(tag.referencedClassName());
         String text = tag.label() != null ? tag.label() : tag.text();
 
         if (file != null && FileCatalog.SINGLETON.check(file)) {
@@ -40,25 +42,16 @@ public class RestdocWriter extends HtmlWriter {
     }
 
     protected String asText(Type type) {
-        return asText(type, " of ", ", ", "");
-    }
-
-    private static String asText(Type type, String separator1, String separator2, String end) {
         StringBuilder builder = new StringBuilder();
         builder.append(type.simpleTypeName());
 
-        ParameterizedType paramType = type.asParameterizedType();
-        if (paramType != null) {
-            builder.append(separator1);
-            for (int i = 0; i < paramType.typeArguments().length; i++) {
-                Type param = paramType.typeArguments()[i];
-                builder.append(param.simpleTypeName());
-                if (i < paramType.typeArguments().length - 1) {
-                    builder.append(separator2);
-                }
-            }
+        String separator = " of ";
+        for (Type paramType : getParameterizedTypes(type)) {
+            builder.append(separator);
+            builder.append(paramType.simpleTypeName());
+            separator = ", ";
         }
-        builder.append(end);
+
         return builder.toString();
     }
 

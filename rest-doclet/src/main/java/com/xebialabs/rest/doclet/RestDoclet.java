@@ -130,6 +130,13 @@ public class RestDoclet {
         return service.qualifiedTypeName() + ".html";
     }
 
+    public static String fileNameFor(String reference) {
+        if (reference == null) {
+            return null;
+        }
+        return reference + ".html";
+    }
+
     public static PrintWriter openFile(String fileName, String title) {
         File file = new File(destinationDir, fileName);
         System.out.println("Writing " + file.getAbsolutePath());
