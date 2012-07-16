@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.base.Strings;
 import com.sun.javadoc.ParameterizedType;
 import com.sun.javadoc.SeeTag;
 import com.sun.javadoc.Tag;
@@ -32,7 +33,10 @@ public class RestdocWriter extends HtmlWriter {
 
     private void appendLink(StringBuilder builder, SeeTag tag) {
         String file = RestDoclet.fileNameFor(tag.referencedClassName());
-        String text = tag.label() != null ? tag.label() : tag.text();
+        String text = tag.text();
+        if (!Strings.isNullOrEmpty(tag.label())) {
+            text = tag.label();
+        }
 
         if (file != null && FileCatalog.SINGLETON.check(file)) {
             builder.append(link(file, text));
