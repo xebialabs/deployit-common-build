@@ -5,7 +5,8 @@ project.ext {
 	jackrabbitVersion = '2.2.10'
 	jettyVersion = '6.1.11'
 	jythonVersion = '2.5.1'
-	overthereVersion = '2.0.0-beta-3'
+	overcastVersion = '1.1.1'
+	overthereVersion = '2.0.0-beta-6'
 	resteasyVersion = '2.3.2.Final'
 	slf4jVersion = '1.6.3'
 	springVersion = '3.1.1.RELEASE'
@@ -48,7 +49,6 @@ project.ext.deps = [
 	hamcrest_lib: "org.hamcrest:hamcrest-library:1.2.1",
 	httpunit: "httpunit:httpunit:1.6.2",
 	icu4j: "com.ibm.icu:icu4j:3.4.4",
-	itest_support: "com.xebialabs.overthere:itest-support:${overthereVersion}",
 	jackrabbit_api: "org.apache.jackrabbit:jackrabbit-api:${jackrabbitVersion}",
 	jackrabbit_commons: "org.apache.jackrabbit:jackrabbit-jcr-commons:${jackrabbitVersion}",
 	jackrabbit_core: "org.apache.jackrabbit:jackrabbit-core:${jackrabbitVersion}",
@@ -81,6 +81,7 @@ project.ext.deps = [
 	mockito: "org.mockito:mockito-all:1.8.5",
 	mockito_core: "org.mockito:mockito-core:1.8.5",
 	mustache: "com.samskivert:jmustache:1.3",
+	overcast: "com.xebialabs.cloud:overcast:${overcastVersion}",
 	overthere: "com.xebialabs.overthere:overthere:${overthereVersion}",
 	resteasy_jaxbprovider: "org.jboss.resteasy:resteasy-jaxb-provider:${resteasyVersion}",
 	resteasy_jaxrs: "org.jboss.resteasy:resteasy-jaxrs:${resteasyVersion}",
