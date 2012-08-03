@@ -126,11 +126,22 @@
   background-color: #F3F2F2;
 }
 
-.required {
-	background-image:url(../image/required.png);
+.icon {
 	background-position:top right;
 	background-repeat:no-repeat;
 	padding-right:10px;
+}
+
+.required {
+	background-image:url(../doc/image/required.png);
+}
+
+.inspection {
+	background-image:url(../doc/image/inspection.png);
+}
+
+.inspection-required {
+	background-image:url(../doc/image/inspection-required.png);
 }
 
 .containerImg {
@@ -138,7 +149,3 @@
 	height: 32px;
 }
 
-.inspectImg {
-	width: 32px;
-	height: 32px;
-}
