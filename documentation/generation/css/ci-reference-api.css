@@ -1,12 +1,16 @@
 /* General */
 
+td {
+  vertical-align: top;
+}
+  
 .ci-reference table {
   border-collapse: collapse;
   padding: 3px;
   page-break-inside: avoid;
 }
 
-.ci-reference th, .ci-reference 	td {
+.ci-reference th, .ci-reference td {
   padding: 3px;
 }
 
@@ -18,7 +22,7 @@
     padding-top: 20px;
 }
 
-.ci-toc {
+.ci-toc, .ci-table {
     border: 1px solid #106931;
     margin-bottom: 20px;
     margin-right: 10px;
@@ -30,7 +34,7 @@
 	font-style: italic;
 }
 
-.ci-toc th {
+.ci-toc th, .ci-table th {
     background-color: #106931;
     color: white;
     white-space: nowrap;
@@ -91,9 +95,6 @@
 	padding-left: 6px;
 }
 
-.ci-description {
-}
-
 .ci-property-req {
     color: red;
     vertical-align: top;
@@ -109,12 +110,21 @@
  font-weight: bold;
 }
 
-.ci-property-kind {
+.ci-property-kind, .ci-property-kind a {
  color: #106931;
+}
+
+.ci-property-kind a:hover {
+ color: #027AC6
+}
+
+.ci-property-info, .icon {
+  margin-top: 6px;
 }
 
 .ci-property-desc {
  color: #333333;
+ margin-bottom: 6px;
 }
 
 
@@ -132,6 +142,10 @@
 	padding-right:10px;
 }
 
+.icon-cell {
+  padding-left: 2px !important;
+}
+
 .required {
 	background-image:url(../doc/image/required.png);
 }
@@ -144,8 +158,6 @@
 	background-image:url(../doc/image/inspection-required.png);
 }
 
-.containerImg {
-	width: 32px;
-	height: 32px;
+.containment {
+    font-style: italic;
 }
-
