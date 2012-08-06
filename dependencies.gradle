@@ -1,10 +1,13 @@
 project.ext {
   apiVersion = '3.8.0-alpha-37'
-  engineVersion = '3.8.0-alpha-42'
-  bundledPluginsVersion = '3.8.0-alpha-12'
 //  apiVersion = '3.8.0-SNAPSHOT'
+  
+  engineVersion = '3.8.0-alpha-43'
 //  engineVersion = '3.8.0-SNAPSHOT'
+
+  bundledPluginsVersion = '3.8.0-alpha-12'
 //  bundledPluginsVersion = '3.8.0-SNAPSHOT'
+
   apacheDsVersion = '1.5.5'
   jackrabbitVersion = '2.2.10'
   jettyVersion = '6.1.11'
