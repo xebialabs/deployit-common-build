@@ -2,7 +2,7 @@ project.ext {
   apiVersion = '3.8.0-alpha-38'
 //  apiVersion = '3.8.0-SNAPSHOT'
   
-  engineVersion = '3.8.0-alpha-44'
+  engineVersion = '3.8.0-alpha-45'
 //  engineVersion = '3.8.0-SNAPSHOT'
 
   bundledPluginsVersion = '3.8.0-alpha-12'
