@@ -49,6 +49,7 @@ project.ext.deps = [
 	hamcrest_lib: "org.hamcrest:hamcrest-library:1.2.1",
 	httpunit: "httpunit:httpunit:1.6.2",
 	icu4j: "com.ibm.icu:icu4j:3.4.4",
+	itest_support: "com.xebialabs.overthere:itest-support:2.0.0-beta-3",
 	jackrabbit_api: "org.apache.jackrabbit:jackrabbit-api:${jackrabbitVersion}",
 	jackrabbit_commons: "org.apache.jackrabbit:jackrabbit-jcr-commons:${jackrabbitVersion}",
 	jackrabbit_core: "org.apache.jackrabbit:jackrabbit-core:${jackrabbitVersion}",
