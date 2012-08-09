@@ -5,7 +5,7 @@ project.ext {
   engineVersion = '3.8.0-alpha-48'
 //  engineVersion = '3.8.0-SNAPSHOT'
 
-  bundledPluginsVersion = '3.8.0-alpha-12'
+  bundledPluginsVersion = '3.8.0-alpha-13'
 //  bundledPluginsVersion = '3.8.0-SNAPSHOT'
 
   apacheDsVersion = '1.5.5'
