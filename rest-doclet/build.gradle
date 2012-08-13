@@ -4,7 +4,7 @@ defaultTasks 'build'
 project.ext.commonBuildPath = hasProperty("localCommonBuildRepo") ? file(localCommonBuildRepo).toURL().toString() : 'https://github.com/xebialabs/deployit-common-build/raw/master'
 
 group = 'com.xebialabs'
-version = '1.4'
+version = '1.5-SNAPSHOT'
 
 apply plugin: 'idea'
 apply plugin: 'java'
