@@ -10,6 +10,7 @@ import java.util.List;
 import com.google.common.base.Strings;
 import com.sun.javadoc.*;
 import com.sun.javadoc.AnnotationDesc.ElementValuePair;
+
 import com.xebialabs.commons.html.Element;
 
 public class RestServiceWriter extends RestdocWriter {
@@ -113,9 +114,18 @@ public class RestServiceWriter extends RestdocWriter {
         } else {
             definitionList(
                     "Response body",
-                    renderType(method.returnType()) + " - " + asText(method.tags("return")[0].inlineTags()),
+                    renderType(method.returnType()) + getReturnTypeInfo(method),
                     "Content type: " + getMethodProduces(method)
             ).write();
+        }
+    }
+
+    private String getReturnTypeInfo(MethodDoc method) {
+        Tag[] tags = method.tags("return");
+        if (tags.length == 0) {
+            return "";
+        } else {
+            return " - " + asText(tags[0].inlineTags());
         }
     }
 
