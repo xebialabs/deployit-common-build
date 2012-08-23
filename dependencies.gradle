@@ -128,7 +128,7 @@ project.ext.deps = [
   spring_test: "org.springframework:spring-test:${springVersion}",
   spring_web: "org.springframework:spring-web:${springVersion}",
   spring_webmvc: "org.springframework:spring-webmvc:${springVersion}",
-  t2_bus: "nl.javadude.t2bus:t2-bus:1.1.1",
+  t2_bus: "nl.javadude.t2bus:t2-bus:1.1.2",
   testng: "org.testng:testng:6.1.1",
   truezip_file: "de.schlichtherle.truezip:truezip-file:${trueZipVersion}",
   truezip_driver_file: "de.schlichtherle.truezip:truezip-driver-file:${trueZipVersion}",
