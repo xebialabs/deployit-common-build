@@ -30,6 +30,10 @@ task writeDeployitConf << {
     file.withWriter { w ->
         w.writeLine("http.port=$project.ext.deployitPort")
         w.writeLine("importable.packages.path=$project.ext.deployitPackagesDir")
+        w.writeLine("http.bind.address=0.0.0.0")
+        w.writeLine("threads.min=3")
+        w.writeLine("threads.max=24")
+        w.writeLine("jcr.repository.path=repository")
     }
 }
 
