@@ -54,10 +54,10 @@ task startIntegrationServer << {
         jvmarg(value: "-Xmx1024m")
         jvmarg(value: "-XX:MaxPermSize=256m")
         if (project.hasProperty('debug')) {
-		    log "Remote debugging enabled on port 5005"
-			jvmarg(value: "-Xdebug")
-			jvmarg(value: "-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005")
-		}
+            log "Remote debugging enabled on port 5005"
+            jvmarg(value: "-Xdebug")
+            jvmarg(value: "-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005")
+        }
     }
 
     int startupDelay = 2
@@ -70,15 +70,15 @@ task startIntegrationServer << {
             connection.connect();
             code = connection.getResponseCode();
         } catch(ConnectException exc) {
-        	code = 404
+            code = 404
         }
-        
-		if(code == 200) {
-			waitForServerStart = false;
-		} else {
-			log "Waiting ${startupDelay}s for the Deployit server to start"
-			TimeUnit.SECONDS.sleep(startupDelay)
-		}
+
+        if(code == 200) {
+            waitForServerStart = false;
+        } else {
+            log "Waiting ${startupDelay}s for the Deployit server to start"
+            TimeUnit.SECONDS.sleep(startupDelay)
+        }
     }
 
     log "Deployit Server has started."
