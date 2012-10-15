@@ -3,13 +3,6 @@
 echo "Release Alpha"
 echo ""
 
-PWD=`pwd`
-BASENAME_PWD=`basename $PWD`
-if [[ $(basename $PWD) = "deployit" ]]; then
-    echo "This script is not meant to be run in the deployit project. It is used to release alpha releases of plugin-api, engine or bundled-plugins."
-    exit -1
-fi
-
 currentAlphaLine=`grep "version.*alpha" build.gradle`
 currentAlphaVersion=`echo $currentAlphaLine | cut -d \' -f 2`
 newAlphaVersion=${currentAlphaVersion%-*}-$((${currentAlphaVersion##*-} + 1))
