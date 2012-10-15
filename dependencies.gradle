@@ -7,8 +7,9 @@ project.ext {
 //  engineVersion = '3.8.0-SNAPSHOT'
   engineVersion = '3.8.0-beta-1'
 
-  bundledPluginsVersion = '3.8.0-alpha-21'
+//  bundledPluginsVersion = '3.8.0-alpha-21'
 //  bundledPluginsVersion = '3.8.0-SNAPSHOT'
+  bundledPluginsVersion = '3.8.0-beta-1'
 
   apacheDsVersion = '1.5.5'
   jackrabbitVersion = '2.2.10'
