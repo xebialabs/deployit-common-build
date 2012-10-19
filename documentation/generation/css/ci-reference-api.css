@@ -152,15 +152,15 @@ td {
 }
 
 .required {
-	background-image:url(../doc/image/required.png);
+	background-image:url(image/required.png);
 }
 
 .inspection {
-	background-image:url(../doc/image/inspection.png);
+	background-image:url(image/inspection.png);
 }
 
 .inspection-required {
-	background-image:url(../doc/image/inspection-required.png);
+	background-image:url(image/inspection-required.png);
 }
 
 .containment {
