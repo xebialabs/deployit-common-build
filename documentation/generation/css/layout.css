@@ -640,6 +640,7 @@ img {
 		white-space: pre-wrap;
 		font-size: 12px;
 		width: 800px;
+		page-break-inside: avoid;
 	}
 
 }
