@@ -44,7 +44,7 @@ project.ext.deps = [
 	dom4j: "dom4j:dom4j:1.6",
 	easymock: "org.easymock:easymock:3.0",
 	freemarker: 'org.freemarker:freemarker:2.3.18',
-	guava: "com.google.guava:guava:10.0.1",
+	guava: "com.google.guava:guava:13.0",
 	hamcrest_core: "org.hamcrest:hamcrest-core:1.2.1",
 	hamcrest_lib: "org.hamcrest:hamcrest-library:1.2.1",
 	httpunit: "httpunit:httpunit:1.6.2",
