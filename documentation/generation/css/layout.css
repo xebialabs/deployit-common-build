@@ -533,6 +533,14 @@ th {
     text-align: left;
     vertical-align: bottom;
 }
+
+.types th {
+  font-weight: normal;
+  background-color: green;
+  color: white;
+  border-top: 1.5em solid white;
+}
+
 input[type="text"]{
     background: url("image/search_bg1.gif") no-repeat scroll 0 0 transparent;
     border: 0 none;
