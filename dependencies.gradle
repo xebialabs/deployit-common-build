@@ -132,3 +132,7 @@ project.ext.deps = [
   velocity: "org.apache.velocity:velocity:1.6.1",
   xstream: 'com.thoughtworks.xstream:xstream:1.4.2'
 ]
+
+deps.each { k, v ->
+    DependencyHandler.metaClass."$k" = v
+}
