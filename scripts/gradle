@@ -1,0 +1,18 @@
+#!/bin/bash
+
+x=`pwd`
+gradleExec=`pwd`/gradlew
+
+while [ ! -d "$x/.git" ]; do 
+    x=`dirname "$x"`
+    if [ -x "$x/gradlew" ]; then
+        gradleExec="$x/gradlew"
+        break
+    fi
+done
+
+if [ ! -x "$gradleExec" ]; then
+    gradleExec=$GRADLE_HOME/bin/gradle
+fi
+
+$gradleExec $@
