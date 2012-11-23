@@ -1,5 +1,5 @@
 project.ext {
-  apiVersion = '3.8.1-alpha-3'
+  apiVersion = '3.8.1'
   engineVersion = '3.8.1-alpha-3'
   bundledPluginsVersion = '3.8.0'
 
