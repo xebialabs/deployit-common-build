@@ -31,6 +31,7 @@ project.ext.deps = [
   commons_httpclient: "commons-httpclient:commons-httpclient:3.1",
   commons_io: "commons-io:commons-io:1.4",
   commons_lang: "commons-lang:commons-lang:2.5",
+  commons_lang3: "org.apache.commons:commons-lang3:3.1",
   deployit_trigger_plugin: "com.xebialabs.deployit.plugins:trigger-plugin:$bundledPluginsVersion",
   deployit_command_plugin: "com.xebialabs.deployit.plugins:command-plugin:$bundledPluginsVersion",
   deployit_database_plugin: "com.xebialabs.deployit.plugins:database-plugin:$bundledPluginsVersion",
