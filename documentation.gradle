@@ -1,0 +1,174 @@
+def commonBuildPath = hasProperty("localCommonBuildRepo") ? file(localCommonBuildRepo).toURL().toString() : 'https://github.com/xebialabs/deployit-common-build/raw/master'
+
+project.ext {
+    docTempDir = file("${buildDir}/doc")
+    docCommonUrl = "${commonBuildPath}/documentation/generation"
+
+    pdfGenerationEnabled = hasProperty("pdfGenerationEnabled") ? pdfGenerationEnabled : true
+    htmlTemplate = "$docCommonUrl/htmlTemplate.html"
+    pdfCover = "$docCommonUrl/pdfCover.html"
+    pdfFooter = "$docCommonUrl/pdfPageFooter.html"
+    pdfHeader = "$docCommonUrl/pdfPageHeader.html"
+    pdfTocXsl = "$docCommonUrl/pdfToc.xsl"
+    htmlHeader = "$docCommonUrl/htmlHeader.html"
+    htmlFooter = "$docCommonUrl/htmlFooter.html"
+    docResources = ["$docCommonUrl/css/deployit.css", "$docCommonUrl/css/ci-reference-api.css", "$docCommonUrl/css/layout.css", "$docCommonUrl/image.zip", "$docCommonUrl/js.zip"]
+    resolvedMarkdownSources = project.ext.properties.containsKey('markdownSources') ? project.ext.properties.markdownSources : '*.markdown'
+    resolvedWkhtmltopdf= project.ext.properties.containsKey("wkhtmltopdf") ? project.ext.properties.wkhtmltopdf : 'wkhtmltopdf'
+    resolvedDocArchiveClassifier = project.ext.properties.containsKey("docArchiveClassifier") ? project.ext.properties.docArchiveClassifier : 'doc'
+    resolvedDocArchiveExludes = project.ext.properties.containsKey("docArchiveExcludes") ? project.ext.properties.docArchiveExcludes : [ ]
+}
+
+configurations {
+    docgen
+    docgenerator
+}
+
+configurations.docgen.ext.requiresFlattening = false
+
+task documentationZip(type: Zip, dependsOn: ['doGenerateDocumentation']) {
+    classifier = "$resolvedDocArchiveClassifier"
+    exclude '*.markdown'
+    exclude '*.properties'
+    into("pdf") {
+        from docTempDir
+        include '*.pdf'
+        if (resolvedDocArchiveExludes) {
+            exclude resolvedDocArchiveExludes
+        }
+    }
+    into("html") {
+        from docTempDir
+        exclude '*.pdf'
+        if (resolvedDocArchiveExludes) {
+            exclude resolvedDocArchiveExludes
+        }
+    }
+    into(""){
+	from projectDir
+	include '*.txt'
+	if (resolvedDocArchiveExludes) {
+            exclude resolvedDocArchiveExludes
+        }
+    }
+}
+
+artifacts {
+    archives documentationZip
+}
+
+dependencies {
+    docgenerator deps.deployit_doc_generator
+    docgen deps.deployit_doc_generator
+}
+
+task cleanDoc(type: Delete) {
+    delete "$docTempDir"
+}
+
+task doGenerateDocumentation(dependsOn: configurations.docgen) {
+    // Changed in code (Java CI's) and resources (synthetic.xml) should result in an updated CI reference section
+    inputs.dir "${projectDir}/src/main"
+    outputs.dir docTempDir
+
+    configurations.docgen.getDependencies().withType(ProjectDependency).each {
+        inputs.dir = "${docProject.projectDir}/src/main"
+    }
+
+    doLast {
+        docTempDir.mkdirs()
+        def config = new groovy.util.ConfigObject()
+        def docClassPath = new LinkedHashSet()
+        registerDocumentationProject(project, config, docClassPath)
+        configurations.docgen.getDependencies().withType(ProjectDependency).each {
+            registerDocumentationProject(it.dependencyProject, config, docClassPath)
+        }
+        config.version = project.version
+        config.toProperties().store(file("$docTempDir/props.properties").newWriter(),"")
+
+        def myHtmlTemplate = configurations.docgen.hasProperty("htmlTemplate") ? configurations.docgen.ext.htmlTemplate : htmlTemplate
+        logger.debug("Using template $myHtmlTemplate")
+
+        def cmdArgs = ['-workingDir', "$docTempDir", '-htmlTemplate', myHtmlTemplate, '-properties', "$docTempDir/props.properties", '-wkhtmltopdf', resolvedWkhtmltopdf,
+                   '-pdfCover', pdfCover, '-pdfFooter', pdfFooter, '-pdfHeader', pdfHeader, '-pdfTocXsl', pdfTocXsl, "-htmlHeader", htmlHeader, '-htmlFooter', htmlFooter]
+        if ("$pdfGenerationEnabled" == "true") cmdArgs << '-generatePdf'
+        docResources.each({cmdArgs << '-resource' << it})
+        fileTree("$docTempDir").include(resolvedMarkdownSources).each { cmdArgs << '-source' << "$it"}
+        logger.debug("Executing DocumentGenerator with following args :\n $cmdArgs")
+        docClassPath.addAll(configurations.docgenerator.resolve())
+        docClassPath.addAll(configurations.runtime.resolve())
+        javaexec {
+            classpath docClassPath
+            setMain 'com.xebialabs.deployit.documentation.DocumentGenerator'
+            args = cmdArgs
+        }
+    }
+}
+
+
+private def registerDocumentationProject(docProject, config, docClassPath) {
+    if (docProject.hasProperty('docgen')) {
+         config.putAll(docProject.docgen)
+    }
+
+    if (docProject.equals(project)) {
+          docClassPath.addAll("$buildDir/classes/main")
+          docClassPath.addAll("$buildDir/resources/main")
+    } else {
+          docClassPath.addAll(0,docProject.configurations.archives.allArtifacts.files.filter { f ->
+            !f.name.contains("-sources") && !f.name.contains("-javadoc")
+          })
+          docClassPath.addAll(docProject.configurations.compile.resolve())
+    }
+    copyMarkdownAndResourcesToDocTemp(new File("${docProject.projectDir}/src/main/markdown"))
+}
+
+private def copyMarkdownAndResourcesToDocTemp(srcDir) {
+    if (!srcDir.exists()) return
+    srcDir.eachDir { dir ->
+        def targetDest = docTempDir
+        if (fileTree(dir).include('*.markdown').isEmpty()) {
+            targetDest = new File("$docTempDir/${dir.name}")
+            targetDest.mkdir()
+        }
+        copy { from dir; into targetDest }
+    }
+
+    copy {
+        from(srcDir) {
+            include '*.markdown'
+        }
+        into docTempDir
+    }
+
+}
+
+private def getDocumentationTarget(path, version, project) {
+    def target = "${path}"
+
+    if (! configurations.docgen.hasProperty('unversioned') || !configurations.docgen.ext.unversioned) {
+        // use only the major version to publish docs (i.e. 3.8 for 3.8.0-SNAPSHOT, etc.)
+        def m = version =~ /(\d+\.\d+)/
+        target += "/releases/" + m[0][0]
+    }
+
+    if (configurations.docgen.hasProperty('requiresFlattening') && configurations.docgen.ext.requiresFlattening) {
+        target += "/deployit"
+    } else {
+        target += "/${project}"
+    }
+
+    println "Uploading documentation to target path ${target}"
+
+    return target
+}
+
+uploadArchives.dependsOn(uploadDocgen)
+uploadDocgen.dependsOn(documentationZip)
+uploadDocgen << {
+    javaexec {
+        main = 'com.xebialabs.deployit.documentation.DocumentationUploader'
+        classpath = configurations.docgen
+        args = ["${docHost}", "${docUserName}", "${docPassword}", getDocumentationTarget(docPath, version, project.name), "${docTempDir}"]
+    }
+}

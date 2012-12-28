@@ -1,0 +1,117 @@
+import java.util.concurrent.TimeUnit
+
+project.ext.deployitPort = 4516
+project.ext.deployitPackagesDir = "importablePackages"
+
+configurations {
+    integrationTestServer
+}
+
+def shutdownServer() {
+    println "Shutting down the Deployit server"
+    def url = new URL("http://localhost:$project.ext.deployitPort/deployit/server/shutdown")
+    try {
+        def connection = getConnectedPost(url)
+        // force the connection to actually connect and do something
+        int contentLength = connection.contentLength
+    } catch(ConnectException exc) {
+        println "The Deployit server is not running. Nothing to do."
+        return;
+    }
+
+    waitForServerShutdown()
+    println "The Deployit server has been shut down."
+}
+
+task writeDeployitConf << {
+    def file = file("conf/deployit.conf")
+    println(file.absolutePath)
+    file.createNewFile()
+    file.withWriter { w ->
+        w.writeLine("http.port=$project.ext.deployitPort")
+        w.writeLine("importable.packages.path=$project.ext.deployitPackagesDir")
+        w.writeLine("http.bind.address=0.0.0.0")
+        w.writeLine("threads.min=3")
+        w.writeLine("threads.max=24")
+        w.writeLine("jcr.repository.path=repository")
+    }
+}
+
+task initRepository(type: JavaExec, dependsOn: writeDeployitConf) {
+    classpath configurations.integrationTestServer.filter({ !it.name.endsWith('-sources.jar') })
+    main = "com.xebialabs.deployit.DeployitBootstrapper"
+    args "-setup", "-reinitialize", "-force", "-setup-defaults", "conf/deployit.conf"
+}
+
+task shutdownIntegrationServer << { shutdownServer() }
+
+task startIntegrationServer << {
+    def serverClasspath = configurations.integrationTestServer.filter({ !it.name.endsWith('-sources.jar') }).asPath
+    log "Starting Deployit Server..."
+    logger.debug("Deployit Server classpath:\n${serverClasspath}")
+    ant.java(fork: true, spawn: true, classpath: serverClasspath, classname: 'com.xebialabs.deployit.DeployitBootstrapper') {
+        arg(value: "-test-mode")
+        jvmarg(value: "-Xmx1024m")
+        jvmarg(value: "-XX:MaxPermSize=256m")
+        if (project.hasProperty('debug')) {
+            log "Remote debugging enabled on port 5005"
+            jvmarg(value: "-Xdebug")
+            jvmarg(value: "-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005")
+        }
+    }
+
+    int startupDelay = 2
+    def waitForServerStart = true
+    while(waitForServerStart) {
+        def url = new URL("http://localhost:$project.ext.deployitPort")
+        def code
+        try {
+            connection = getConnectedPost(url)
+            connection.connect();
+            code = connection.getResponseCode();
+        } catch(ConnectException exc) {
+            code = 404
+        }
+
+        if(code == 200) {
+            waitForServerStart = false;
+        } else {
+            log "Waiting ${startupDelay}s for the Deployit server to start"
+            TimeUnit.SECONDS.sleep(startupDelay)
+        }
+    }
+
+    log "Deployit Server has started."
+}
+
+startIntegrationServer.doFirst {shutdownServer()}
+startIntegrationServer.dependsOn(initRepository)
+
+def waitForServerShutdown() {
+    int shutdownDelay = 2
+    def waitForServerShutdown = true;
+    def url = new URL("http://localhost:$project.ext.deployitPort")
+    while(waitForServerShutdown) {
+        try {
+            def connection = getConnectedPost(url)
+            def code = connection.getResponseCode();
+            print code
+            if(code == 404) {
+                waitForServerShutdown = false;
+            } else {
+                println "Waiting ${shutdownDelay}s for the Deployit server to shutdown"
+                TimeUnit.SECONDS.sleep(shutdownDelay)
+            }
+        } catch(ConnectException exc) {
+            break
+        }
+    }
+}
+
+def getConnectedPost(url) {
+    def connection = url.openConnection()
+    connection.setRequestMethod('POST')
+    connection.setRequestProperty("Authorization", "Basic YWRtaW46YWRtaW4=");
+    connection.connect()
+    return connection
+}
