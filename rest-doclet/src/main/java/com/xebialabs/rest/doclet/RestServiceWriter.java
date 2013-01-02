@@ -52,8 +52,7 @@ public class RestServiceWriter extends RestdocWriter {
         table().cssClass("parameter-table").writeOpen();
         for (MethodDoc method : getRestMethods(service)) {
             String httpMethod = getHttpMethod(method);
-            String resource = path + "/" + getPath(method);
-            row(httpMethod, link("#" + method.qualifiedName(), resource), asText(method.firstSentenceTags())).write();
+            row(httpMethod, link("#" + getAnchor(method), getUri(method)), asText(method.firstSentenceTags())).write();
         }
         table().writeClose();
     }
@@ -61,17 +60,15 @@ public class RestServiceWriter extends RestdocWriter {
     private void writeDetails() {
         hr().write();
         for (MethodDoc method : getRestMethods(service)) {
-            writeMethodDetail(method, path);
+            writeMethodDetail(method);
         }
     }
 
-    private void writeMethodDetail(MethodDoc method, String path) {
-        String httpMethod = getHttpMethod(method);
-        String resource = path + "/" + getPath(method);
+    private void writeMethodDetail(MethodDoc method) {
 
         // Method signature and comments
-        anchor(method.qualifiedName()).write();
-        h2(httpMethod, " ", resource).cssClass("resource-header").write();
+        anchor(getAnchor(method)).write();
+        h2(getHttpMethod(method), " ", getUri(method)).cssClass("resource-header").write();
         div(asText(method.inlineTags())).write();
 
         // Permissions
@@ -175,6 +172,14 @@ public class RestServiceWriter extends RestdocWriter {
 
     private static String getPath(ProgramElementDoc element) {
         return getAnnotationValue(element, "javax.ws.rs.Path");
+    }
+
+    private String getUri(ProgramElementDoc element) {
+        return path + "/" + getPath(element);
+    }
+
+    private String getAnchor(ProgramElementDoc element) {
+        return getUri(element) + ":" + getHttpMethod(element);
     }
 
     private static String getConsumes(ProgramElementDoc element) {
