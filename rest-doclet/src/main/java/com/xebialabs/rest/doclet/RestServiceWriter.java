@@ -13,6 +13,9 @@ import com.sun.javadoc.AnnotationDesc.ElementValuePair;
 
 import com.xebialabs.commons.html.Element;
 
+/**
+ * Writes a documentation page for a single service class.
+ */
 public class RestServiceWriter extends RestdocWriter {
 
     private final ClassDoc service;
@@ -20,6 +23,12 @@ public class RestServiceWriter extends RestdocWriter {
     private final String defaultConsumes;
     private final String defaultProduces;
 
+    /**
+     * Creates a new writer. Use a new instance for each page.
+     *
+     * @param writer the stream to write to.
+     * @param service the javadoc info of the Rest class to be documented.
+     */
     public RestServiceWriter(PrintWriter writer, ClassDoc service) {
         super(writer);
         this.service = service;
@@ -32,10 +41,13 @@ public class RestServiceWriter extends RestdocWriter {
     // Page structure
     //
 
+    /**
+     * Writes the entire page.
+     */
     public void writeRestService() {
         writeHeader();
         writeIndex();
-        writeDetails();
+        writeMethodDetails();
     }
 
     //
@@ -57,7 +69,7 @@ public class RestServiceWriter extends RestdocWriter {
         table().writeClose();
     }
 
-    private void writeDetails() {
+    private void writeMethodDetails() {
         hr().write();
         for (MethodDoc method : getRestMethods(service)) {
             writeMethodDetail(method);

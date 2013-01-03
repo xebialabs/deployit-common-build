@@ -4,8 +4,9 @@ import java.io.PrintWriter;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static com.xebialabs.rest.doclet.Resource.classpathResource;
-
+/**
+ * Maintains a list of files referenced from the documentation.
+ */
 public class FileCatalog {
 
     public final static FileCatalog SINGLETON = new FileCatalog();
@@ -48,7 +49,7 @@ public class FileCatalog {
         return missing;
     }
 
-    public static void write(PrintWriter writer, String item) {
-        classpathResource(asResourcePath(item)).write(writer);
+    public static void write(String item, PrintWriter writer) {
+        Resource.fromClasspath(asResourcePath(item)).write(writer);
     }
 }

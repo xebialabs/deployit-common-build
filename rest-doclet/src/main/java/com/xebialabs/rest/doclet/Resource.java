@@ -7,6 +7,9 @@ import java.util.zip.ZipInputStream;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
 
+/**
+ * Utility class for working with files and class path resources.
+ */
 public abstract class Resource implements InputSupplier<InputStream> {
 
     public void write(PrintWriter writer) {
@@ -70,7 +73,7 @@ public abstract class Resource implements InputSupplier<InputStream> {
 
     public abstract String getName();
 
-    public static Resource classpathResource(final String name) {
+    public static Resource fromClasspath(final String name) {
         return new Resource() {
 
             @Override

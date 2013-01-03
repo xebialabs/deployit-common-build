@@ -8,6 +8,9 @@ import java.util.Set;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.PackageDoc;
 
+/**
+ * Generates the summary page.
+ */
 public class OverviewWriter extends RestdocWriter {
 
     public OverviewWriter(PrintWriter writer) {

@@ -4,6 +4,9 @@ import java.io.PrintWriter;
 
 import com.xebialabs.commons.html.HtmlWriter;
 
+/**
+ * Provides header and footer for generated files.
+ */
 public class PageTemplate extends HtmlWriter {
 
     public PageTemplate(PrintWriter writer) {
@@ -19,10 +22,10 @@ public class PageTemplate extends HtmlWriter {
         ).write();
 
         // Start body
-        FileCatalog.write(getWriter(), "html-body-start.html");
+        FileCatalog.write("html-body-start.html", getWriter());
     }
 
     public void writeFooter() {
-        FileCatalog.write(getWriter(), "html-body-end.html");
+        FileCatalog.write("html-body-end.html", getWriter());
     }
 }

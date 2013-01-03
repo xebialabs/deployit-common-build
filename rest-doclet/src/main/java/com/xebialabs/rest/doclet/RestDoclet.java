@@ -8,8 +8,9 @@ import java.util.List;
 
 import com.sun.javadoc.*;
 
-import static com.xebialabs.rest.doclet.Resource.classpathResource;
-
+/**
+ * Doclet implementation for generating REST documentation. Main entry point for the Javadoc tool.
+ */
 public class RestDoclet {
 
     private static File destinationDir = new File(".");
@@ -56,9 +57,9 @@ public class RestDoclet {
     }
 
     private static void copyCss() {
-        classpathResource("restdoc/layout.css").copy(new File(destinationDir, "layout.css"));
-        classpathResource("restdoc/restdoc.css").copy(new File(destinationDir, "restdoc.css"));
-        classpathResource("restdoc/image.zip").unzip(destinationDir);
+        Resource.fromClasspath("restdoc/layout.css").copy(new File(destinationDir, "layout.css"));
+        Resource.fromClasspath("restdoc/restdoc.css").copy(new File(destinationDir, "restdoc.css"));
+        Resource.fromClasspath("restdoc/image.zip").unzip(destinationDir);
     }
 
     private static List<ClassDoc> findRestServices(RootDoc root) {
@@ -111,7 +112,7 @@ public class RestDoclet {
             if (FileCatalog.isResource(item)) {
                 PrintWriter writer = openFile(item, item.replace(".html", ""));
                 try {
-                    FileCatalog.write(writer, item);
+                    FileCatalog.write(item, writer);
                 } finally {
                     closeFile(writer);
                 }

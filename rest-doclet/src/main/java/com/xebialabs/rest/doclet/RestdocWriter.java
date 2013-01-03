@@ -9,12 +9,19 @@ import com.sun.javadoc.ParameterizedType;
 import com.sun.javadoc.SeeTag;
 import com.sun.javadoc.Tag;
 import com.sun.javadoc.Type;
+
 import com.xebialabs.commons.html.HtmlWriter;
 
+/**
+ * HtmlWriter with convenience methods for writing REST documentation.
+ */
 public class RestdocWriter extends HtmlWriter {
+
+    private final FileCatalog fileCatalog;
 
     public RestdocWriter(PrintWriter writer) {
         super(writer);
+        fileCatalog = FileCatalog.SINGLETON;
     }
 
     protected String asText(Tag[] tags) {
@@ -38,7 +45,7 @@ public class RestdocWriter extends HtmlWriter {
             text = tag.label();
         }
 
-        if (file != null && FileCatalog.SINGLETON.check(file)) {
+        if (file != null && fileCatalog.check(file)) {
             builder.append(link(file, text));
         } else {
             builder.append(bold(text));
@@ -98,11 +105,11 @@ public class RestdocWriter extends HtmlWriter {
         String externalFile = asReference(type);
 
         // Add references to catalog
-        if (FileCatalog.SINGLETON.check(externalFile)) {
+        if (fileCatalog.check(externalFile)) {
             returnTypeText = link(externalFile, returnTypeText);
         }
         for (Type paramType : getParameterizedTypes(type)) {
-            FileCatalog.SINGLETON.check(asReference(paramType));
+            fileCatalog.check(asReference(paramType));
         }
 
         return returnTypeText;
