@@ -43,6 +43,7 @@ project.ext.deps = [
   deployit_generic_plugin: "com.xebialabs.deployit.plugins:generic-plugin:$bundledPluginsVersion",
   deployit_jee_plugin: "com.xebialabs.deployit.plugins:jee-plugin:$bundledPluginsVersion",
   deployit_local_booter: "com.xebialabs.deployit.engine:local-booter:$engineVersion",
+  deployit_packager: "com.xebialabs.deployit.engine:packager:$engineVersion",
   deployit_planner: "com.xebialabs.deployit.engine:planner:$engineVersion",
   deployit_python_plugin: "com.xebialabs.deployit.plugins:python-plugin:$bundledPluginsVersion",
   deployit_powershell_plugin: "com.xebialabs.deployit.plugins:powershell-plugin:$bundledPluginsVersion",
