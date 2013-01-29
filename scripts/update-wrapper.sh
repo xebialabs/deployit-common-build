@@ -7,6 +7,8 @@ echo $wrappers
 echo "Updating to new gradle: ${newgradleVersion}"
 
 currentDir=`pwd`
+failed=""
+
 
 for wrapper in $wrappers; do
     echo "Updating: $wrapper"
@@ -19,10 +21,13 @@ for wrapper in $wrappers; do
         git pull --rebase
         if [ ! $? -eq 0 ]; then
             echo "Rebase failed for ${dir}, please fix and try again."
+            failed="$failed, ${dir}"
         else
             git push
         fi
         cd $currentDir
     fi
 done
+
+echo "\n\n*** Updating failed for: $failed"
 
