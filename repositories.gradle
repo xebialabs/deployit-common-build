@@ -13,6 +13,13 @@ repositories {
       }
       url "${nexusBaseUrl}/repositories/releases"
     }
+   maven {
+      credentials {
+        username nexusUserName
+        password nexusPassword
+      }
+      url "${nexusBaseUrl}/repositories/alphas"
+    }
     maven {
       credentials {
         username nexusUserName
