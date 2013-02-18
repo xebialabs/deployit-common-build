@@ -1,7 +1,7 @@
 project.ext {
   apiVersion = '3.9.0-alpha-20'
-  engineVersion = '3.9.0-alpha-31'
-  bundledPluginsVersion = '3.9.0-alpha-3'
+  engineVersion = '3.9.0-alpha-33'
+  bundledPluginsVersion = '3.9.0-alpha-4'
 
   apacheDsVersion = '1.5.5'
   jackrabbitVersion = '2.2.10'
@@ -52,6 +52,7 @@ project.ext.deps = [
   deployit_remoting_plugin: "com.xebialabs.deployit.plugins:remoting-plugin:$bundledPluginsVersion",
   deployit_replacer: "com.xebialabs.deployit.engine:replacer:$engineVersion",
   deployit_test_engine: "com.xebialabs.deployit.engine:test-engine:$engineVersion",
+  deployit_test_tools: "com.xebialabs.deployit.engine:test-tools:$engineVersion",
   deployit_tasker: "com.xebialabs.deployit.engine:tasker:$engineVersion",
   deployit_udm_plugin_api: "com.xebialabs.deployit:udm-plugin-api:$apiVersion",
   deployit_webserver_plugin: "com.xebialabs.deployit.plugins:webserver-plugin:$bundledPluginsVersion",
