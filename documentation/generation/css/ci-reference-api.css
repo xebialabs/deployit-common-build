@@ -51,6 +51,13 @@ td {
 	padding-left: 6px;
 }
 
+.ci-table {
+	word-wrap: break-word;
+}
+
+.ci-table td {
+    max-width: 600px;
+}
 
 /* Details */
 
