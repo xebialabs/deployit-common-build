@@ -4,17 +4,17 @@ project.ext {
   bundledPluginsVersion = '3.9.0-alpha-8'
 
   apacheDsVersion = '1.5.5'
-  jackrabbitVersion = '2.2.10'
+  jackrabbitVersion = '2.6.0'
   jettyVersion = '6.1.11'
-  jythonVersion = '2.5.2'
+  jythonVersion = '2.5.3'
   overcastVersion = '1.1.1'
   overthereVersion = '2.2.0'
-  resteasyVersion = '2.3.2.Final'
-  slf4jVersion = '1.6.3'
-  springVersion = '3.1.1.RELEASE'
-  springBatchVersion = "2.1.8.RELEASE"
-  springSecurityVersion = '3.1.0.RELEASE'
-  trueZipVersion = '7.3.4'
+  resteasyVersion = '2.3.5.Final'
+  slf4jVersion = '1.7.2'
+  springVersion = '3.1.4.RELEASE'
+  springBatchVersion = '2.1.9.RELEASE'
+  springSecurityVersion = '3.1.3.RELEASE'
+  trueZipVersion = '7.4.3'
 }
 
 project.ext.deps = [
@@ -24,14 +24,14 @@ project.ext.deps = [
   apacheds_client: "org.apache.directory.server:apacheds-core-integ:${apacheDsVersion}",
   apacheds_server: "org.apache.directory.server:apacheds-server-integ:${apacheDsVersion}",
   args4j: "args4j:args4j:2.0.16",
-  bouncycastle: 'org.bouncycastle:bcprov-jdk16:1.45',
-  cglib: "cglib:cglib:2.2",
-  commons_beanutils: "commons-beanutils:commons-beanutils:1.8.0",
-  commons_codec: "commons-codec:commons-codec:1.4",
+  bouncycastle: 'org.bouncycastle:bcprov-jdk16:1.46',
+  cglib: "cglib:cglib:2.2.2",
+  commons_beanutils: "commons-beanutils:commons-beanutils:1.8.3",
+  commons_codec: "commons-codec:commons-codec:1.7",
   commons_collections: "commons-collections:commons-collections:3.2.1",
   commons_httpclient: "commons-httpclient:commons-httpclient:3.1",
-  commons_io: "commons-io:commons-io:1.4",
-  commons_lang: "commons-lang:commons-lang:2.5",
+  commons_io: "commons-io:commons-io:2.4",
+  commons_lang: "commons-lang:commons-lang:2.6",
   commons_lang3: "org.apache.commons:commons-lang3:3.1",
   deployit_trigger_plugin: "com.xebialabs.deployit.plugins:trigger-plugin:$bundledPluginsVersion",
   deployit_command_plugin: "com.xebialabs.deployit.plugins:command-plugin:$bundledPluginsVersion",
@@ -63,16 +63,16 @@ project.ext.deps = [
   deployit_engine_xml: "com.xebialabs.deployit.engine:engine-xml:$engineVersion",
   xebialabs_html_writer: "com.xebialabs:html-writer:1.0",
   xebialabs_rest_doclet: "com.xebialabs:rest-doclet:1.5",
-  dom4j: "dom4j:dom4j:1.6",
-  easymock: "org.easymock:easymock:3.0",
-  findbugs_annotations: 'com.google.code.findbugs:annotations:1.3.9',
-  findbugs_jsr305: 'com.google.code.findbugs:jsr305:1.3.9',
-  freemarker: 'org.freemarker:freemarker:2.3.18',
+  dom4j: "dom4j:dom4j:1.6.1",
+  easymock: "org.easymock:easymock:3.1",
+  findbugs_annotations: 'com.google.code.findbugs:annotations:2.0.1',
+  findbugs_jsr305: 'com.google.code.findbugs:jsr305:2.0.1',
+  freemarker: 'org.freemarker:freemarker:2.3.19',
   grizzly_httpserver: 'org.glassfish.grizzly:grizzly-http-server:2.2.5',
   guava: "com.google.guava:guava:13.0",
-  hamcrest_core: "org.hamcrest:hamcrest-core:1.2.1",
-  hamcrest_lib: "org.hamcrest:hamcrest-library:1.2.1",
-  httpunit: "httpunit:httpunit:1.6.2",
+  hamcrest_core: "org.hamcrest:hamcrest-core:1.3",
+  hamcrest_lib: "org.hamcrest:hamcrest-library:1.3",
+  httpunit: "httpunit:httpunit:1.7",
   icu4j: "com.ibm.icu:icu4j:3.4.4",
   jackrabbit_api: "org.apache.jackrabbit:jackrabbit-api:${jackrabbitVersion}",
   jackrabbit_commons: "org.apache.jackrabbit:jackrabbit-jcr-commons:${jackrabbitVersion}",
@@ -82,31 +82,31 @@ project.ext.deps = [
   jackrabbit_spi: "org.apache.jackrabbit:jackrabbit-spi:${jackrabbitVersion}",
   jackrabbit_webapp: "org.apache.jackrabbit:jackrabbit-webapp:${jackrabbitVersion}@jar",
   jackrabbit_webdav: "org.apache.jackrabbit:jackrabbit-webdav:${jackrabbitVersion}",
-  javassist: "org.javassist:javassist:3.15.0-GA",
+  javassist: "org.javassist:javassist:3.17.1-GA",
   javax_transaction: "javax.transaction:jta:1.1",
   javaxmail: 'javax.mail:mail:1.4',
-  jaxen: "jaxen:jaxen:1.1.1",
+  jaxen: "jaxen:jaxen:1.1.4",
   jaxrs_api: "org.jboss.resteasy:jaxrs-api:${resteasyVersion}",
   jcl_over_slf4j: "org.slf4j:jcl-over-slf4j:${slf4jVersion}",
   jcr: "javax.jcr:jcr:2.0",
   jetty_servlet_api: "org.mortbay.jetty:servlet-api-2.5:${jettyVersion}",
   jetty_util: "org.mortbay.jetty:jetty-util:${jettyVersion}",
   jetty: "org.mortbay.jetty:jetty:${jettyVersion}",
-  jline: "jline:jline:2.6",
+  jline: "jline:jline:2.10",
   jms: "javax.jms:jms:1.1",
   joda_time: "joda-time:joda-time:2.1",
-  joda_time_convert: "org.joda:joda-convert:1.2",
+  joda_time_convert: "org.joda:joda-convert:1.3",
   junit: "junit:junit:4.10",
   junit_dep: "junit:junit-dep:4.10",
-  junit_params: "pl.pragmatists:JUnitParams:0.3.0",
+  junit_params: "pl.pragmatists:JUnitParams:0.9.0",
   jython: "org.python:jython:${jythonVersion}",
   jython_standalone: "org.python:jython-standalone:${jythonVersion}",
   log4j_over_slf4j: "org.slf4j:log4j-over-slf4j:${slf4jVersion}",
-  logback_classic: "ch.qos.logback:logback-classic:0.9.30",
+  logback_classic: "ch.qos.logback:logback-classic:1.0.9",
   mime4j: "org.apache.james:apache-mime4j:0.6",
-  mockito: "org.mockito:mockito-all:1.8.5",
-  mockito_core: "org.mockito:mockito-core:1.8.5",
-  mustache: "com.samskivert:jmustache:1.3",
+  mockito: "org.mockito:mockito-all:1.9.5",
+  mockito_core: "org.mockito:mockito-core:1.9.5",
+  mustache: "com.samskivert:jmustache:1.6",
   overthere: "com.xebialabs.overthere:overthere:${overthereVersion}",
   overcast: "com.xebialabs.cloud:overcast:${overcastVersion}",
   resteasy_jaxbprovider: "org.jboss.resteasy:resteasy-jaxb-provider:${resteasyVersion}",
@@ -132,13 +132,13 @@ project.ext.deps = [
   spring_web: "org.springframework:spring-web:${springVersion}",
   spring_webmvc: "org.springframework:spring-webmvc:${springVersion}",
   t2_bus: "nl.javadude.t2bus:t2-bus:1.2.1",
-  testng: "org.testng:testng:6.1.1",
+  testng: "org.testng:testng:6.8",
   truezip_file: "de.schlichtherle.truezip:truezip-file:${trueZipVersion}",
   truezip_driver_file: "de.schlichtherle.truezip:truezip-driver-file:${trueZipVersion}",
   truezip_driver_zip: "de.schlichtherle.truezip:truezip-driver-zip:${trueZipVersion}",
   truezip_kernel: "de.schlichtherle.truezip:truezip-kernel:${trueZipVersion}",
-  velocity: "org.apache.velocity:velocity:1.6.1",
-  xstream: 'com.thoughtworks.xstream:xstream:1.4.2'
+  velocity: "org.apache.velocity:velocity:1.7",
+  xstream: 'com.thoughtworks.xstream:xstream:1.4.4'
 ]
 
 deps.each { k, v ->
