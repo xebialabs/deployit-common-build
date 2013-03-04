@@ -7,6 +7,7 @@ project.ext {
   jackrabbitVersion = '2.6.0'
   jettyVersion = '6.1.11'
   jythonVersion = '2.5.3'
+  httpComponentsVersion = '4.2.3'
   overcastVersion = '1.1.1'
   overthereVersion = '2.2.0'
   resteasyVersion = '2.3.5.Final'
@@ -18,9 +19,9 @@ project.ext {
 }
 
 project.ext.deps = [
-  apache_httpclient4: "org.apache.httpcomponents:httpclient:4.2.1",
-  apache_httpcore4: "org.apache.httpcomponents:httpcore:4.2.1",
-  apache_httpmime4: "org.apache.httpcomponents:httpmime:4.2.1",
+  apache_httpclient4: "org.apache.httpcomponents:httpclient:${httpComponentsVersion}",
+  apache_httpcore4: "org.apache.httpcomponents:httpcore:${httpComponentsVersion}",
+  apache_httpmime4: "org.apache.httpcomponents:httpmime:${httpComponentsVersion}",
   apacheds_client: "org.apache.directory.server:apacheds-core-integ:${apacheDsVersion}",
   apacheds_server: "org.apache.directory.server:apacheds-server-integ:${apacheDsVersion}",
   args4j: "args4j:args4j:2.0.16",
