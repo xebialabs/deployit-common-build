@@ -90,6 +90,7 @@ project.ext.deps = [
   jaxrs_api: "org.jboss.resteasy:jaxrs-api:${resteasyVersion}",
   jcl_over_slf4j: "org.slf4j:jcl-over-slf4j:${slf4jVersion}",
   jcr: "javax.jcr:jcr:2.0",
+  jdom: "org.jdom:jdom:2.0.2",
   jettison: "org.codehaus.jettison:jettison:1.3.1",
   jetty_servlet_api: "org.mortbay.jetty:servlet-api-2.5:${jettyVersion}",
   jetty_util: "org.mortbay.jetty:jetty-util:${jettyVersion}",
