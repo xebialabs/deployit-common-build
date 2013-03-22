@@ -143,6 +143,7 @@ project.ext.deps = [
   truezip_driver_zip: "de.schlichtherle.truezip:truezip-driver-zip:${trueZipVersion}",
   truezip_kernel: "de.schlichtherle.truezip:truezip-kernel:${trueZipVersion}",
   velocity: "org.apache.velocity:velocity:1.7",
+  vijava: 'com.cloudbees.thirdparty:vijava:5.1-beta',
   xstream: 'com.thoughtworks.xstream:xstream:1.4.4'
 ]
 
