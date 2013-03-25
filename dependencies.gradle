@@ -1,7 +1,6 @@
 project.ext {
   apiVersion = '3.9.0-alpha-25'
   engineVersion = '3.9.0-alpha-47'
-  bundledPluginsVersion = '3.9.0-alpha-10'
   bundledPluginsVersion = '3.9.0-alpha-11'
 
   apacheDsVersion = '1.5.5'
@@ -63,7 +62,6 @@ project.ext.deps = [
   deployit_webserver_plugin: "com.xebialabs.deployit.plugins:webserver-plugin:$bundledPluginsVersion",
   deployit_deployment_checklist_plugin: "com.xebialabs.deployit.plugins:deployment-checklist-plugin:$bundledPluginsVersion",
   deployit_group_orchestrator_plugin: "com.xebialabs.deployit.plugins:group-orchestrator-plugin:$bundledPluginsVersion",
-  deployit_dynamic_environment_plugin: "com.xebialabs.deployit.plugins:dynamic-environment-plugin:$bundledPluginsVersion",
   deployit_engine_xml: "com.xebialabs.deployit.engine:engine-xml:$engineVersion",
   xebialabs_html_writer: "com.xebialabs:html-writer:1.0",
   xebialabs_rest_doclet: "com.xebialabs:rest-doclet:1.5",
