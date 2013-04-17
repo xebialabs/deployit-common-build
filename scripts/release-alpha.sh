@@ -28,7 +28,7 @@ if [ ! $? -eq 0 ]; then
 fi
 
 sed -E -i.old -e "s/\/\/[[:space:]]*version/    version/" -e "s/${currentAlphaVersion}/${newAlphaVersion}/" -e "s/[[:space:]]*(version.*SNAPSHOT)/\/\/  \1/" build.gradle
-gradle clean test uploadArchives
+./gradlew clean test uploadArchives
 
 if [ ! $? -eq 0 ]; then
     echo "Build failed!"
