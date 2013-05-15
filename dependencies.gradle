@@ -9,7 +9,7 @@ project.ext {
   jettyVersion = '6.1.11'
   jythonVersion = '2.5.3'
   httpComponentsVersion = '4.2.3'
-  overcastVersion = '1.1.2'
+  overcastVersion = '1.1.3'
   overthereVersion = '2.2.0'
   resteasyVersion = '2.3.5.Final'
   slf4jVersion = '1.7.2'
