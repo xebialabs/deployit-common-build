@@ -7,7 +7,7 @@ project.ext {
   jackrabbitVersion = '2.2.10'
   jettyVersion = '6.1.11'
   jythonVersion = '2.5.2'
-  overcastVersion = '1.1.1'
+  overcastVersion = '1.1.4'
   overthereVersion = '2.2.0'
   resteasyVersion = '2.3.2.Final'
   slf4jVersion = '1.6.3'
