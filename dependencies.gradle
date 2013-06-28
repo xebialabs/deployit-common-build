@@ -1,6 +1,6 @@
 project.ext {
   apiVersion = '3.9.2-alpha-2'
-  engineVersion = '3.9.2-alpha-6'
+  engineVersion = '3.9.2-alpha-7'
   bundledPluginsVersion = '3.9.2-alpha-4'
 
   apacheDsVersion = '1.5.5'
@@ -116,7 +116,7 @@ project.ext.deps = [
   mime4j: "org.apache.james:apache-mime4j:0.6",
   mockito: "org.mockito:mockito-all:1.9.5",
   mockito_core: "org.mockito:mockito-core:1.9.5",
-  mustache: "com.samskivert:jmustache:1.6",
+  mustache: "com.samskivert:jmustache:1.8",
   overthere: "com.xebialabs.overthere:overthere:${overthereVersion}",
   overcast: "com.xebialabs.cloud:overcast:${overcastVersion}",
   resteasy_jaxbprovider: "org.jboss.resteasy:resteasy-jaxb-provider:${resteasyVersion}",
