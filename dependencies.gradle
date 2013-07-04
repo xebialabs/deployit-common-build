@@ -184,7 +184,7 @@ configurations.all {
   resolutionStrategy {
     eachDependency { DependencyResolveDetails details ->
       if (details.requested.group == 'jdom') {
-        details.useTarget group: 'org.jdom', name: details.requested.name, version: details.requested.version
+        details.useTarget deps.jdom
       }
     }
   }
