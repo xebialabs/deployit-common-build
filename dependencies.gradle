@@ -178,8 +178,7 @@ project.afterEvaluate { evaluatedProject ->
   }
 }
 
-// manage old group names to new group names, leave version up to default 
-// resolution
+// manage old group names to new group names
 configurations.all {
   resolutionStrategy {
     eachDependency { DependencyResolveDetails details ->
