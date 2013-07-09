@@ -2,6 +2,7 @@ project.ext {
   apiVersion = '3.9.2'
   engineVersion = '3.9.2'
   bundledPluginsVersion = '3.9.3-alpha-1'
+  cloudPackVersion = '3.9.2'
 
   apacheDsVersion = '1.5.5'
   jackrabbitVersion = '2.6.0'
@@ -36,7 +37,7 @@ project.ext.deps = [
   commons_io: "commons-io:commons-io:2.4",
   commons_lang: "commons-lang:commons-lang:2.6",
   commons_lang3: "org.apache.commons:commons-lang3:3.1",
-  deployit_cloud_plugin: "com.xebialabs.deployit.plugins:cloud-plugin:$bundledPluginsVersion",
+  deployit_cloud_plugin: "com.xebialabs.deployit.plugins:cloud-plugin:$cloudPackVersion",
   deployit_trigger_plugin: "com.xebialabs.deployit.plugins:trigger-plugin:$bundledPluginsVersion",
   deployit_command_plugin: "com.xebialabs.deployit.plugins:command-plugin:$bundledPluginsVersion",
   deployit_database_plugin: "com.xebialabs.deployit.plugins:database-plugin:$bundledPluginsVersion",
