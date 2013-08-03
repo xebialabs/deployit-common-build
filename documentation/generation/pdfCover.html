@@ -1,29 +1,69 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <title>Cover</title>
     <style type="text/css">
-      body {
-          font-family: Arial, sans-serif;
-          height: 1450px;
-          width: 1024px;
-      }
+	@media print {
+		#page {
+			background: none;
+		}
+		body {
+			background: none;
+			color: black;
+			font-size: 12pt;
+		}
 
-      .manual-title {
-          min-height:800px;
-          text-align:center;
-          vertical-align:middle;
-      }
+		#header {
+			height:0;
+		}
+		#header, .top_left_corner, .top_right_corner, .rightcol, .footer {
+			visibility: hidden;
+		}
 
-      .manual-title h1 {
-          font-size : 48px;
-      }
+		h1 {
+			font-size: 20pt;
+		}
+		h2 {
+			font-size: 16pt;
+		}
+		h3 {
+			font-size: 14pt;
+		}
+		h4 {
+			font-size: 12pt;
+		}
+
+		td, th {
+			font-size: 10pt;
+		}
+
+		#main_white_bg {
+			background: none;
+			width: 654px;
+		}
+		
+		.leftcol {
+			width: 100%;
+		}
+
+		pre {
+			white-space: pre-wrap;
+			font-size: 12px;
+			width: 800px;
+			page-break-inside: avoid;
+		}
+
+	}
+
+	/* Page margins for printing form browser. */
+	@page {
+		 margin-top: 2cm;
+		 margin-bottom: 2cm;
+	}
     </style>
 </head>
 <body>
 <div>
-    <img border="0" alt="Home" src="image/LabsLogo.png">
+    <img border="0" alt="Home" src="image/LabsLogo.png"/>
 
     <div style="vertical-align: middle;" >
         <div class="manual-title"><h1>Deployit {{title}}</h1><h2>Version {{version}}</h2></div>

@@ -608,9 +608,11 @@ img {
 	body {
 		background: none;
 		color: black;
-		font-size: 12pt;
-		margin-left: 10em;
+		font-size: 10pt;
+		width: 21cm;
 	}
+	
+	#main_white_bg{background:#fff; width:18cm; float:left; position:relative}
 	
 	#header {
 		height:0;
@@ -633,28 +635,32 @@ img {
 	}
 	
 	td, th {
-		font-size: 12pt;
+		font-size: 10pt;
+	}
+	
+	.deployed-matrix {
+		table-layout: fixed;
+		word-wrap:break-word;
 	}
 	
 	#main_white_bg {
 		background: none;
-		width: 654px;
 	}
 	.leftcol {
-		width: 100%;
+		width: 17cm;
 	}
 	
 	pre {
 		white-space: pre-wrap;
-		font-size: 12px;
-		width: 800px;
+		font-size: 10px;
 		page-break-inside: avoid;
 	}
-
+	
 }
 
 /* Page margins for printing form browser. */
 @page {
-	 margin-top: 2cm;
-	 margin-bottom: 2cm;
+	size: A4;
+	margin-top: 2cm;
+	margin-bottom: 2cm;
 }
