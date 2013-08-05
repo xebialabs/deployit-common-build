@@ -153,14 +153,14 @@ project.ext.deps = [
   xstream: 'com.thoughtworks.xstream:xstream:1.4.4',
 
   // grabbing latest minor in absence of snapshots
-  license_database: 'com.xebialabs.deployit.gradle:license-data:1.0.0+'
+  license_database: 'com.xebialabs.deployit.gradle:license-data:1.0.1+'
 ]
 
 deps.each { k, v ->
     DependencyHandler.metaClass."$k" = v
 }
 
-// exclude things that are not needed on java 1.6, or are superseded 
+// exclude things that are not needed on java 1.6, or are superseded
 // by new libraries
 project.afterEvaluate { evaluatedProject ->
   evaluatedProject.configurations.all*.dependencies*.withType(ModuleDependency)*.each { configuration ->
