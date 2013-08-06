@@ -4,6 +4,26 @@
             "licenseSource": "data",
             "license": "Apache-2.0"
         },
+        "org.eclipse.jetty:jetty-servlet": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"
+        },
+        "com.typesafe.akka:akka-actor_2.10": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"
+        },
+        "org.json4s:json4s-jackson_2.10": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"
+        },
+        "ro.isdc.wro4j:wro4j-core": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"
+        },
+        "ro.isdc.wro4j:wro4j-extensions": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"
+        },
         "io.spray:spray-servlet": {
             "licenseSource": "data",
             "license": "Apache-2.0"
