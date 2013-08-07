@@ -173,6 +173,7 @@ project.afterEvaluate { evaluatedProject ->
       'org.slf4j': 'slf4j-log4j12',
       'org.bouncycastle': 'bcprov-jdk15',
       'stax': 'stax-api',
+      'junit': 'junit'
     ].each { g, m ->
       configuration.exclude group: g, module: m
     }
