@@ -152,7 +152,7 @@ project.ext.deps = [
   vijava: 'com.vmware:vijava:5.1',
   xstream: 'com.thoughtworks.xstream:xstream:1.4.4',
 
-  license_database: 'com.xebialabs.deployit.gradle:license-data:1.0.5'
+  license_database: 'com.xebialabs.deployit.gradle:license-data:1.0.7'
 ]
 
 deps.each { k, v ->

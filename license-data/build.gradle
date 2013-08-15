@@ -1,6 +1,6 @@
 
 group = 'com.xebialabs.deployit.gradle'
-version = '1.0.6'
+version = '1.0.7'
 
 apply plugin: 'deployit-java'
 apply plugin: 'deployit-artifact'

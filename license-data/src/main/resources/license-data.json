@@ -736,6 +736,14 @@
     "org.springframework:spring-tx": {
       "license": "Apache-2.0",
       "licenseSource": "jar"
+    },
+    "com.github.scopt:scopt_2.10": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "com.propensive:rapture-io": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
     }
   },
   "licenses": {
