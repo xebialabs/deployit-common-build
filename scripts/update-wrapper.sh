@@ -29,5 +29,9 @@ for wrapper in $wrappers; do
     fi
 done
 
-echo "\n\n*** Updating failed for: $failed"
+if [ -n "$failed" ]; then
+    echo -e "\n\n*** Updating failed for: $failed"
+else
+    echo -e "\n\n*** Update ok."
+fi
 
