@@ -140,7 +140,6 @@ public class RestDoclet {
 
     public static PrintWriter openFile(String fileName, String title) {
         File file = new File(destinationDir, fileName);
-        System.out.println("Writing " + file.getAbsolutePath());
         try {
             PrintWriter writer = new PrintWriter(file);
             new PageTemplate(writer).writeHeader(title);
