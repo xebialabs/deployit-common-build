@@ -2,11 +2,11 @@ package com.xebialabs.rest.doclet;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.sun.javadoc.*;
 import com.sun.javadoc.AnnotationDesc.ElementValuePair;
@@ -195,7 +195,7 @@ public class RestServiceWriter extends RestdocWriter {
     }
 
     private static String getConsumes(ProgramElementDoc element) {
-        return getAnnotationValue(element, "javax.ws.rs.Consumes").replace("\"", "").replaceAll("[\"\\]\\[]", "");
+        return noJsonSupport(getAnnotationValue(element, "javax.ws.rs.Consumes").replace("\"", ""));
     }
 
     private String getMethodConsumes(MethodDoc method) {
@@ -207,7 +207,12 @@ public class RestServiceWriter extends RestdocWriter {
     }
 
     private static String getProduces(ProgramElementDoc element) {
-        return getAnnotationValue(element, "javax.ws.rs.Produces").replaceAll("[\"\\]\\[]", "");
+        return noJsonSupport(getAnnotationValue(element, "javax.ws.rs.Produces").replace("\"", ""));
+    }
+
+    // HACK for DEPLOYITPB-4862
+    private static String noJsonSupport(String contentTypes) {
+        return contentTypes.replace("application/json", "").replaceAll(",\\s*$", "");
     }
 
     private String getMethodProduces(MethodDoc method) {
@@ -251,7 +256,7 @@ public class RestServiceWriter extends RestdocWriter {
         for (ElementValuePair item : annotation.elementValues()) {
             Object value = item.value().value();
             if (value instanceof Object[]) {
-                return Arrays.asList((Object[]) value).toString();
+                return Joiner.on(", ").join((Object[]) value);
             }
             return value.toString();
         }
