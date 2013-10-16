@@ -1,5 +1,5 @@
 group = 'com.xebialabs'
-version = '1.6-SNAPSHOT'
+version = '1.7'
 
 apply plugin: 'deployit-java'
 apply plugin: 'deployit-artifact'
