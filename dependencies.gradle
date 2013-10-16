@@ -65,7 +65,7 @@ project.ext.deps = [
   deployit_group_orchestrator_plugin: "com.xebialabs.deployit.plugins:group-orchestrator-plugin:$bundledPluginsVersion",
   deployit_engine_xml: "com.xebialabs.deployit.engine:engine-xml:$engineVersion",
   xebialabs_html_writer: "com.xebialabs:html-writer:1.0",
-  xebialabs_rest_doclet: "com.xebialabs:rest-doclet:1.6-SNAPSHOT",
+  xebialabs_rest_doclet: "com.xebialabs:rest-doclet:1.5-nojson",
   dom4j: "dom4j:dom4j:1.6.1",
   easymock: "org.easymock:easymock:3.1",
   fest_assert_core: "org.easytesting:fest-assert-core:2.0M10",
