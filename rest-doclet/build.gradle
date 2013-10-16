@@ -1,5 +1,5 @@
 group = 'com.xebialabs'
-version = '1.7-SNAPSHOT'
+version = '1.7-nojson'
 
 apply plugin: 'deployit-java'
 apply plugin: 'deployit-artifact'
