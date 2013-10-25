@@ -70,10 +70,10 @@ project.ext.deps = [
   easymock: "org.easymock:easymock:3.1",
   fest_assert_core: "org.easytesting:fest-assert-core:2.0M10",
   fest_reflect: "org.easytesting:fest-reflect:1.4.1",
-  findbugs_annotations: 'com.google.code.findbugs:annotations:2.0.1',
-  findbugs_jsr305: 'com.google.code.findbugs:jsr305:2.0.1',
-  freemarker: 'org.freemarker:freemarker:2.3.19',
-  grizzly_httpserver: 'org.glassfish.grizzly:grizzly-http-server:2.2.5',
+  findbugs_annotations: "com.google.code.findbugs:annotations:2.0.1",
+  findbugs_jsr305: "com.google.code.findbugs:jsr305:2.0.1",
+  freemarker: "org.freemarker:freemarker:2.3.19",
+  grizzly_httpserver: "org.glassfish.grizzly:grizzly-http-server:2.2.5",
   guava: "com.google.guava:guava:13.0",
   hamcrest_core: "org.hamcrest:hamcrest-core:1.3",
   hamcrest_lib: "org.hamcrest:hamcrest-library:1.3",
@@ -89,7 +89,7 @@ project.ext.deps = [
   jackrabbit_webdav: "org.apache.jackrabbit:jackrabbit-webdav:${jackrabbitVersion}",
   javassist: "org.javassist:javassist:3.17.1-GA",
   javax_transaction: "javax.transaction:jta:1.1",
-  javaxmail: 'javax.mail:mail:1.4',
+  javaxmail: "javax.mail:mail:1.4",
   jaxen: "jaxen:jaxen:1.1.4",
   jaxrs_api: "org.jboss.resteasy:jaxrs-api:${resteasyVersion}",
   jcl_over_slf4j: "org.slf4j:jcl-over-slf4j:${slf4jVersion}",
@@ -149,11 +149,11 @@ project.ext.deps = [
   truezip_driver_zip: "de.schlichtherle.truezip:truezip-driver-zip:${trueZipVersion}",
   truezip_kernel: "de.schlichtherle.truezip:truezip-kernel:${trueZipVersion}",
   velocity: "org.apache.velocity:velocity:1.7",
-  vijava: 'com.cloudbees.thirdparty:vijava:5.1-beta',
-  xstream: 'com.thoughtworks.xstream:xstream:1.4.4',
+  vijava: "com.cloudbees.thirdparty:vijava:5.1-beta",
+  xstream: "com.thoughtworks.xstream:xstream:1.4.4",
 
   // grabbing latest minor in absence of snapshots
-  license_database: 'com.xebialabs.deployit.gradle:license-data:1.0.0+'
+  license_database: "com.xebialabs.deployit.gradle:license-data:1.0.0+"
 ]
 
 deps.each { k, v ->
