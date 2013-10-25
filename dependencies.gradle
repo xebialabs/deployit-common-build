@@ -28,7 +28,7 @@ project.ext.deps = [
   apacheds_server: "org.apache.directory.server:apacheds-server-integ:${apacheDsVersion}",
   args4j: "args4j:args4j:2.0.16",
   assumeng: "nl.javadude.assumeng:assumeng:1.2.3",
-  bouncycastle: 'org.bouncycastle:bcprov-jdk16:1.46',
+  bouncycastle: "org.bouncycastle:bcprov-jdk15on:1.49",
   cglib: "cglib:cglib:2.2.2",
   commons_beanutils: "commons-beanutils:commons-beanutils:1.8.3",
   commons_codec: "commons-codec:commons-codec:1.7",
@@ -172,6 +172,7 @@ project.afterEvaluate { evaluatedProject ->
       'org.slf4j': 'slf4j-simple',
       'org.slf4j': 'slf4j-log4j12',
       'org.bouncycastle': 'bcprov-jdk15',
+      'org.bouncycastle': 'bcprov-jdk16',
       'stax': 'stax-api',
     ].each { g, m ->
       configuration.exclude group: g, module: m
