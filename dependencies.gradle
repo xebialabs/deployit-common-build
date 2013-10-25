@@ -3,6 +3,7 @@ project.ext {
   engineVersion = '4.0.0-alpha-15'
   bundledPluginsVersion = '4.0.0-alpha-1'
   cloudPackVersion = '3.9.2'
+  licenseDatabaseVersion = '1.0.8'
 
   apacheDsVersion = '1.5.5'
   jackrabbitVersion = '2.6.0'
@@ -112,6 +113,7 @@ project.ext.deps = [
   junit_params: "pl.pragmatists:JUnitParams:0.9.0",
   jython: "org.python:jython:${jythonVersion}",
   jython_standalone: "org.python:jython-standalone:${jythonVersion}",
+  license_database: "com.xebialabs.deployit.gradle:license-data:${licenseDatabaseVersion}",
   log4j_over_slf4j: "org.slf4j:log4j-over-slf4j:${slf4jVersion}",
   logback_classic: "ch.qos.logback:logback-classic:1.0.9",
   mime4j: "org.apache.james:apache-mime4j:0.6",
@@ -151,8 +153,6 @@ project.ext.deps = [
   velocity: "org.apache.velocity:velocity:1.7",
   vijava: 'com.vmware:vijava:5.1',
   xstream: 'com.thoughtworks.xstream:xstream:1.4.4',
-
-  license_database: 'com.xebialabs.deployit.gradle:license-data:1.0.7'
 ]
 
 deps.each { k, v ->

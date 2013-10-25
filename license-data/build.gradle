@@ -1,6 +1,9 @@
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Only modify and release the license-data from the master branch of the deployit-common-build repository!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 group = 'com.xebialabs.deployit.gradle'
-version = '1.0.7'
+version = '1.0.8'
 
 apply plugin: 'deployit-java'
 apply plugin: 'deployit-artifact'
