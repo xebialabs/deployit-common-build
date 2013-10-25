@@ -223,6 +223,14 @@
             "license": "EPL-1.0",
             "licenseSource": "data"
         },
+        "org.bouncycastle:bcprov-jdk15on": {
+            "license": "Bouncy-Castle-License",
+            "licenseSource": "data"
+        },
+        "org.bouncycastle:bcpkix-jdk15on": {
+            "license": "Bouncy-Castle-License",
+            "licenseSource": "data"
+        },
         "org.bouncycastle:bcprov-jdk16": {
             "license": "Bouncy-Castle-License",
             "licenseSource": "data"
