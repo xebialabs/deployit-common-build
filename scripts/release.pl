@@ -250,12 +250,12 @@ sub prepareReleaseNotes {
   out(\"*** Version ${version}\")
   var issuesByType = _.reduce(this.issues, function(memo, i) {
     if (i.fields.issuetype.name == \"Bug\") {
-      memo.Bugs.push(i) 
+      memo[\"Bug fixes\"].push(i) 
     } else {
       memo.Improvements.push(i)
     }
     return memo
-  }, {\"Bugs\": [], \"Improvements\": []})
+  }, {\"Bug fixes\": [], \"Improvements\": []})
   _.each(issuesByType, function(issues, type) {
     if (issues.length == 0) return
     out(\"** \" + type)
