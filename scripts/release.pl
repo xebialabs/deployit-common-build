@@ -289,6 +289,9 @@ sub prepareReleaseNotes {
       execute('mv release-notes.txt.new release-notes.txt')
     }
     
+    print "You can revise updated release notes. Press enter when you are ready. \n";
+    chomp();
+    
   } else {
     print "Then update release notes manually. Press enter when done. \n";
     chomp();
@@ -341,10 +344,9 @@ print "Development version: $developmentVersion\n";
 
 print "\n";
 
-prepareReleaseNotes($project, $branch, $releaseVersion);
-
 checkOutstandingWork();
 updateLocalRepo();
+prepareReleaseNotes($project, $branch, $releaseVersion);
 setReleaseVersion($version, $releaseVersion);
 buildReleaseVersion($project, $releaseVersion);
 commitAndTagRelease($project, $releaseVersion);
