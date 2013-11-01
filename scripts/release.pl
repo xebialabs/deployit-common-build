@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+# PRE-REQUISITES:
+# - brew install jsawk
+
 #
 # TO DO:
 # - distinguish between releasing maintenance vs master
@@ -227,6 +230,75 @@ sub createMaintenanceBranchIfNeeded {
 	}
 }
 
+sub prepareReleaseNotes {
+  
+  my $project = shift;
+  my $branch = shift;
+  my $version = shift;
+  
+  print("Querying JIRA for release notes for $project on $branch\n");
+  
+  print("Jira username: ");
+  chomp($username=<STDIN>);
+  system('stty','-echo');
+  print("Jira password: ");
+  chomp($password=<STDIN>);
+  system('stty','echo');
+  print("\n");
+  
+  my $jsAwkScript = "'
+  out(\"*** Version ${version}\")
+  var issuesByType = _.reduce(this.issues, function(memo, i) {
+    if (i.fields.issuetype.name == \"Bug\") {
+      memo.Bugs.push(i) 
+    } else {
+      memo.Improvements.push(i)
+    }
+    return memo
+  }, {\"Bugs\": [], \"Improvements\": []})
+  _.each(issuesByType, function(issues, type) {
+    if (issues.length == 0) return
+    out(\"** \" + type)
+    _.each(issues, function(i) {
+      out(\"    * \" + i.key + \" \" + i.fields.summary)
+    })
+  })
+  '";
+  
+  my $escapedBranch = $branch;
+  $escapedBranch =~ s/\./\\u002e/g;
+  my $releaseNotes = execute("curl -s -u $username:$password -X GET -H 'Content-Type: application/json' https://xebialabs.atlassian.net/rest/api/latest/search?jql=fixVersion='$escapedBranch'+AND+status='Release\\u0020Ready'+AND+component=$project | jsawk -n $jsAwkScript", "Failed to request release notes. Incorrect credentials?");
+  
+  print("-----------------------------------------------------------------------------------------  \n");
+  print($releaseNotes);
+  print("-----------------------------------------------------------------------------------------  \n");  
+  print("Are you OK with adding this to release-notes.txt? [y] y/n? ");
+  chomp($answer=<STDIN>);
+  if ($answer == 'y' || $answer == 'yes' || $answer == '') {
+    $releaseNotes =~ s/'/\\'/g;
+    my $head = execute("head -n 1 release-notes.txt");
+    $head =~ s/'/\\'/g;
+    my $tail = execute("tail -n +2 release-notes.txt");
+    $tail =~ s/'/\\'/g;
+    
+    execute("echo '$head' > release-notes.txt.new; echo '$releaseNotes' >> release-notes.txt.new; echo '$tail' >> release-notes.txt.new;");
+    
+    print "Thanks for trusting me! Updated release-notes.txt \n";
+    
+    if ($DRYRUN == 0) {
+      execute('mv release-notes.txt.new release-notes.txt')
+    }
+    
+  } else {
+    print "Then update release notes manually. Press enter when done. \n";
+    chomp();
+  }
+  
+  
+  print("Completed preparing release notes. \n");
+  
+}
+
 ##############
 # MAIN
 
@@ -255,7 +327,7 @@ print "Release scope: $releaseScope\n";
 print "Release type: $releaseType\n";
 print "(running in debug mode)\n\n" if ($DEBUG == 1);
 
-`grep version build.gradle` =~ /^\s*version\s*=\s*['"](.+)['"]/m;
+`GREP_OPTIONS='' grep version build.gradle` =~ /^\s*version\s*=\s*['"](.+)['"]/m;
 $version = $1;
 print "Current version: $version\n";
 
@@ -268,6 +340,8 @@ $developmentVersion = "$1" . "." . "$2" . "." . (int($4) + 1) . "-SNAPSHOT";
 print "Development version: $developmentVersion\n";
 
 print "\n";
+
+prepareReleaseNotes($project, $branch, $releaseVersion);
 
 checkOutstandingWork();
 updateLocalRepo();
