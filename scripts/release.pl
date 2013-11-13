@@ -80,6 +80,16 @@ sub checkOutstandingWork {
 	print("done.\n");
 }
 
+sub checkCommonBuildOrigin {
+  print("Checking common build... ");
+	my $output = `gradle properties | grep 'localCommon'`;
+	if(length($output) != 0) {
+		print "Local common build should not be enabled!\n";
+		exit 2;
+	}  
+  print("ok.\n");
+}
+
 sub updateLocalRepo {
 	print("Ensuring local repo is up to date... ");
 	
@@ -274,7 +284,8 @@ sub prepareReleaseNotes {
   print("-----------------------------------------------------------------------------------------  \n");  
   print("Are you OK with adding this to release-notes.txt? [y] y/n? ");
   chomp($answer=<STDIN>);
-  if ($answer == 'y' || $answer == 'yes' || $answer == '') {
+  
+  if ($answer eq 'y' || $answer eq 'yes' || $answer eq '') {
     $releaseNotes =~ s/'/\\'/g;
     my $head = execute("head -n 1 release-notes.txt");
     $head =~ s/'/\\'/g;
@@ -290,11 +301,11 @@ sub prepareReleaseNotes {
     }
     
     print "You can revise updated release notes. Press enter when you are ready. \n";
-    chomp();
+    <STDIN>;
     
   } else {
     print "Then update release notes manually. Press enter when done. \n";
-    chomp();
+    <STDIN>;
   }
   
   
@@ -344,6 +355,7 @@ print "Development version: $developmentVersion\n";
 
 print "\n";
 
+checkCommonBuildOrigin();
 checkOutstandingWork();
 updateLocalRepo();
 prepareReleaseNotes($project, $branch, $releaseVersion);
