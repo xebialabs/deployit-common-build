@@ -752,6 +752,18 @@
     "com.propensive:rapture-io": {
       "license": "Apache-2.0",
       "licenseSource": "data"
+    },
+    "org.clapper:grizzled-slf4j": {
+      "license": "BSD-GRIZZLED",
+      "licenseSource": "data"
+    },
+    "com.typesafe.akka:akka-slf4j_2.10": {
+      "licenseSource": "data",
+      "license": "Apache-2.0"
+    },
+    "org.joda:joda-convert": {
+      "licenseSource": "data",
+      "license": "Apache-2.0"
     }
   },
   "licenses": {
@@ -846,6 +858,10 @@
     "BSD-asm": {
       "type": "BSD",
       "file": "BSD-ASM"
+    },
+    "BSD-GRIZZLED": {
+      "type": "BSD",
+      "file": "BSD-GRIZZLED"
     },
     "ICU-License": {
       "type": "MIT like",
