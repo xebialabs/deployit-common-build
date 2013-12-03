@@ -3,7 +3,7 @@ project.ext {
   engineVersion = '4.0.0-alpha-16'
   bundledPluginsVersion = '4.0.0-alpha-1'
   cloudPackVersion = '3.9.2'
-  licenseDatabaseVersion = '1.0.8'
+  licenseDatabaseVersion = '1.0.10'
 
   apacheDsVersion = '1.5.5'
   jackrabbitVersion = '2.6.0'
@@ -70,6 +70,7 @@ project.ext.deps = [
   deployit_test_engine: "com.xebialabs.deployit.engine:test-engine:$engineVersion",
   deployit_test_tools: "com.xebialabs.deployit.engine:test-tools:$engineVersion",
   deployit_tasker: "com.xebialabs.deployit.engine:tasker:$engineVersion",
+  deployit_par_tasker: "com.xebialabs.deployit.engine:par-tasker:$engineVersion",
   deployit_udm_plugin_api: "com.xebialabs.deployit:udm-plugin-api:$apiVersion",
   deployit_webserver_plugin: "com.xebialabs.deployit.plugins:webserver-plugin:$bundledPluginsVersion",
   deployit_deployment_checklist_plugin: "com.xebialabs.deployit.plugins:deployment-checklist-plugin:$bundledPluginsVersion",
