@@ -753,7 +753,7 @@
       "license": "Apache-2.0",
       "licenseSource": "data"
     },
-    "org.clapper:grizzled-slf4j": {
+    "org.clapper:grizzled-slf4j_2.10": {
       "license": "BSD-GRIZZLED",
       "licenseSource": "data"
     },
