@@ -131,6 +131,7 @@ project.ext.deps = [
   mockito: "org.mockito:mockito-all:1.9.5",
   mockito_core: "org.mockito:mockito-core:1.9.5",
   mustache: "com.samskivert:jmustache:1.8",
+  nscala_time: "com.github.nscala-time:nscala-time_$scalaVersion:0.6.0",
   overthere: "com.xebialabs.overthere:overthere:${overthereVersion}",
   overcast: "com.xebialabs.cloud:overcast:${overcastVersion}",
   resteasy_jaxbprovider: "org.jboss.resteasy:resteasy-jaxb-provider:${resteasyVersion}",
