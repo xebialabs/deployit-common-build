@@ -764,6 +764,10 @@
     "org.joda:joda-convert": {
       "licenseSource": "data",
       "license": "Apache-2.0"
+    },
+    "com.github.nscala-time:nscala-time_2.10": {
+      "licenseSource": "data",
+      "license": "Apache-2.0"
     }
   },
   "licenses": {

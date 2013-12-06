@@ -3,7 +3,7 @@
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 group = 'com.xebialabs.deployit.gradle'
-version = '1.0.10'
+version = '1.0.11'
 
 apply plugin: 'deployit-java'
 apply plugin: 'deployit-artifact'
