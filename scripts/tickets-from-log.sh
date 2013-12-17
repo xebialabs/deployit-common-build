@@ -20,4 +20,4 @@ for i in plugin-api engine bundled-plugins deployit; do
 			cd "$i" && git log ${i}-${FROM}..${TO:+${i}-${TO}} 
 		)
 	fi
-done | egrep -o 'DEPLOYIT(PB)?-[0-9]+' | sed s/DEPLOYIT-/DEPLOYITPB-/g | sort -u
+done | egrep -i -o '(DEPLOYIT(PB)?-[0-9]+|DEPL-[0-9]+)' | tr [:lower:] [:upper:] | sed -E 's/DEPLOYIT(PB)?-/DEPL-/g' | sort -u
