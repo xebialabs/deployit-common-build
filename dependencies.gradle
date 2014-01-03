@@ -24,7 +24,7 @@ project.ext {
   scalaVersion="2.10"
   scalaFullVersion="${scalaVersion}.3"
   akkaVersion="2.2.3"
-  sprayVersion="1.2-20130710"
+  sprayVersion="1.2.0"
   scalaTestVersion="1.9.1"
 }
 
