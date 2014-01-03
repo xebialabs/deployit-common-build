@@ -149,6 +149,8 @@ project.ext.deps = [
   shrinkwrap_api: "org.jboss.shrinkwrap:shrinkwrap-api:1.0.0-alpha-12",
   shrinkwrap_impl: "org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.0-alpha-12",
   slf4j_api: "org.slf4j:slf4j-api:${slf4jVersion}",
+  spray_can: "io.spray:spray-can:${sprayVersion}",
+  spray_json: "io.spray:spray-json_2.10:1.2.5",
   spray_routing: "io.spray:spray-routing:${sprayVersion}",
   spray_servlet: "io.spray:spray-servlet:${sprayVersion}",
   spray_testkit: "io.spray:spray-testkit:${sprayVersion}",
