@@ -185,17 +185,17 @@ deps.each { k, v ->
 // by new libraries
 project.afterEvaluate { evaluatedProject ->
   evaluatedProject.configurations.all*.dependencies*.withType(ModuleDependency)*.each { configuration ->
-    [ 'com.google.collections': 'google-collections',
-      'commons-logging': 'commons-logging',
-      'javax.xml.stream': 'stax-api',
-      'javassist': 'javassist',
-      'org.mortbay.jetty': 'servlet-api-2.5',
-      'org.slf4j': 'slf4j-simple',
-      'org.slf4j': 'slf4j-log4j12',
-      'org.bouncycastle': 'bcprov-jdk15',
-      'org.bouncycastle': 'bcprov-jdk16',
-      'stax': 'stax-api',
-      'junit': 'junit'
+    [ ['com.google.collections', 'google-collections' ],
+      ['commons-logging', 'commons-logging' ],
+      ['javax.xml.stream', 'stax-api' ],
+      ['javassist', 'javassist' ],
+      ['org.mortbay.jetty', 'servlet-api-2.5' ],
+      ['org.slf4j', 'slf4j-simple' ],
+      ['org.slf4j', 'slf4j-log4j12' ],
+      ['org.bouncycastle', 'bcprov-jdk15' ],
+      ['org.bouncycastle', 'bcprov-jdk16' ],
+      ['stax', 'stax-api' ],
+      ['junit', 'junit' ]
     ].each { g, m ->
       configuration.exclude group: g, module: m
     }
