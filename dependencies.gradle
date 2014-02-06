@@ -3,7 +3,7 @@ project.ext {
   engineVersion = '3.10.0-alpha-4'
   bundledPluginsVersion = '3.10.0-alpha-5'
   cloudPackVersion = '3.9.2'
-  licenseDatabaseVersion = '1.0.11'
+  licenseDatabaseVersion = '1.0.12'
 
   apacheDsVersion = '1.5.5'
   jackrabbitVersion = '2.6.0'
