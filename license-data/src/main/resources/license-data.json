@@ -518,6 +518,10 @@
       "license": "EPL-1.0",
       "licenseSource": "data"
     },
+    "de.schlichtherle.truezip:truezip-driver-tar": {
+      "license": "EPL-1.0",
+      "licenseSource": "data"
+    },
     "org.bouncycastle:bcprov-jdk15on": {
       "license": "Bouncy-Castle-License",
       "licenseSource": "data"
