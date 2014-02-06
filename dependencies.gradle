@@ -171,7 +171,7 @@ project.ext.deps = [
   truezip_file: "de.schlichtherle.truezip:truezip-file:${trueZipVersion}",
   truezip_driver_file: "de.schlichtherle.truezip:truezip-driver-file:${trueZipVersion}",
   truezip_driver_zip: "de.schlichtherle.truezip:truezip-driver-zip:${trueZipVersion}",
-  truezip_driver_tar: "de.schlichtherle.truezip:truezip-driver-zip:${trueZipVersion}",
+  truezip_driver_tar: "de.schlichtherle.truezip:truezip-driver-tar:${trueZipVersion}",
   truezip_kernel: "de.schlichtherle.truezip:truezip-kernel:${trueZipVersion}",
   velocity: "org.apache.velocity:velocity:1.7",
   vijava: 'com.vmware:vijava:5.1',
