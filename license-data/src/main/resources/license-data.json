@@ -772,6 +772,18 @@
     "com.github.nscala-time:nscala-time_2.10": {
       "licenseSource": "data",
       "license": "Apache-2.0"
+    },
+    "com.github.scala-incubator.io:scala-io-core_2.10": {
+      "licenseSource": "data",
+      "license": "SCALA-LICENSE"
+    },
+    "com.github.scala-incubator.io:scala-io-file_2.10": {
+      "licenseSource": "data",
+      "license": "SCALA-LICENSE"
+    },
+    "com.jsuereth:scala-arm_2.10": {
+      "licenseSource": "data",
+      "license": "SCALA-LICENSE"
     }
   },
   "licenses": {
