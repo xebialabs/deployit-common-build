@@ -6,3 +6,7 @@ bin
 .project
 .settings
 .gradle
+*.iml
+.idea
+gradle
+gradle*
