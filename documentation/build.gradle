@@ -1,0 +1,34 @@
+
+apply plugin: 'base'
+apply plugin: 'maven'
+
+group = 'com.xebialabs.deployit.documentation'
+version = '1.0.0'
+
+defaultTasks 'buildDocumentationZip'
+
+task buildDocumentationZip(type:Zip) {
+  baseName = 'base-documentation-style'
+  exclude '**/pdf*', '**/unversioned-htmlTemplate.html'
+  from 'generation'
+}
+
+def nexusReleaseUrl = "${project.nexusBaseUrl}/repositories/releases"
+if (project.version.toString().contains("-alpha-")) {
+  nexusReleaseUrl = "${project.nexusBaseUrl}/repositories/alphas"
+}
+
+artifacts {
+  archives buildDocumentationZip
+}
+
+uploadArchives {
+  repositories.mavenDeployer {
+    repository(url: nexusReleaseUrl) {
+      authentication(userName: "${project.nexusUserName}", password: "${project.nexusPassword}")
+    }
+    snapshotRepository(url: "${project.nexusBaseUrl}/repositories/snapshots") {
+      authentication(userName: "${project.nexusUserName}", password: "${project.nexusPassword}")
+    }
+  }
+}
