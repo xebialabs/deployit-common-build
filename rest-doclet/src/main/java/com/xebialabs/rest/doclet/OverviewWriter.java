@@ -55,7 +55,7 @@ public class OverviewWriter extends RestdocWriter {
     //
 
     public void writeHeader() {
-        h1("Deployit REST API").write();
+        h1("XL Deploy REST API").write();
     }
 
     private void writeFooter() {
