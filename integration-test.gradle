@@ -8,19 +8,19 @@ configurations {
 }
 
 def shutdownServer() {
-    println "Shutting down the Deployit server"
+    println "Shutting down the XL Deploy server"
     def url = new URL("http://localhost:$project.ext.deployitPort/deployit/server/shutdown")
     try {
         def connection = getConnectedPost(url)
         // force the connection to actually connect and do something
         int contentLength = connection.contentLength
     } catch(ConnectException exc) {
-        println "The Deployit server is not running. Nothing to do."
+        println "The XL Deploy server is not running. Nothing to do."
         return;
     }
 
     waitForServerShutdown()
-    println "The Deployit server has been shut down."
+    println "The XL Deploy server has been shut down."
 }
 
 task writeDeployitConf << {
@@ -47,8 +47,8 @@ task shutdownIntegrationServer << { shutdownServer() }
 
 task startIntegrationServer << {
     def serverClasspath = configurations.integrationTestServer.filter({ !it.name.endsWith('-sources.jar') }).asPath
-    log "Starting Deployit Server..."
-    logger.debug("Deployit Server classpath:\n${serverClasspath}")
+    log "Starting XL Deploy Server..."
+    logger.debug("XL Deploy Server classpath:\n${serverClasspath}")
     ant.java(fork: true, spawn: true, classpath: serverClasspath, classname: 'com.xebialabs.deployit.DeployitBootstrapper') {
         arg(value: "-test-mode")
         jvmarg(value: "-Xmx1024m")
@@ -76,12 +76,12 @@ task startIntegrationServer << {
         if(code == 200) {
             waitForServerStart = false;
         } else {
-            log "Waiting ${startupDelay}s for the Deployit server to start"
+            log "Waiting ${startupDelay}s for the XL Deploy server to start"
             TimeUnit.SECONDS.sleep(startupDelay)
         }
     }
 
-    log "Deployit Server has started."
+    log "XL Deploy Server has started."
 }
 
 startIntegrationServer.doFirst {shutdownServer()}
@@ -99,7 +99,7 @@ def waitForServerShutdown() {
             if(code == 404) {
                 waitForServerShutdown = false;
             } else {
-                println "Waiting ${shutdownDelay}s for the Deployit server to shutdown"
+                println "Waiting ${shutdownDelay}s for the XL Deploy server to shutdown"
                 TimeUnit.SECONDS.sleep(shutdownDelay)
             }
         } catch(ConnectException exc) {

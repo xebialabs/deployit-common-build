@@ -82,7 +82,7 @@ public class RestDoclet {
     }
 
     private static void writeOverview(List<ClassDoc> restServices) {
-        PrintWriter writer = openFile("index.html", "Deployit REST API");
+        PrintWriter writer = openFile("index.html", "XL Deploy REST API");
         try {
             new OverviewWriter(writer).write(restServices);
         } finally {
