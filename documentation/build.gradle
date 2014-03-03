@@ -3,7 +3,7 @@ apply plugin: 'base'
 apply plugin: 'maven'
 
 group = 'com.xebialabs.deployit.documentation'
-version = '1.0.0'
+version = '1.0.1-SNAPSHOT'
 
 defaultTasks 'buildDocumentationZip'
 
