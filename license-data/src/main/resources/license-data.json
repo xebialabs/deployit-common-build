@@ -252,6 +252,10 @@
       "licenseSource": "data",
       "license": "Apache-2.0"
     },
+    "io.spray:spray-json_2.10": {
+      "licenseSource": "data",
+      "license": "Apache-2.0"
+    },
     "io.spray:spray-http": {
       "license": "Apache-2.0",
       "licenseSource": "data"
@@ -324,7 +328,19 @@
       "license": "Apache-2.0",
       "licenseSource": "data"
     },
+    "org.eclipse.jetty:jetty-webapp": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.eclipse.jetty:jetty-servlets": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
     "javax.servlet:servlet-api": {
+      "licenseSource": "data",
+      "license": "CDDL-1.0"
+    },
+    "javax.servlet:javax.servlet-api": {
       "licenseSource": "data",
       "license": "CDDL-1.0"
     },
@@ -443,8 +459,12 @@
       "licenseSource": "jar"
     },
     "org.python:jython-standalone": {
-      "license": "Apache-2.0",
-      "licenseSource": "jar"
+      "license": "JYTHON-2",
+      "licenseSource": "data"
+    },
+    "org.python:jython": {
+      "license": "JYTHON-2",
+      "licenseSource": "data"
     },
     "commons-lang:commons-lang": {
       "license": "Apache-2.0",
@@ -927,6 +947,10 @@
     "MPL-2.0": {
       "type": "Mozilla Public License 2.0",
       "file": "MPL-2.0"
+    },
+    "JYTHON-2": {
+        "type": "The Jython License",
+        "file": "JYTHON"
     }
   }
 }
