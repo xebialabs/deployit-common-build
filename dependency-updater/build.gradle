@@ -1,0 +1,214 @@
+buildscript {
+    repositories { mavenCentral() }
+    dependencies { 
+        classpath 'com.typesafe:config:1.2.0'
+        classpath 'org.codehaus.groovy.modules.http-builder:http-builder:0.6'
+    }
+}
+
+ext {
+    branch = project.hasProperty('branch') ? project.getProperty('branch') : 'master' 
+    mainProjectData = [
+        'plugin-api' : 'git@github.com:xebialabs/plugin-api.git',
+        'engine' : 'git@github.com:xebialabs/engine.git',
+        'bundled-plugins' : 'git@github.com:xebialabs/bundled-plugins.git',
+        'cloud-pack' : 'git@github.com:xebialabs/cloud-pack.git',
+        'deployit' : 'git@github.com:xebialabs/deployit.git',
+    ]
+    ciPluginProjectData = [
+        'deployit-java-client' : 'git@github.com:xebialabs/deployit-java-client.git',
+        'deployit-plugin' : 'https://github.com/jenkinsci/deployit-plugin.git',
+        'jenkins-deployit-plugin' : 'https://github.com/jenkinsci/deployit-plugin',
+        'bamboo-deployit-plugin' : 'git@github.com:xebialabs/bamboo-deployit-plugin.git',
+        'maven-deployit-plugin' : 'git@github.com:xebialabs/maven-deployit-plugin.git',
+    ]
+    middleWarePluginProjectData = [
+        'tomcat-plugin' : 'git@github.com:xebialabs/tomcat-plugin.git',
+        'glassfish-plugin' : 'git@github.com:xebialabs/glassfish-plugin.git',
+
+        'jbossas-plugin' : 'git@github.com:xebialabs/jbossas-plugin.git',
+        'jbossdm-plugin' : 'git@github.com:xebialabs/jbossdm-plugin.git',
+
+        'loadbalancer-plugin' : 'git@github.com:xebialabs/loadbalancer-plugin.git',
+
+        'was-plugin' : 'git@github.com:xebialabs/was-plugin.git',
+
+        'windows-plugin' : 'git@github.com:xebialabs/windows-plugin.git',
+        'iis-plugin' : 'git@github.com:xebialabs/iis-plugin.git',
+
+        'wls-plugin' : 'git@github.com:xebialabs/wls-plugin.git',
+        'osb-plugin' : 'git@github.com:xebialabs/osb-plugin.git',
+    ]
+    projectData = mainProjectData + ciPluginProjectData + middleWarePluginProjectData + [
+        'temp4test' : 'git@github.com:xebialabs/temp4test.git',
+    ]
+    versionProperties = ['apiVersion', 
+        'licenseDatabaseVersion',
+        'bundledPluginsVersion',
+        'cloudPackVersion',
+        'docBaseStyleVersion',
+        'engineVersion' ]
+    propToProject = ['apiVersion' : 'plugin-api', 
+        'licenseDatabaseVersion': 'license-database',
+        'bundledPluginsVersion': 'bundled-plugins',
+        'cloudPackVersion': 'cloud-pack',
+        'docBaseStyleVersion': 'doc-base-style',
+        'engineVersion' : 'engine' ]
+}
+
+description = """ 
+Use this gradle build to update gradle/dependencies.conf files across many 
+projects.
+
+You can do single updates or update groups of projects.
+
+Supported properties:
+    ${versionProperties.join(',\n    ')}
+
+If a property is not present in the dependencies.conf it will not be 
+added/updated.
+
+So to update all XL Deploy dependencies:
+
+    gradle groupUpdateXlDeployDependencies \\
+      -PapiVersion=5.0.1 \\
+      -PengineVersion=5.0.1
+
+Or using task abbreviations:
+
+    gradle gUXD -PapiVersion=5.0.1 -PengineVersion=5.0.1
+
+To update only the jenkins deployit plugin:
+
+    gradle updateJenkinsDeployitPluginDependencies -PapiVersion=5.0.1
+
+Per default branch master is updated. Specify -Pbranch=<branch> to update
+another branch.
+
+Authentication
+
+To authenticate generate a oauth token for your github account and give 
+it access to private repositories.
+
+Put the token in your private gradle.properties with key
+
+    githubOauthToken=<yourkey>
+
+"""
+
+def projectName(def name) {
+    def parts = name.split('-')
+    parts*.capitalize().join()
+}
+
+def updateProjectTaskName(def name) {
+    "update${projectName(name)}Dependencies"
+}
+projectData.each { repoName, metadata -> 
+    task "${updateProjectTaskName(repoName)}" (type: UpdateGithubFile) {
+        group = "Single project update"
+
+        organization = 'xebialabs'
+        repository = repoName
+        contentPath = 'gradle/dependencies.conf'
+        branch = project.getProperty('branch')
+        username = githubOauthToken
+        password = 'x-oauth-basic'
+
+        doUpdate { content ->
+            def cfg = ConfigFactory.parseString(content, ConfigParseOptions.defaults().setOriginDescription("Github project ${name} branch $branch gradle/dependencies.conf"))
+            def updates = [:]
+            def updatedToList = []
+    
+            versionProperties.each {
+                def key = "xebialabs.dependencies.versions.${it}"
+                if(cfg.hasPath(key) && project.hasProperty(it)) {
+                    def version = project.getProperty(it)
+                    updates[key] = version
+                    updatedToList += "${propToProject[it]}-$version"
+                }
+            }
+
+            def newCfg = ConfigFactory.parseMap(updates, "updated values")
+            cfg = newCfg.withFallback(cfg)
+
+            def rendered = cfg.root().render(ConfigRenderOptions.defaults().setOriginComments(false).setJson(false))
+
+            [ content: rendered, message: updatedToList.join(', ') ]
+        }
+    }
+}
+
+def nextLine = ',\n    '
+task groupUpdateXlDeployDependencies( dependsOn: mainProjectData.keySet().collect { "${updateProjectTaskName(it)}" } ) {
+    group "Group update"
+    description = "Update ${mainProjectData.keySet().join(nextLine)}"
+}
+
+task groupUpdateCiPluginDependencies( dependsOn: ciPluginProjectData.keySet().collect { "${updateProjectTaskName(it)}" } ) {
+    group "Group update"
+    description = "Update ${ciPluginProjectData.keySet().join(nextLine)}"
+}
+
+task groupUpdateMiddleWarePluginDependencies( dependsOn: middleWarePluginProjectData.keySet().collect { "${updateProjectTaskName(it)}" } ) {
+    group "Group update"
+    description = "Update ${middleWarePluginProjectData.keySet().join(nextLine)}"
+}
+
+task groupUpdateAllDependencies( dependsOn: projectData.keySet().collect { "${updateProjectTaskName(it)}" } ) {
+    group "Group update"
+    description = "Update ${projectData.keySet().join(nextLine)}"
+}
+
+import com.typesafe.config.ConfigFactory
+import com.typesafe.config.ConfigRenderOptions
+import com.typesafe.config.ConfigValueFactory
+import com.typesafe.config.ConfigParseOptions
+
+import groovyx.net.http.RESTClient
+import static groovyx.net.http.ContentType.JSON
+import org.apache.http.*
+import org.apache.http.protocol.*
+import org.apache.http.auth.*
+
+class UpdateGithubFile extends DefaultTask {
+    String organization
+    String repository
+    String contentPath
+    String branch
+
+    String username
+    String password
+
+    Closure doUpdate
+
+    @TaskAction
+    def update() {
+        // set auth header manually else it doesn't work
+        def userPassBase64 = "${username}:${password}".toString().bytes.encodeBase64()
+        def github = new RESTClient("https://api.github.com/").with {
+            contentType = JSON
+            defaultRequestHeaders.'Authorization' = "Basic $userPassBase64"
+            defaultRequestHeaders.'Accept' = 'application/vnd.github.v3+json'
+            // will not work without User-Agent!
+            defaultRequestHeaders.'User-Agent' = 'UpdateGithubTask'
+            handler.failure = { resp ->
+                throw new RuntimeException("GitHub API Failure: ${resp.statusLine}")
+            }
+            delegate
+        }
+        def url = "/repos/$organization/$repository/contents/$contentPath"
+        def response = github.get(path: url, query : ['ref': branch])
+        def content = new String(response.data.content.decodeBase64(), 'UTF-8');
+        def sha = response.data.sha
+        logger.debug("Loaded from '{}': '{}'", url, content)
+
+        def updateMap = doUpdate content
+        logger.debug("Updating with {}", updateMap)
+
+        def body = [ 'content': updateMap.content.bytes.encodeBase64().toString(), 'message': updateMap.message.toString(), 'sha': sha ]
+        logger.debug("Update request body: {}", body)
+        def putResponse = github.put(path: url, 'body': body, query : ['branch': branch])
+        logger.debug("Update response: {}", putResponse.data)
+    }
+}
