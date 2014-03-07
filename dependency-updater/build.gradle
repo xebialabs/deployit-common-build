@@ -9,7 +9,6 @@ buildscript {
 ext {
     branch = project.hasProperty('branch') ? project.getProperty('branch') : 'master' 
     mainProjectData = [
-        'plugin-api' : 'git@github.com:xebialabs/plugin-api.git',
         'engine' : 'git@github.com:xebialabs/engine.git',
         'bundled-plugins' : 'git@github.com:xebialabs/bundled-plugins.git',
         'cloud-pack' : 'git@github.com:xebialabs/cloud-pack.git',
