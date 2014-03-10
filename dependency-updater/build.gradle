@@ -16,8 +16,6 @@ ext {
     ]
     ciPluginProjectData = [
         'deployit-java-client' : 'git@github.com:xebialabs/deployit-java-client.git',
-        'deployit-plugin' : 'https://github.com/jenkinsci/deployit-plugin.git',
-        'jenkins-deployit-plugin' : 'https://github.com/jenkinsci/deployit-plugin',
         'bamboo-deployit-plugin' : 'git@github.com:xebialabs/bamboo-deployit-plugin.git',
         'maven-deployit-plugin' : 'git@github.com:xebialabs/maven-deployit-plugin.git',
     ]
@@ -38,7 +36,8 @@ ext {
         'wls-plugin' : 'git@github.com:xebialabs/wls-plugin.git',
         'osb-plugin' : 'git@github.com:xebialabs/osb-plugin.git',
     ]
-    projectData = mainProjectData + ciPluginProjectData + middleWarePluginProjectData + [
+    pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
+    projectData = mainProjectData + pluginProjectData + [
         'temp4test' : 'git@github.com:xebialabs/temp4test.git',
     ]
     versionProperties = ['apiVersion', 
@@ -164,6 +163,11 @@ task groupUpdateCiPluginDependencies( dependsOn: ciPluginProjectData.keySet().co
 task groupUpdateMiddleWarePluginDependencies( dependsOn: middleWarePluginProjectData.keySet().collect { "${updateProjectTaskName(it)}" } ) {
     group "Group update"
     description = "Update ${middleWarePluginProjectData.keySet().join(nextLine)}"
+}
+
+task groupUpdatePluginDependencies( dependsOn: pluginProjectData.keySet().collect { "${updateProjectTaskName(it)}" } ) {
+    group "Group update"
+    description = "Update ${pluginProjectData.keySet().join(nextLine)}"
 }
 
 task groupUpdateAllDependencies( dependsOn: projectData.keySet().collect { "${updateProjectTaskName(it)}" } ) {
