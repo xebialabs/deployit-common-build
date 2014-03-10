@@ -28,7 +28,8 @@ ext {
 
         'loadbalancer-plugin' : 'git@github.com:xebialabs/loadbalancer-plugin.git',
 
-        'was-plugin' : 'git@github.com:xebialabs/was-plugin.git',
+
+        'websphere-plugins' : 'git@github.com:xebialabs/websphere-plugins.git',
 
         'windows-plugin' : 'git@github.com:xebialabs/windows-plugin.git',
         'iis-plugin' : 'git@github.com:xebialabs/iis-plugin.git',
