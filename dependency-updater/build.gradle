@@ -9,6 +9,7 @@ buildscript {
 ext {
     branch = project.hasProperty('branch') ? project.getProperty('branch') : 'master' 
     mainProjectData = [
+        'plugin-api' : 'git@github.com:xebialabs/plugin-api.git',
         'engine' : 'git@github.com:xebialabs/engine.git',
         'bundled-plugins' : 'git@github.com:xebialabs/bundled-plugins.git',
         'cloud-pack' : 'git@github.com:xebialabs/cloud-pack.git',
@@ -102,11 +103,21 @@ def projectName(def name) {
     parts*.capitalize().join()
 }
 
-def updateProjectTaskName(def name) {
+def updateProjectDependencyTaskName(def name) {
     "update${projectName(name)}Dependencies"
 }
+
+def updateProjectGradleTaskName(def name) {
+    "update${projectName(name)}Gradle"
+}
+
+import com.typesafe.config.ConfigFactory
+import com.typesafe.config.ConfigRenderOptions
+import com.typesafe.config.ConfigValueFactory
+import com.typesafe.config.ConfigParseOptions
+
 projectData.each { repoName, metadata -> 
-    task "${updateProjectTaskName(repoName)}" (type: UpdateGithubFile) {
+    task "${updateProjectDependencyTaskName(repoName)}" (type: UpdateGithubFile) {
         group = "Single project update"
 
         organization = 'xebialabs'
@@ -150,38 +161,86 @@ projectData.each { repoName, metadata ->
             }
         }
     }
+
+    task "${updateProjectGradleTaskName(repoName)}" (type: UpdateGithubFile) {
+        group = "Single project Gradle Wrapper Update"
+
+        organization = 'xebialabs'
+        repository = repoName
+        contentPath = 'gradle/wrapper/gradle-wrapper.properties'
+        branch = project.getProperty('branch')
+        username = githubOauthToken
+        password = 'x-oauth-basic'
+
+        doUpdate { content ->
+            if(project.hasProperty('gradleDistributionUrl')) {
+                def url = project.getProperty('gradleDistributionUrl')
+
+                Properties props = new Properties();
+                props.load(new StringReader(content))
+                def currentUrl = props['distributionUrl']
+
+                if( !url.equals(currentUrl) ) {
+                    logger.info("Updating gradle distribution $currentUrl -> $url")
+                    props['distributionUrl'] = url
+                    def newContent = new StringWriter()
+                    props.store(newContent, null)
+                    String gradleZip = url.substring(url.lastIndexOf('/')+1).replace('-bin.zip', '')
+                    return [ content: newContent.toString(), message: gradleZip ]
+                } else {
+                    logger.debug("Not updating gradle distributionUrl no change (${currentUrl})")
+                }
+            }
+
+            return [:]
+        }
+    }
 }
 
+///// Dependency group update tasks
+
 def nextLine = ',\n    '
-task groupUpdateXlDeployDependencies( dependsOn: mainProjectData.keySet().collect { "${updateProjectTaskName(it)}" } ) {
+task groupUpdateXlDeployDependencies( dependsOn: mainProjectData.keySet().collect { "${updateProjectDependencyTaskName(it)}" } ) {
     group "Group update"
     description = "Update ${mainProjectData.keySet().join(nextLine)}"
 }
 
-task groupUpdateCiPluginDependencies( dependsOn: ciPluginProjectData.keySet().collect { "${updateProjectTaskName(it)}" } ) {
+task groupUpdateCiPluginDependencies( dependsOn: ciPluginProjectData.keySet().collect { "${updateProjectDependencyTaskName(it)}" } ) {
     group "Group update"
     description = "Update ${ciPluginProjectData.keySet().join(nextLine)}"
 }
 
-task groupUpdateMiddleWarePluginDependencies( dependsOn: middleWarePluginProjectData.keySet().collect { "${updateProjectTaskName(it)}" } ) {
+task groupUpdateMiddleWarePluginDependencies( dependsOn: middleWarePluginProjectData.keySet().collect { "${updateProjectDependencyTaskName(it)}" } ) {
     group "Group update"
     description = "Update ${middleWarePluginProjectData.keySet().join(nextLine)}"
 }
 
-task groupUpdatePluginDependencies( dependsOn: pluginProjectData.keySet().collect { "${updateProjectTaskName(it)}" } ) {
+task groupUpdatePluginDependencies( dependsOn: pluginProjectData.keySet().collect { "${updateProjectDependencyTaskName(it)}" } ) {
     group "Group update"
     description = "Update ${pluginProjectData.keySet().join(nextLine)}"
 }
 
-task groupUpdateAllDependencies( dependsOn: projectData.keySet().collect { "${updateProjectTaskName(it)}" } ) {
+task groupUpdateAllDependencies( dependsOn: projectData.keySet().collect { "${updateProjectDependencyTaskName(it)}" } ) {
     group "Group update"
     description = "Update ${projectData.keySet().join(nextLine)}"
 }
 
-import com.typesafe.config.ConfigFactory
-import com.typesafe.config.ConfigRenderOptions
-import com.typesafe.config.ConfigValueFactory
-import com.typesafe.config.ConfigParseOptions
+///// Gradle group update tasks
+
+task groupUpdateXlDeployGradle( dependsOn: mainProjectData.keySet().collect { "${updateProjectGradleTaskName(it)}" } ) {
+    group "Group gradle update"
+    description = "Update ${mainProjectData.keySet().join(nextLine)}"
+}
+
+task groupUpdatePluginGradle( dependsOn: pluginProjectData.keySet().collect { "${updateProjectGradleTaskName(it)}" } ) {
+    group "Group gradle update"
+    description = "Update ${pluginProjectData.keySet().join(nextLine)}"
+}
+
+task groupUpdateAllGradle( dependsOn: projectData.keySet().collect { "${updateProjectGradleTaskName(it)}" } ) {
+    group "Group gradle update"
+    description = "Update ${projectData.keySet().join(nextLine)}"
+}
 
 import groovyx.net.http.RESTClient
 import static groovyx.net.http.ContentType.JSON
