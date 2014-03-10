@@ -59,8 +59,8 @@ ext {
 }
 
 description = """ 
-Use this gradle build to update gradle/dependencies.conf files across many 
-projects.
+Use this gradle build to update the gradle/dependencies.conf and/or gradle 
+distribution URL's across many projects.
 
 You can do single updates or update groups of projects.
 
@@ -86,6 +86,13 @@ To update only the jenkins deployit plugin:
 
 Per default branch master is updated. Specify -Pbranch=<branch> to update
 another branch.
+
+To update gradle wrappers use the update<plugin>Gradle or 
+groupUpdate<group>Gradle tasks with an additional property 
+'gradleDistributionUrl'. For instance:
+
+    gradle groupUpdateXlDeployGradle \\
+        -PgradleDistributionUrl=http://example/gradle-dist-1.1-bin.zip
 
 Authentication
 
