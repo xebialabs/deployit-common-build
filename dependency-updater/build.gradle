@@ -46,7 +46,9 @@ ext {
         'bundledPluginsVersion',
         'cloudPackVersion',
         'docBaseStyleVersion',
-        'engineVersion' ]
+        'engineVersion',
+        'overthereVersion',
+        'overcastVersion' ]
     propToProject = ['apiVersion' : 'plugin-api', 
         'licenseDatabaseVersion': 'license-database',
         'bundledPluginsVersion': 'bundled-plugins',
