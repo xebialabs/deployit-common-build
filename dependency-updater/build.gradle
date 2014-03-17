@@ -1,3 +1,10 @@
+/* TODO:
+
+ * update maven pom.xml in bamboo + maven deployit plugin, jenkins plugin (?)
+ * check consistency of dependencies.conf
+
+*/
+
 buildscript {
     repositories { mavenCentral() }
     dependencies { 
@@ -18,7 +25,6 @@ ext {
     ciPluginProjectData = [
         'deployit-java-client' : 'git@github.com:xebialabs/deployit-java-client.git',
         'bamboo-deployit-plugin' : 'git@github.com:xebialabs/bamboo-deployit-plugin.git',
-        'maven-deployit-plugin' : 'git@github.com:xebialabs/maven-deployit-plugin.git',
     ]
     middleWarePluginProjectData = [
         'tomcat-plugin' : 'git@github.com:xebialabs/tomcat-plugin.git',
@@ -29,18 +35,20 @@ ext {
 
         'loadbalancer-plugin' : 'git@github.com:xebialabs/loadbalancer-plugin.git',
 
-
         'websphere-plugins' : 'git@github.com:xebialabs/websphere-plugins.git',
 
         'windows-plugin' : 'git@github.com:xebialabs/windows-plugin.git',
         'iis-plugin' : 'git@github.com:xebialabs/iis-plugin.git',
 
-        'wls-plugin' : 'git@github.com:xebialabs/wls-plugin.git',
-        'osb-plugin' : 'git@github.com:xebialabs/osb-plugin.git',
+        'weblogic-plugins' : 'git@github.com:xebialabs/weblogic-plugins',
     ]
     pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
-    projectData = mainProjectData + pluginProjectData + [
-        'temp4test' : 'git@github.com:xebialabs/temp4test.git',
+    projectData = mainProjectData + pluginProjectData 
+    // Test repository: + [ 'temp4test' : 'git@github.com:xebialabs/temp4test.git' ]
+
+    // plugins that use maven to build
+    mavenPluginProjectData = [
+        'maven-deployit-plugin' : 'git@github.com:xebialabs/maven-deployit-plugin.git',
     ]
     versionProperties = ['apiVersion', 
         'licenseDatabaseVersion',
@@ -249,6 +257,56 @@ task groupUpdateAllGradle( dependsOn: projectData.keySet().collect { "${updatePr
     description = "Update ${projectData.keySet().join(nextLine)}"
 }
 
+////// Check targets 
+
+def getGradleVersionFromUrl( def url ) {
+    def start = url.lastIndexOf('/')+1
+    def end = url.lastIndexOf('-bin.zip')
+    if(start == -1) {
+        start = 0
+    }
+    if(end == -1) {
+        end = url.length()
+    }
+    url.substring(start, end)
+}
+
+task checkGradleWrappers( type: CheckGithubFile ) {
+    group = "Check that gradle wrappers are the same across projects"
+
+    organization = 'xebialabs'
+    repositories = projectData.keySet()
+    contentPath = 'gradle/wrapper/gradle-wrapper.properties'
+    branch = project.getProperty('branch')
+    username = githubOauthToken
+    password = 'x-oauth-basic'
+
+    def nonMatching = []
+    def previousUrl = null
+    check { repository, content ->
+        logger.debug("Checking $repository...")
+        Properties props = new Properties();
+        props.load(new StringReader(content))
+        def currentUrl = props['distributionUrl']
+        if( previousUrl == null ) {
+            previousUrl = currentUrl;
+        } else {
+            if(!currentUrl.equals(previousUrl)) {
+                nonMatching += [ [ repository, previousUrl, currentUrl ] ]
+            }
+        }
+    }
+    doLast {
+        if(nonMatching.size() > 0) {
+            nonMatching.each { repo, goodUrl, url ->
+                println "$repo gradle version is ${getGradleVersionFromUrl(url)} not ${getGradleVersionFromUrl(goodUrl)}"
+            }
+            throw new RuntimeException("Gradle wrapper not up to date across projects!")
+        }
+    }
+}
+
+
 import groovyx.net.http.RESTClient
 import static groovyx.net.http.ContentType.JSON
 import org.apache.http.*
@@ -297,6 +355,44 @@ class UpdateGithubFile extends DefaultTask {
             logger.debug("Update response: {}", putResponse.data)
         } else {
             logger.debug("No update to do.")
+        }
+    }
+}
+
+class CheckGithubFile extends DefaultTask {
+    String organization
+    String contentPath
+    String branch
+    def repositories = []
+
+    String username
+    String password
+
+    Closure check
+
+    @TaskAction
+    def check() {
+        // set auth header manually else it doesn't work
+        def userPassBase64 = "${username}:${password}".toString().bytes.encodeBase64()
+        def github = new RESTClient("https://api.github.com/").with {
+            contentType = JSON
+            defaultRequestHeaders.'Authorization' = "Basic $userPassBase64"
+            defaultRequestHeaders.'Accept' = 'application/vnd.github.v3+json'
+            // will not work without User-Agent!
+            defaultRequestHeaders.'User-Agent' = 'UpdateGithubTask'
+            handler.failure = { resp ->
+                throw new RuntimeException("GitHub API Failure: ${resp.statusLine}")
+            }
+            delegate
+        }
+        repositories.each { repository ->
+            def url = "/repos/$organization/$repository/contents/$contentPath"
+            def response = github.get(path: url, query : ['ref': branch])
+            def content = new String(response.data.content.decodeBase64(), 'UTF-8');
+            def sha = response.data.sha
+            logger.debug("Loaded from '{}': '{}'", url, content)
+
+            check repository, content
         }
     }
 }
