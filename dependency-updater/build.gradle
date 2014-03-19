@@ -23,7 +23,6 @@ ext {
         'deployit' : 'git@github.com:xebialabs/deployit.git',
     ]
     ciPluginProjectData = [
-        'deployit-java-client' : 'git@github.com:xebialabs/deployit-java-client.git',
         'bamboo-deployit-plugin' : 'git@github.com:xebialabs/bamboo-deployit-plugin.git',
     ]
     middleWarePluginProjectData = [
@@ -49,6 +48,7 @@ ext {
     // plugins that use maven to build
     mavenPluginProjectData = [
         'maven-deployit-plugin' : 'git@github.com:xebialabs/maven-deployit-plugin.git',
+        'bamboo-deployit-plugin' : 'git@github.com:xebialabs/bamboo-deployit-plugin.git',
     ]
     versionProperties = ['apiVersion', 
         'licenseDatabaseVersion',
@@ -127,6 +127,8 @@ def updateProjectGradleTaskName(def name) {
 }
 
 import com.typesafe.config.ConfigFactory
+import com.typesafe.config.ConfigValue
+import com.typesafe.config.ConfigValueType
 import com.typesafe.config.ConfigRenderOptions
 import com.typesafe.config.ConfigValueFactory
 import com.typesafe.config.ConfigParseOptions
@@ -307,6 +309,53 @@ task checkGradleWrappers( type: CheckGithubFile ) {
 }
 
 
+task checkVersions( type: CheckGithubFile ) {
+    group = "Check that gradle wrappers are the same across projects"
+
+    organization = 'xebialabs'
+    repositories = projectData.keySet()
+    contentPath = 'gradle/dependencies.conf'
+    branch = project.getProperty('branch')
+    username = githubOauthToken
+    password = 'x-oauth-basic'
+
+    def nonMatching = []
+    def previousCfg = null
+    check { repository, content ->
+        //logger.info("Content = $content")
+        def cfg = ConfigFactory.parseString(content, ConfigParseOptions.defaults().setOriginDescription("Github project ${repository} branch $branch gradle/dependencies.conf"))
+        if(previousCfg == null) {
+            previousCfg = cfg
+        } else {
+            cfg.entrySet().each { Map.Entry<String, ConfigValue> entry ->
+                def key = entry.getKey()
+                def value = null
+                if(entry.getValue().valueType() == ConfigValueType.STRING) {
+                    value = cfg.getString(key)
+                } else if (entry.getValue().valueType() == ConfigValueType.NUMBER) {
+                    value = cfg.getNumber(key).toString()
+                } else {
+                    throw new RuntimeException("$repository gradle/dependencies.conf $key has unsupported type ${entry.getValue().valueType()}");
+                }
+
+                if(previousCfg.hasPath(key)) {
+                    def previousValue  = previousCfg.getString(key)
+                    if(!previousValue.equals(value)) {
+                        nonMatching += [ [repository, key, previousValue, value] ]
+                    }
+                }
+            }
+        }
+    }
+    doLast {
+        if(nonMatching.size() > 0) {
+            nonMatching.each { repo, key, prevValue, value ->
+                println "Repository $repo $key $prevValue != $value"
+            }
+        }
+    }
+}
+
 import groovyx.net.http.RESTClient
 import static groovyx.net.http.ContentType.JSON
 import org.apache.http.*
@@ -387,10 +436,15 @@ class CheckGithubFile extends DefaultTask {
         }
         repositories.each { repository ->
             def url = "/repos/$organization/$repository/contents/$contentPath"
-            def response = github.get(path: url, query : ['ref': branch])
-            def content = new String(response.data.content.decodeBase64(), 'UTF-8');
-            def sha = response.data.sha
-            logger.debug("Loaded from '{}': '{}'", url, content)
+            def content = ""
+            try {
+                def response = github.get(path: url, query : ['ref': branch])
+                content = new String(response.data.content.decodeBase64(), 'UTF-8');
+                def sha = response.data.sha
+                logger.debug("Loaded from '{}': '{}'", url, content)
+            } catch ( RuntimeException e ) {
+                throw new RuntimeException("Failed to read from repository $repository ($branch)", e)
+            }
 
             check repository, content
         }
