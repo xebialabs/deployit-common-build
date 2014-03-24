@@ -93,7 +93,11 @@ To update only the jenkins deployit plugin:
     gradle updateJenkinsDeployitPluginDependencies -PapiVersion=5.0.1
 
 Per default branch master is updated. Specify -Pbranch=<branch> to update
-another branch.
+another branch:
+
+    gradle groupUpdateXlDeployDependencies \\
+      -PoverthereVersion=2.4.1 \\
+      -Pbranch=4.0.x-maintenance
 
 To update gradle wrappers use the update<plugin>Gradle or 
 groupUpdate<group>Gradle tasks with an additional property 
