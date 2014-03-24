@@ -63,7 +63,9 @@ ext {
         'bundledPluginsVersion': 'bundled-plugins',
         'cloudPackVersion': 'cloud-pack',
         'docBaseStyleVersion': 'doc-base-style',
-        'engineVersion' : 'engine' ]
+        'engineVersion' : 'engine',
+        'overthereVersion': 'overthere',
+        'overcastVersion': 'overcast' ]
 }
 
 description = """ 
