@@ -106,7 +106,7 @@ groupUpdate<group>Gradle tasks with an additional property
 'gradleDistributionUrl'. For instance:
 
     gradle groupUpdateXlDeployGradle \\
-        -PgradleDistributionUrl=http://example/gradle-dist-1.1-bin.zip
+        -PgradleDistributionUrl=http://tech.xebialabs.com/xebialabs-gradle/xebialabs-gradle-1.11-1.2.18-bin.zip
 
 Authentication
 
@@ -213,6 +213,8 @@ projectData.each { repoName, metadata ->
         } else {
           logger.debug("Not updating gradle distributionUrl no change (${currentUrl})")
         }
+      } else {
+        throw new RuntimeException("Property gradleDistributionUrl not set, don't know which gradle to update to.")
       }
 
       return [:]
