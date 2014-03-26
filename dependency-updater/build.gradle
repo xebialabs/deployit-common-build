@@ -299,6 +299,7 @@ task checkGradleWrappers(type: CheckGithubFile) {
     Properties props = new Properties();
     props.load(new StringReader(content))
     def currentUrl = props['distributionUrl']
+    logger.info("${repository}: Previous URL=${previousUrl} Current URL=${currentUrl}")
     if (previousUrl == null) {
       previousUrl = currentUrl;
     } else {
@@ -317,6 +318,9 @@ task checkGradleWrappers(type: CheckGithubFile) {
   }
 }
 
+def renderCfg(def cfg) {
+  cfg.root().render(ConfigRenderOptions.defaults().setOriginComments(false).setJson(false))
+}
 
 task checkVersions(type: CheckGithubFile) {
   group = "Check that gradle wrappers are the same across projects"
@@ -331,14 +335,13 @@ task checkVersions(type: CheckGithubFile) {
   def nonMatching = []
   def previousCfg = null
   check { repository, content ->
-    //logger.info("Content = $content")
-
     def cfg = ConfigFactory.parseString(content, ConfigParseOptions.defaults().setOriginDescription("Github project ${repository} branch $branch gradle/dependencies.conf"))
     if (previousCfg == null) {
+      logger.info("Repository $repository becomes starting point for versions: ${renderCfg(cfg)}")
       previousCfg = cfg
     } else {
       cfg.entrySet().each { Map.Entry<String, ConfigValue> entry ->
-        def key = entry.getKey()
+        String key = entry.getKey()
         def value = null
         if (entry.getValue().valueType() == ConfigValueType.STRING) {
           value = cfg.getString(key)
@@ -353,6 +356,12 @@ task checkVersions(type: CheckGithubFile) {
           if (!previousValue.equals(value)) {
             nonMatching += [[repository, key, previousValue, value]]
           }
+        } else {
+          logger.debug("Repository $repository adding $key=$value to previousCfg")
+          def update = [:]
+          update[key] = value
+          def newCfg = ConfigFactory.parseMap(update, "updated values")
+          previousCfg = newCfg.withFallback(previousCfg)
         }
       }
     }
