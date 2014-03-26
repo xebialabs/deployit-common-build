@@ -65,6 +65,8 @@ ext {
                    'engineVersion'         : 'engine',
                    'overthereVersion'      : 'overthere',
                    'overcastVersion'       : 'overcast']
+
+  numInconsistencies = 0
 }
 
 description = """
@@ -119,6 +121,15 @@ Put the token in your private gradle.properties with key
     githubOauthToken=<yourkey>
 
 """
+
+gradle.buildStarted {
+  numInconsistencies = 0
+}
+gradle.buildFinished { buildresult ->
+  if(numInconsistencies > 0) {
+    throw new RuntimeException("${numInconsistencies} inconsistencies found.")
+  }
+}
 
 def projectName(def name) {
   def parts = name.split('-')
@@ -310,10 +321,10 @@ task checkGradleWrappers(type: CheckGithubFile) {
   }
   doLast {
     if (nonMatching.size() > 0) {
+      project.ext.numInconsistencies += nonMatching.size()
       nonMatching.each { repo, goodUrl, url ->
         println "$repo gradle version is ${getGradleVersionFromUrl(url)} not ${getGradleVersionFromUrl(goodUrl)}"
       }
-      throw new RuntimeException("Gradle wrapper not up to date across projects!")
     }
   }
 }
@@ -368,6 +379,7 @@ task checkVersions(type: CheckGithubFile) {
   }
   doLast {
     if (nonMatching.size() > 0) {
+      project.ext.numInconsistencies += nonMatching.size()
       nonMatching.each { repo, key, prevValue, value ->
         println "Repository $repo $key $prevValue != $value"
       }
