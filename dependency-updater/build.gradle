@@ -14,7 +14,7 @@ buildscript {
 }
 
 ext {
-  branch = project.hasProperty('branch') ? project.getProperty('branch') : 'master'
+  branch = project.getProperty('branch')
   mainProjectData = [
       'plugin-api'     : 'git@github.com:xebialabs/plugin-api.git',
       'engine'         : 'git@github.com:xebialabs/engine.git',
@@ -84,18 +84,19 @@ So to update all XL Deploy dependencies:
 
     gradle groupUpdateXlDeployDependencies \\
       -PapiVersion=5.0.1 \\
-      -PengineVersion=5.0.1
+      -PengineVersion=5.0.1 \\
+      -Pbranch=master
 
 Or using task abbreviations:
 
-    gradle gUXD -PapiVersion=5.0.1 -PengineVersion=5.0.1
+    gradle gUXD -PapiVersion=5.0.1 -PengineVersion=5.0.1  -Pbranch=master
 
 To update only the jenkins deployit plugin:
 
-    gradle updateJenkinsDeployitPluginDependencies -PapiVersion=5.0.1
+    gradle updateJenkinsDeployitPluginDependencies -PapiVersion=5.0.1 -Pbranch=master
 
-Per default branch master is updated. Specify -Pbranch=<branch> to update
-another branch:
+To specify the branch you want to update use -Pbranch=<branch>. There is no
+default by design.
 
     gradle groupUpdateXlDeployDependencies \\
       -PoverthereVersion=2.4.1 \\
@@ -106,7 +107,8 @@ groupUpdate<group>Gradle tasks with an additional property
 'gradleDistributionUrl'. For instance:
 
     gradle groupUpdateXlDeployGradle \\
-        -PgradleDistributionUrl=http://tech.xebialabs.com/xebialabs-gradle/xebialabs-gradle-1.11-1.2.18-bin.zip
+        -PgradleDistributionUrl=http://tech.xebialabs.com/xebialabs-gradle/xebialabs-gradle-1.11-1.2.18-bin.zip \\
+        -Pbranch=master
 
 Authentication
 
