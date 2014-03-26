@@ -332,6 +332,7 @@ task checkVersions(type: CheckGithubFile) {
   def previousCfg = null
   check { repository, content ->
     //logger.info("Content = $content")
+
     def cfg = ConfigFactory.parseString(content, ConfigParseOptions.defaults().setOriginDescription("Github project ${repository} branch $branch gradle/dependencies.conf"))
     if (previousCfg == null) {
       previousCfg = cfg
@@ -375,7 +376,7 @@ class UpdateGithubFile extends DefaultTask {
   String organization
   String repository
   String contentPath
-  String branch
+  def branch
 
   String username
   String password
@@ -398,7 +399,7 @@ class UpdateGithubFile extends DefaultTask {
       delegate
     }
     def url = "/repos/$organization/$repository/contents/$contentPath"
-    def response = github.get(path: url, query: ['ref': branch])
+    def response = github.get(path: url, query: ['ref': "${branch}"])
     def content = new String(response.data.content.decodeBase64(), 'UTF-8');
     def sha = response.data.sha
     logger.debug("Loaded from '{}': '{}'", url, content)
@@ -407,7 +408,7 @@ class UpdateGithubFile extends DefaultTask {
     if (updateMap.size() > 0) {
       logger.debug("Updating with {}", updateMap)
 
-      def body = ['content': updateMap.content.bytes.encodeBase64().toString(), 'message': updateMap.message.toString(), 'sha': sha, 'branch': branch]
+      def body = ['content': updateMap.content.bytes.encodeBase64().toString(), 'message': updateMap.message.toString(), 'sha': sha, 'branch': "${branch}"]
       logger.debug("Update request body: {}", body)
       def putResponse = github.put(path: url, 'body': body)
       logger.debug("Update response: {}", putResponse.data)
@@ -420,7 +421,7 @@ class UpdateGithubFile extends DefaultTask {
 class CheckGithubFile extends DefaultTask {
   String organization
   String contentPath
-  String branch
+  def branch
   def repositories = []
 
   String username
@@ -447,7 +448,7 @@ class CheckGithubFile extends DefaultTask {
       def url = "/repos/$organization/$repository/contents/$contentPath"
       def content = ""
       try {
-        def response = github.get(path: url, query: ['ref': branch])
+        def response = github.get(path: url, query: ['ref': "${branch}"])
         content = new String(response.data.content.decodeBase64(), 'UTF-8');
         def sha = response.data.sha
         logger.debug("Loaded from '{}': '{}'", url, content)
