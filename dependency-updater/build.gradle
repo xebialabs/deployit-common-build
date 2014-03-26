@@ -14,7 +14,6 @@ buildscript {
 }
 
 ext {
-  branch = project.getProperty('branch')
   mainProjectData = [
       'plugin-api'     : 'git@github.com:xebialabs/plugin-api.git',
       'engine'         : 'git@github.com:xebialabs/engine.git',
@@ -148,7 +147,7 @@ projectData.each { repoName, metadata ->
     organization = 'xebialabs'
     repository = repoName
     contentPath = 'gradle/dependencies.conf'
-    branch = project.getProperty('branch')
+    branch = { -> project.getProperty('branch') }
     username = githubOauthToken
     password = 'x-oauth-basic'
 
@@ -193,7 +192,7 @@ projectData.each { repoName, metadata ->
     organization = 'xebialabs'
     repository = repoName
     contentPath = 'gradle/wrapper/gradle-wrapper.properties'
-    branch = project.getProperty('branch')
+    branch = { -> project.getProperty('branch') }
     username = githubOauthToken
     password = 'x-oauth-basic'
 
@@ -289,7 +288,7 @@ task checkGradleWrappers(type: CheckGithubFile) {
   organization = 'xebialabs'
   repositories = projectData.keySet()
   contentPath = 'gradle/wrapper/gradle-wrapper.properties'
-  branch = project.getProperty('branch')
+  branch = { -> project.getProperty('branch') }
   username = githubOauthToken
   password = 'x-oauth-basic'
 
@@ -325,7 +324,7 @@ task checkVersions(type: CheckGithubFile) {
   organization = 'xebialabs'
   repositories = projectData.keySet()
   contentPath = 'gradle/dependencies.conf'
-  branch = project.getProperty('branch')
+  branch = { -> project.getProperty('branch') }
   username = githubOauthToken
   password = 'x-oauth-basic'
 
