@@ -1,6 +1,7 @@
 
 apply plugin: 'base'
 apply plugin: 'maven'
+apply plugin: 'java'
 
 group = 'com.xebialabs.deployit.documentation'
 version = '1.0.1-SNAPSHOT'
@@ -21,6 +22,8 @@ if (project.version.toString().contains("-alpha-")) {
 artifacts {
   archives buildDocumentationZip
 }
+
+jar.baseName = 'base-documentation-style'
 
 uploadArchives {
   repositories.mavenDeployer {
