@@ -213,8 +213,8 @@
       "licenseSource": "data"
     },
     "org.eclipse.jetty:jetty-webapp": {
-      "licenseSource": "data",
-      "license": "Apache-2.0"
+      "license": "Apache-2.0",
+      "licenseSource": "data"
     },
     "org.eclipse.jetty:jetty-servlet": {
       "licenseSource": "data",
@@ -325,10 +325,6 @@
       "licenseSource": "data"
     },
     "org.mortbay.jetty:jetty-util": {
-      "license": "Apache-2.0",
-      "licenseSource": "data"
-    },
-    "org.eclipse.jetty:jetty-webapp": {
       "license": "Apache-2.0",
       "licenseSource": "data"
     },
@@ -546,7 +542,7 @@
       "license": "Bouncy-Castle-License",
       "licenseSource": "data"
     },
-      "org.bouncycastle:bcpkix-jdk15on": {
+    "org.bouncycastle:bcpkix-jdk15on": {
       "license": "Bouncy-Castle-License",
       "licenseSource": "data"
     },
@@ -804,6 +800,186 @@
     "com.jsuereth:scala-arm_2.10": {
       "licenseSource": "data",
       "license": "SCALA-LICENSE"
+    },
+    "org.jboss.resteasy:resteasy-jackson-provider": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.springframework:spring-test": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.aspectj:aspectjweaver": {
+      "license": "EPL-1.0",
+      "licenseSource": "data"
+    },
+    "org.lesscss:lesscss": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.codehaus.jackson:jackson-core-asl": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.codehaus.jackson:jackson-mapper-asl": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "com.github.spullara.mustache.java:compiler": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.commons:commons-email": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "com.xhaus:jyson": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.mnode.ical4j:ical4j": {
+      "license": "BSD-ICAL4J",
+      "licenseSource": "data"
+    },
+    "org.apache.poi:poi": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.poi:poi-ooxml": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.poi:poi-ooxml-schemas": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "com.jayway.jsonpath:json-path": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.codehaus.jackson:jackson-jaxrs": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.codehaus.jackson:jackson-xc": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.mozilla:rhino": {
+      "license": "MPL-2.0",
+      "licenseSource": "data"
+    },
+    "org.jruby:jruby-stdlib": {
+      "license": "CPL-1.0",
+      "licenseSource": "data"
+    },
+    "backport-util-concurrent:backport-util-concurrent": {
+      "license": "Public-Domain",
+      "licenseSource": "data"
+    },
+    "org.apache.xmlbeans:xmlbeans": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "net.minidev:json-smart": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.tika:tika-parsers": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.jackrabbit:jackrabbit-jcr-servlet": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.jackrabbit:jackrabbit-jcr-rmi": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.webjars:jquery": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "org.gagravarr:vorbis-java-tika": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "edu.ucar:netcdf": {
+      "license": "MIT-UCAR",
+      "licenseSource": "data"
+    },
+    "org.apache.james:apache-mime4j-core": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.james:apache-mime4j-dom": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.pdfbox:pdfbox": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.bouncycastle:bcmail-jdk15": {
+      "license": "Bouncy-Castle-License",
+      "licenseSource": "data"
+    },
+    "org.apache.poi:poi-scratchpad": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.geronimo.specs:geronimo-stax-api_1.0_spec": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.ccil.cowan.tagsoup:tagsoup": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "com.googlecode.mp4parser:isoparser": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "com.drewnoakes:metadata-extractor": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "de.l3s.boilerpipe:boilerpipe": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "rome:rome": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.gagravarr:vorbis-java-core": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "com.googlecode.juniversalchardet:juniversalchardet": {
+      "license": "MPL-1.1",
+      "licenseSource": "data"
+    },
+    "org.apache.pdfbox:fontbox": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.pdfbox:jempbox": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "com.adobe.xmp:xmpcore": {
+      "license": "BSD-ADOBE",
+      "licenseSource": "data"
+    },
+    "org.tukaani:xz": {
+      "license": "Public-Domain",
+      "licenseSource": "data"
+    },
+    "org.aspectj:aspectjrt": {
+      "license": "EPL-1.0",
+      "licenseSource": "data"
     }
   },
   "licenses": {
@@ -835,6 +1011,10 @@
       "type": "BSD",
       "file": "BSD-JMUSTACHE"
     },
+    "BSD-ADOBE": {
+      "type": "BSD",
+      "file": "BSD-ADOBE"
+    },
     "XebiaLabs-FLOSS": {
       "type": "GPL, proprietary",
       "file": "XEBIALABS-FLOSS"
@@ -858,6 +1038,10 @@
     "MIT-JSON": {
       "type": "MIT",
       "file": "MIT-JSON"
+    },
+    "MIT-UCAR": {
+      "type": "MIT",
+      "file": "MIT-UCAR"
     },
     "JDOM": {
       "type": "Apache Style",
@@ -944,13 +1128,17 @@
       "type": "BSD",
       "file": "BSD-ANTLR"
     },
+    "BSD-ICAL4J": {
+      "type": "BSD",
+      "file": "BSD-ICAL4J"
+    },
     "MPL-2.0": {
       "type": "Mozilla Public License 2.0",
       "file": "MPL-2.0"
     },
     "JYTHON-2": {
-        "type": "The Jython License",
-        "file": "JYTHON"
+      "type": "The Jython License",
+      "file": "JYTHON"
     }
   }
 }
