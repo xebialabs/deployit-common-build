@@ -1,9 +1,4 @@
-/* TODO:
-
- * update maven pom.xml in bamboo + maven deployit plugin, jenkins plugin (?)
- * check consistency of dependencies.conf
-
-*/
+// TODO checkVersions should include the pom.xml in a project
 
 buildscript {
   repositories { mavenCentral() }
@@ -15,40 +10,37 @@ buildscript {
 
 ext {
   mainProjectData = [
-      'plugin-api'     : 'git@github.com:xebialabs/plugin-api.git',
-      'engine'         : 'git@github.com:xebialabs/engine.git',
-      'bundled-plugins': 'git@github.com:xebialabs/bundled-plugins.git',
-      'cloud-pack'     : 'git@github.com:xebialabs/cloud-pack.git',
-      'deployit'       : 'git@github.com:xebialabs/deployit.git',
+    [ 'plugin-api',       [ url: 'git@github.com:xebialabs/plugin-api.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'engine',           [ url: 'git@github.com:xebialabs/engine.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'bundled-plugins',  [ url: 'git@github.com:xebialabs/bundled-plugins.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'cloud-pack',       [ url: 'git@github.com:xebialabs/cloud-pack.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'deployit',         [ url: 'git@github.com:xebialabs/deployit.git', toUpdate: [ 'depcfg' ] ] ],
   ]
   ciPluginProjectData = [
-      'bamboo-deployit-plugin': 'git@github.com:xebialabs/bamboo-deployit-plugin.git',
+    [ 'bamboo-deployit-plugin', [ url: 'git@github.com:xebialabs/bamboo-deployit-plugin.git', toUpdate: [ 'depcfg', 'pom' ] ] ],
+    [ 'maven-deployit-plugin',  [ url: 'git@github.com:xebialabs/maven-deployit-plugin.git', toUpdate: [ 'pom' ] ] ],
   ]
   middleWarePluginProjectData = [
-      'tomcat-plugin'      : 'git@github.com:xebialabs/tomcat-plugin.git',
-      'glassfish-plugin'   : 'git@github.com:xebialabs/glassfish-plugin.git',
+    [ 'tomcat-plugin',         [ url: 'git@github.com:xebialabs/tomcat-plugin.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'glassfish-plugin',      [ url: 'git@github.com:xebialabs/glassfish-plugin.git', toUpdate: [ 'depcfg' ] ] ],
 
-      'jbossas-plugin'     : 'git@github.com:xebialabs/jbossas-plugin.git',
-      'jbossdm-plugin'     : 'git@github.com:xebialabs/jbossdm-plugin.git',
+    [ 'jbossas-plugin',        [ url: 'git@github.com:xebialabs/jbossas-plugin.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'jbossdm-plugin',        [ url: 'git@github.com:xebialabs/jbossdm-plugin.git', toUpdate: [ 'depcfg' ] ] ],
 
-      'loadbalancer-plugin': 'git@github.com:xebialabs/loadbalancer-plugin.git',
+    [ 'loadbalancer-plugin',   [ url: 'git@github.com:xebialabs/loadbalancer-plugin.git', toUpdate: [ 'depcfg' ] ] ],
 
-      'websphere-plugins'  : 'git@github.com:xebialabs/websphere-plugins.git',
+    [ 'websphere-plugins',     [ url: 'git@github.com:xebialabs/websphere-plugins.git', toUpdate: [ 'depcfg' ] ] ],
 
-      'windows-plugin'     : 'git@github.com:xebialabs/windows-plugin.git',
-      'iis-plugin'         : 'git@github.com:xebialabs/iis-plugin.git',
+    [ 'windows-plugin',        [ url: 'git@github.com:xebialabs/windows-plugin.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'iis-plugin',            [ url: 'git@github.com:xebialabs/iis-plugin.git', toUpdate: [ 'depcfg' ] ] ],
 
-      'weblogic-plugins'   : 'git@github.com:xebialabs/weblogic-plugins',
+    [ 'weblogic-plugins',      [ url: 'git@github.com:xebialabs/weblogic-plugins', toUpdate: [ 'depcfg' ] ] ],
   ]
+  testData = [ [ 'temp4test', [ url:'git@github.com:xebialabs/temp4test.git', toUpdate: [ 'depcfg', 'pom'] ] ] ]
+
   pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
-  projectData = mainProjectData + pluginProjectData
-  // Test repository: + [ 'temp4test' : 'git@github.com:xebialabs/temp4test.git' ]
+  projectData = mainProjectData + pluginProjectData // + testData
 
-  // plugins that use maven to build
-  mavenPluginProjectData = [
-      'maven-deployit-plugin' : 'git@github.com:xebialabs/maven-deployit-plugin.git',
-      'bamboo-deployit-plugin': 'git@github.com:xebialabs/bamboo-deployit-plugin.git',
-  ]
   versionProperties = ['apiVersion',
                        'licenseDatabaseVersion',
                        'bundledPluginsVersion',
@@ -70,8 +62,10 @@ ext {
 }
 
 description = """
-Use this gradle build to update the gradle/dependencies.conf and/or gradle
-distribution URL's across many projects.
+Use this gradle build to update the gradle/dependencies.conf, pom.xml and/or gradle
+distribution URL's across many projects. The pom.xml has to have a special format 
+with a properties section with the same property names as the supported properties
+as described below.
 
 You can do single updates or update groups of projects.
 
@@ -108,7 +102,7 @@ groupUpdate<group>Gradle tasks with an additional property
 'gradleDistributionUrl'. For instance:
 
     gradle groupUpdateXlDeployGradle \\
-        -PgradleDistributionUrl=http://tech.xebialabs.com/xebialabs-gradle/xebialabs-gradle-1.11-1.2.18-bin.zip \\
+        -PgradleDistributionUrl=http://tech.xebialabs.com/xebialabs-gradle/xebialabs-gradle-1.11-1.2.21-bin.zip \\
         -Pbranch=master
 
 Authentication
@@ -152,49 +146,132 @@ import com.typesafe.config.ConfigValueFactory
 import com.typesafe.config.ConfigParseOptions
 
 projectData.each { repoName, metadata ->
-  task "${updateProjectDependencyTaskName(repoName)}"(type: UpdateGithubFile) {
-    group = "Single project update"
 
-    organization = 'xebialabs'
-    repository = repoName
-    contentPath = 'gradle/dependencies.conf'
-    branch = { -> project.getProperty('branch') }
-    username = githubOauthToken
-    password = 'x-oauth-basic'
+  task "${updateProjectDependencyTaskName(repoName)}" {
+    group = "Single project update "
+    description = "Update"
+  }
 
-    doUpdate { content ->
-      def cfg = ConfigFactory.parseString(content, ConfigParseOptions.defaults().setOriginDescription("Github project ${name} branch $branch gradle/dependencies.conf"))
-      def updates = [:]
-      def updatedToList = []
+  if( metadata.toUpdate.contains('depcfg') ) {
+    def taskName = "update${projectName(repoName)}DepCfg"
 
-      versionProperties.each {
-        def key = "xebialabs.dependencies.versions.${it}"
-        if (project.hasProperty(it)) {
-          def version = project.getProperty(it)
-          if (cfg.hasPath(key)) {
-            def currentVersion = cfg.getString(key)
-            if (!version.equals(currentVersion)) {
-              logger.info("Updating $it $currentVersion -> $version")
-              updates[key] = version
-              updatedToList += "${propToProject[it]}-$version"
-            } else {
-              logger.debug("Not updating $it no change")
+    task "$taskName" (type: UpdateGithubFile) {
+      group = "Single project gradle/dependency.conf update"
+
+      organization = 'xebialabs'
+      repository = repoName
+      contentPath = 'gradle/dependencies.conf'
+      branch = { -> project.getProperty('branch') }
+      username = githubOauthToken
+      password = 'x-oauth-basic'
+
+      doUpdate { content ->
+        def cfg = ConfigFactory.parseString(content, ConfigParseOptions.defaults().setOriginDescription("Github project ${name} branch $branch gradle/dependencies.conf"))
+        def updates = [:]
+        def updatedToList = []
+
+        versionProperties.each {
+          def key = "xebialabs.dependencies.versions.${it}"
+          if (project.hasProperty(it)) {
+            def version = project.getProperty(it)
+            if (cfg.hasPath(key)) {
+              def currentVersion = cfg.getString(key)
+              if (!version.equals(currentVersion)) {
+                logger.info("Updating $it $currentVersion -> $version")
+                updates[key] = version
+                updatedToList += "${propToProject[it]}-$version"
+              } else {
+                logger.debug("Not updating $it no change")
+              }
             }
           }
         }
-      }
 
-      def newCfg = ConfigFactory.parseMap(updates, "updated values")
-      cfg = newCfg.withFallback(cfg)
+        def newCfg = ConfigFactory.parseMap(updates, "updated values")
+        cfg = newCfg.withFallback(cfg)
 
-      def rendered = cfg.root().render(ConfigRenderOptions.defaults().setOriginComments(false).setJson(false))
+        def rendered = cfg.root().render(ConfigRenderOptions.defaults().setOriginComments(false).setJson(false))
 
-      if (updatedToList.size() > 0) {
-        return [content: rendered, message: updatedToList.join(', ')]
-      } else {
-        return [:]
+        if (updatedToList.size() > 0) {
+          return [content: rendered, message: updatedToList.join(', ')]
+        } else {
+          return [:]
+        }
       }
     }
+    tasks["${updateProjectDependencyTaskName(repoName)}"].dependsOn taskName
+    tasks["${updateProjectDependencyTaskName(repoName)}"].description += " gradle/dependencies.conf"
+  }
+
+  if( metadata.toUpdate.contains('pom') ) {
+    def taskName = "update${projectName(repoName)}Pom"
+
+    task "$taskName" (type: UpdateGithubFile) {
+      group = "Single project pom.xml update"
+
+      organization = 'xebialabs'
+      repository = repoName
+      contentPath = 'pom.xml'
+      branch = { -> project.getProperty('branch') }
+      username = githubOauthToken
+      password = 'x-oauth-basic'
+
+      doUpdate { content ->
+        def newContent = new StringWriter()
+
+        boolean inProperties = false
+        def updates = [:]
+        def updatedToList = []
+
+        content.eachLine {
+          if( !inProperties ) {
+            if(it ==~ /^\s+<properties>\s*$/) {
+              inProperties = true;
+            }
+            newContent.println it
+          } else {
+            if(it ==~ "^\\s+</properties>\\s*\$") {
+              inProperties = false;
+              newContent.println it
+            } else {
+              def matcher = it =~ /^(\s+)<(\w+)>(.+)<\/\w+>(\s*)$/
+              if(matcher) {
+
+                def lws = matcher[0][1]
+                def prop = matcher[0][2]
+                def version = matcher[0][2]
+                def tws = matcher[0][4]
+
+                versionProperties.each {
+                  if (prop == it && project.hasProperty(it)) {
+                    def newVersion = project.getProperty(it)
+                    if (!version.equals(newVersion)) {
+                      logger.info("Updating $it $version -> $newVersion")
+                      updates[it] = newVersion
+                      updatedToList += "${propToProject[it]}-$newVersion"
+                      version = newVersion
+                    } else {
+                      logger.debug("Not updating $it no change")
+                    }
+                  }
+                }
+                newContent.println "${lws}<${prop}>${version}</${prop}>${tws}"
+              } else {
+                newContent.println it
+              }
+            }
+          }
+        }
+
+        if (updatedToList.size() > 0) {
+          return [content: newContent.toString(), message: updatedToList.join(', ')]
+        } else {
+          return [:]
+        }
+      }
+    }
+    tasks["${updateProjectDependencyTaskName(repoName)}"].dependsOn taskName
+    tasks["${updateProjectDependencyTaskName(repoName)}"].description += " pom.xml"
   }
 
   task "${updateProjectGradleTaskName(repoName)}"(type: UpdateGithubFile) {
@@ -237,46 +314,46 @@ projectData.each { repoName, metadata ->
 ///// Dependency group update tasks
 
 def nextLine = ',\n    '
-task groupUpdateXlDeployDependencies(dependsOn: mainProjectData.keySet().collect { "${updateProjectDependencyTaskName(it)}" }) {
+task groupUpdateXlDeployDependencies(dependsOn: mainProjectData.collect { "${updateProjectDependencyTaskName(it[0])}" }) {
   group "Group update"
-  description = "Update ${mainProjectData.keySet().join(nextLine)}"
+  description = "Update ${mainProjectData.collect{it[0]}.join(nextLine)}"
 }
 
-task groupUpdateCiPluginDependencies(dependsOn: ciPluginProjectData.keySet().collect { "${updateProjectDependencyTaskName(it)}" }) {
+task groupUpdateCiPluginDependencies(dependsOn: ciPluginProjectData.collect { "${updateProjectDependencyTaskName(it[0])}" }) {
   group "Group update"
-  description = "Update ${ciPluginProjectData.keySet().join(nextLine)}"
+  description = "Update ${ciPluginProjectData.collect{it[0]}.join(nextLine)}"
 }
 
-task groupUpdateMiddleWarePluginDependencies(dependsOn: middleWarePluginProjectData.keySet().collect { "${updateProjectDependencyTaskName(it)}" }) {
+task groupUpdateMiddleWarePluginDependencies(dependsOn: middleWarePluginProjectData.collect { "${updateProjectDependencyTaskName(it[0])}" }) {
   group "Group update"
-  description = "Update ${middleWarePluginProjectData.keySet().join(nextLine)}"
+  description = "Update ${middleWarePluginProjectData.collect{it[0]}.join(nextLine)}"
 }
 
-task groupUpdatePluginDependencies(dependsOn: pluginProjectData.keySet().collect { "${updateProjectDependencyTaskName(it)}" }) {
+task groupUpdatePluginDependencies(dependsOn: pluginProjectData.collect { "${updateProjectDependencyTaskName(it[0])}" }) {
   group "Group update"
-  description = "Update ${pluginProjectData.keySet().join(nextLine)}"
+  description = "Update ${pluginProjectData.collect{it[0]}.join(nextLine)}"
 }
 
-task groupUpdateAllDependencies(dependsOn: projectData.keySet().collect { "${updateProjectDependencyTaskName(it)}" }) {
+task groupUpdateAllDependencies(dependsOn: projectData.collect { "${updateProjectDependencyTaskName(it[0])}" }) {
   group "Group update"
-  description = "Update ${projectData.keySet().join(nextLine)}"
+  description = "Update ${projectData.collect{it[0]}.join(nextLine)}"
 }
 
 ///// Gradle group update tasks
 
-task groupUpdateXlDeployGradle(dependsOn: mainProjectData.keySet().collect { "${updateProjectGradleTaskName(it)}" }) {
+task groupUpdateXlDeployGradle(dependsOn: mainProjectData.collect { "${updateProjectGradleTaskName(it[0])}" }) {
   group "Group gradle update"
-  description = "Update ${mainProjectData.keySet().join(nextLine)}"
+  description = "Update ${mainProjectData.collect{it[0]}.join(nextLine)}"
 }
 
-task groupUpdatePluginGradle(dependsOn: pluginProjectData.keySet().collect { "${updateProjectGradleTaskName(it)}" }) {
+task groupUpdatePluginGradle(dependsOn: pluginProjectData.collect { "${updateProjectGradleTaskName(it[0])}" }) {
   group "Group gradle update"
-  description = "Update ${pluginProjectData.keySet().join(nextLine)}"
+  description = "Update ${pluginProjectData.collect{it[0]}.join(nextLine)}"
 }
 
-task groupUpdateAllGradle(dependsOn: projectData.keySet().collect { "${updateProjectGradleTaskName(it)}" }) {
+task groupUpdateAllGradle(dependsOn: projectData.collect { "${updateProjectGradleTaskName(it[0])}" }) {
   group "Group gradle update"
-  description = "Update ${projectData.keySet().join(nextLine)}"
+  description = "Update ${projectData.collect{it[0]}.join(nextLine)}"
 }
 
 ////// Check targets
@@ -297,7 +374,7 @@ task checkGradleWrappers(type: CheckGithubFile) {
   group = "Check that gradle wrappers are the same across projects"
 
   organization = 'xebialabs'
-  repositories = projectData.keySet()
+  repositories = projectData.collect{it[0]}
   contentPath = 'gradle/wrapper/gradle-wrapper.properties'
   branch = { -> project.getProperty('branch') }
   username = githubOauthToken
@@ -337,11 +414,13 @@ task checkVersions(type: CheckGithubFile) {
   group = "Check that gradle wrappers are the same across projects"
 
   organization = 'xebialabs'
-  repositories = projectData.keySet()
+  repositories = projectData.grep{it[1].toUpdate.contains('depcfg')}.collect{it[0]}
   contentPath = 'gradle/dependencies.conf'
   branch = { -> project.getProperty('branch') }
   username = githubOauthToken
   password = 'x-oauth-basic'
+
+  description = "Check versions in ${repositories.join(' ')}"
 
   def nonMatching = []
   def previousCfg = null
