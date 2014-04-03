@@ -1061,6 +1061,48 @@
       "licenseSource": "data",
       "license": "MIT-LODASH"
     },
+    "org:resthttpservice": {
+      "license": "MIT-RESTHTTPSERVICE",
+      "licenseSource": "data"
+    },
+    "com.amcharts:amChartsFB3": {
+      "license": "Commercial",
+      "licenseSource": "data",
+      "comment": "We have a commercial license for this component."
+    },
+    "org.as3lib:as3httpclientlib": {
+      "license": "MIT-AS3HTTPCLIENT",
+      "licenseSource": "data"
+    },
+    "org.as3lib:as3corelibcustom": {
+      "license": "BSD-ADOBE",
+      "licenseSource": "data"
+    },
+    "org.as3commons:as3commons-reflect": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.as3commons:as3commons-lang": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.as3commons:as3commons-logging": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.springextensions.actionscript:spring-actionscript-core": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.bytearray:gifplayer": {
+      "license": "MIT",
+      "licenseSource": "data",
+      "comment": "Two sites list different licenses MIT/CCAL-3.0, waiting for information from author."
+    },
+    "com.google.code.flex-iframe:flex-iframe": {
+      "license": "MIT-FLEXIFRAME",
+      "licenseSource": "data"
+    },
     "dummy:dummy": {
       "license": "Apache-2.0",
       "licenseSource": "data",
