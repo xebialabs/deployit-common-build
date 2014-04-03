@@ -1,12 +1,12 @@
 Eclipse Public License - v 1.0
 
 THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
-LICENSE (\"AGREEMENT\"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE
+LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE
 PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
 
 1. DEFINITIONS
 
-\"Contribution\" means:
+"Contribution" means:
 
 a) in the case of the initial Contributor, the initial code and
    documentation distributed under this Agreement, and
@@ -25,16 +25,16 @@ not include additions to the Program which: (i) are separate modules of
 software distributed in conjunction with the Program under their own
 license agreement, and (ii) are not derivative works of the Program.
 
-\"Contributor\" means any person or entity that distributes the Program.
+"Contributor" means any person or entity that distributes the Program.
 
-\"Licensed Patents\" mean patent claims licensable by a Contributor which
+"Licensed Patents" mean patent claims licensable by a Contributor which
 are necessarily infringed by the use or sale of its Contribution alone or
 when combined with the Program.
 
-\"Program\" means the Contributions distributed in accordance with this
+"Program" means the Contributions distributed in accordance with this
 Agreement.
 
-\"Recipient\" means anyone who receives the Program under this Agreement,
+"Recipient" means anyone who receives the Program under this Agreement,
 including all Contributors.
 
 2. GRANT OF RIGHTS
@@ -119,9 +119,9 @@ intended to facilitate the commercial use of the Program, the Contributor who
 includes the Program in a commercial product offering should do so in a manner
 which does not create potential liability for other Contributors. Therefore,
 if a Contributor includes the Program in a commercial product offering, such
-Contributor (\"Commercial Contributor\") hereby agrees to defend and indemnify
-every other Contributor (\"Indemnified Contributor\") against any losses,
-damages and costs (collectively \"Losses\") arising from claims, lawsuits and
+Contributor ("Commercial Contributor") hereby agrees to defend and indemnify
+every other Contributor ("Indemnified Contributor") against any losses,
+damages and costs (collectively "Losses") arising from claims, lawsuits and
 other legal actions brought by a third party against the Indemnified
 Contributor to the extent caused by the acts or omissions of such Commercial
 Contributor in connection with its distribution of the Program in a commercial
@@ -146,7 +146,7 @@ Commercial Contributor must pay those damages.
 5. NO WARRANTY
 
 EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, THE PROGRAM IS PROVIDED
-ON AN \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER
+ON AN "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER
 EXPRESS OR IMPLIED INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OR
 CONDITIONS OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A
 PARTICULAR PURPOSE. Each Recipient is solely responsible for determining
