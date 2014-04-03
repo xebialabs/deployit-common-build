@@ -40,6 +40,7 @@ ext {
 
   pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
   projectData = mainProjectData + pluginProjectData // + testData
+  checkGradleProjectData = mainProjectData + middleWarePluginProjectData
 
   versionProperties = ['apiVersion',
                        'licenseDatabaseVersion',
@@ -374,7 +375,7 @@ task checkGradleWrappers(type: CheckGithubFile) {
   group = "Check that gradle wrappers are the same across projects"
 
   organization = 'xebialabs'
-  repositories = projectData.collect{it[0]}
+  repositories = checkGradleProjectData.collect{it[0]}
   contentPath = 'gradle/wrapper/gradle-wrapper.properties'
   branch = { -> project.getProperty('branch') }
   username = githubOauthToken
