@@ -980,6 +980,71 @@
     "org.aspectj:aspectjrt": {
       "license": "EPL-1.0",
       "licenseSource": "data"
+    },
+    "com.vmware:vijava": {
+      "license": "BSD-3CLAUSE",
+      "licenseSource": "jar"
+    },
+    "org.apache.jclouds.api:ec2": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.jclouds.api:sts": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.jclouds.provider:aws-ec2": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.jclouds:jclouds-compute": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.jclouds:jclouds-core": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.apache.jclouds:jclouds-scriptbuilder": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "com.google.inject:guice": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "com.google.inject.extensions:guice-assistedinject": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.99soft.guice:rocoto": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "javax.ws.rs:jsr311-api": {
+      "license": "CDDL-1.0",
+      "licenseSource": "data"
+    },
+    "javax.inject:javax.inject": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.jboss:jboss-dmr": {
+      "license": "LGPL-2.1",
+      "licenseSource": "data"
+    },
+    "org.codehaus.jackson:jackson-core-asl": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "org.codehaus.jackson:jackson-mapper-asl": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "dummy:dummy": {
+      "license": "Apache-2.0",
+      "licenseSource": "data",
+      "dummy entry:": "I don't want to forget to put a , at the end again....."
     }
   },
   "licenses": {
