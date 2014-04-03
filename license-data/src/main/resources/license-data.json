@@ -1041,6 +1041,26 @@
       "license": "Apache-2.0",
       "licenseSource": "data"
     },
+    "jquery": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "angular": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "angular-resource": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "bootstrap": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "lodash" :{
+      "licenseSource": "data",
+      "license": "MIT-LODASH"
+    },
     "dummy:dummy": {
       "license": "Apache-2.0",
       "licenseSource": "data",
