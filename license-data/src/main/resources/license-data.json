@@ -1,5 +1,17 @@
 {
     "artifacts": {
+        "es5-shim": {
+            "license": "MIT-ES5-SHIM",
+            "licenseSource": "data"
+        },
+        "json3": {
+            "license": "MIT-JSON3",
+            "licenseSource": "data"
+        },
+        "restangular": {
+            "license": "MIT-RESTANGULAR",
+            "licenseSource": "data"
+        },
         "ro.isdc.wro4j:rhino": {
             "license": "MPL-2.0",
             "licenseSource": "data"
@@ -1364,6 +1376,18 @@
         "MIT-LODASH": {
             "type": "MIT",
             "file": "MIT-LODASH"
+        },
+        "MIT-RESTANGULAR": {
+            "type": "MIT",
+            "file": "MIT-RESTANGULAR"
+        },
+        "MIT-JSON3": {
+            "type": "MIT",
+            "file": "MIT-JSON3"
+        },
+        "MIT-ES5-SHIM": {
+            "type": "MIT",
+            "file": "MIT-ES5-SHIM"
         },
         "Commercial": {
             "type": "Commercial",
