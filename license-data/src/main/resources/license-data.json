@@ -1102,6 +1102,81 @@
       "license": "MIT-FLEXIFRAME",
       "licenseSource": "data"
     },
+    "jquery-ui": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "jquery-simulate": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "angular-sanitize": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "angular-route": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "angular-strap": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "angular-ui-sortable": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "bootstrap-datepicker": {
+      "license": "Apache-2.0",
+      "licenseSource": "data"
+    },
+    "marked": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "moment.js": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "jsTimezoneDetect": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "Highcharts JS": {
+      "license": "Commercial",
+      "licenseSource": "data",
+      "comment": "We have a commercial license for this component."
+    },
+    "qTip2": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "Chroma.js": {
+      "license": "BSD",
+      "licenseSource": "data"
+    },
+    "colors": {
+      "license": "Apache-2.0",
+      "licenseSource": "data",
+      "comment": "Chroma.js includes colors from colorbrewer2.org"
+    },
+    "DHTMLX Gantt Chart": {
+      "license": "Commercial",
+      "licenseSource": "data",
+      "comment": "We have a commercial license for this component."
+    },
+    "jQuery File Upload Plugin": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "Bowser": {
+      "license": "MIT",
+      "licenseSource": "data"
+    },
+    "jquery.pnotify.js": {
+      "license": "MPL-1.1",
+      "licenseSource": "data"
+    },
     "dummy:dummy": {
       "license": "Apache-2.0",
       "licenseSource": "data",
