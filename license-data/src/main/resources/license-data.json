@@ -1104,7 +1104,7 @@
         },
         "org.bytearray:gifplayer": {
             "license": "MIT",
-            "licenseSource": "data",
+            "licenseSource": "data"
         },
         "com.google.code.flex-iframe:flex-iframe": {
             "license": "MIT-FLEXIFRAME",
@@ -1368,7 +1368,6 @@
         "Commercial": {
             "type": "Commercial",
             "file": "Commercial"
-        },
-
+        }
     }
 }
