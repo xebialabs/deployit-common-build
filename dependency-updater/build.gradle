@@ -40,7 +40,6 @@ ext {
 
   pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
   projectData = mainProjectData + pluginProjectData // + testData
-  checkGradleProjectData = mainProjectData + middleWarePluginProjectData
 
   versionProperties = ['apiVersion',
                        'licenseDatabaseVersion',
@@ -275,39 +274,42 @@ projectData.each { repoName, metadata ->
     tasks["${updateProjectDependencyTaskName(repoName)}"].description += " pom.xml"
   }
 
-  task "${updateProjectGradleTaskName(repoName)}"(type: UpdateGithubFile) {
-    group = "Single project Gradle Wrapper Update"
+  // depcfg implies gradle wrapper
+  if( metadata.toUpdate.contains('depcfg') ) {
+    task "${updateProjectGradleTaskName(repoName)}"(type: UpdateGithubFile) {
+      group = "Single project Gradle Wrapper Update"
 
-    organization = 'xebialabs'
-    repository = repoName
-    contentPath = 'gradle/wrapper/gradle-wrapper.properties'
-    branch = { -> project.getProperty('branch') }
-    username = githubOauthToken
-    password = 'x-oauth-basic'
+      organization = 'xebialabs'
+      repository = repoName
+      contentPath = 'gradle/wrapper/gradle-wrapper.properties'
+      branch = { -> project.getProperty('branch') }
+      username = githubOauthToken
+      password = 'x-oauth-basic'
 
-    doUpdate { content ->
-      if (project.hasProperty('gradleDistributionUrl')) {
-        def url = project.getProperty('gradleDistributionUrl')
+      doUpdate { content ->
+        if (project.hasProperty('gradleDistributionUrl')) {
+          def url = project.getProperty('gradleDistributionUrl')
 
-        Properties props = new Properties();
-        props.load(new StringReader(content))
-        def currentUrl = props['distributionUrl']
+          Properties props = new Properties();
+          props.load(new StringReader(content))
+          def currentUrl = props['distributionUrl']
 
-        if (!url.equals(currentUrl)) {
-          logger.info("Updating gradle distribution $currentUrl -> $url")
-          props['distributionUrl'] = url
-          def newContent = new StringWriter()
-          props.store(newContent, null)
-          String gradleZip = url.substring(url.lastIndexOf('/') + 1).replace('-bin.zip', '')
-          return [content: newContent.toString(), message: gradleZip]
+          if (!url.equals(currentUrl)) {
+            logger.info("Updating gradle distribution $currentUrl -> $url")
+            props['distributionUrl'] = url
+            def newContent = new StringWriter()
+            props.store(newContent, null)
+            String gradleZip = url.substring(url.lastIndexOf('/') + 1).replace('-bin.zip', '')
+            return [content: newContent.toString(), message: gradleZip]
+          } else {
+            logger.debug("Not updating gradle distributionUrl no change (${currentUrl})")
+          }
         } else {
-          logger.debug("Not updating gradle distributionUrl no change (${currentUrl})")
+          throw new RuntimeException("Property gradleDistributionUrl not set, don't know which gradle to update to.")
         }
-      } else {
-        throw new RuntimeException("Property gradleDistributionUrl not set, don't know which gradle to update to.")
-      }
 
-      return [:]
+        return [:]
+      }
     }
   }
 }
@@ -315,46 +317,46 @@ projectData.each { repoName, metadata ->
 ///// Dependency group update tasks
 
 def nextLine = ',\n    '
-task groupUpdateXlDeployDependencies(dependsOn: mainProjectData.collect { "${updateProjectDependencyTaskName(it[0])}" }) {
+task groupUpdateXlDeployDependencies(dependsOn: mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectDependencyTaskName(it[0])}" : null }) {
   group "Group update"
-  description = "Update ${mainProjectData.collect{it[0]}.join(nextLine)}"
+  description = "Update ${mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
 }
 
-task groupUpdateCiPluginDependencies(dependsOn: ciPluginProjectData.collect { "${updateProjectDependencyTaskName(it[0])}" }) {
+task groupUpdateCiPluginDependencies(dependsOn: ciPluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectDependencyTaskName(it[0])}" : null }) {
   group "Group update"
-  description = "Update ${ciPluginProjectData.collect{it[0]}.join(nextLine)}"
+  description = "Update ${ciPluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
 }
 
-task groupUpdateMiddleWarePluginDependencies(dependsOn: middleWarePluginProjectData.collect { "${updateProjectDependencyTaskName(it[0])}" }) {
+task groupUpdateMiddleWarePluginDependencies(dependsOn: middleWarePluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectDependencyTaskName(it[0])}" : null }) {
   group "Group update"
-  description = "Update ${middleWarePluginProjectData.collect{it[0]}.join(nextLine)}"
+  description = "Update ${middleWarePluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
 }
 
-task groupUpdatePluginDependencies(dependsOn: pluginProjectData.collect { "${updateProjectDependencyTaskName(it[0])}" }) {
+task groupUpdatePluginDependencies(dependsOn: pluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectDependencyTaskName(it[0])}" : null }) {
   group "Group update"
-  description = "Update ${pluginProjectData.collect{it[0]}.join(nextLine)}"
+  description = "Update ${pluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
 }
 
-task groupUpdateAllDependencies(dependsOn: projectData.collect { "${updateProjectDependencyTaskName(it[0])}" }) {
+task groupUpdateAllDependencies(dependsOn: projectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectDependencyTaskName(it[0])}" : null }) {
   group "Group update"
-  description = "Update ${projectData.collect{it[0]}.join(nextLine)}"
+  description = "Update ${projectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
 }
 
 ///// Gradle group update tasks
 
-task groupUpdateXlDeployGradle(dependsOn: mainProjectData.collect { "${updateProjectGradleTaskName(it[0])}" }) {
+task groupUpdateXlDeployGradle(dependsOn: mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
   group "Group gradle update"
-  description = "Update ${mainProjectData.collect{it[0]}.join(nextLine)}"
+  description = "Update ${mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
 }
 
-task groupUpdatePluginGradle(dependsOn: pluginProjectData.collect { "${updateProjectGradleTaskName(it[0])}" }) {
+task groupUpdatePluginGradle(dependsOn: pluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
   group "Group gradle update"
-  description = "Update ${pluginProjectData.collect{it[0]}.join(nextLine)}"
+  description = "Update ${pluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
 }
 
-task groupUpdateAllGradle(dependsOn: projectData.collect { "${updateProjectGradleTaskName(it[0])}" }) {
+task groupUpdateAllGradle(dependsOn: projectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
   group "Group gradle update"
-  description = "Update ${projectData.collect{it[0]}.join(nextLine)}"
+  description = "Update ${projectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
 }
 
 ////// Check targets
@@ -375,7 +377,7 @@ task checkGradleWrappers(type: CheckGithubFile) {
   group = "Check that gradle wrappers are the same across projects"
 
   organization = 'xebialabs'
-  repositories = checkGradleProjectData.collect{it[0]}
+  repositories = projectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }
   contentPath = 'gradle/wrapper/gradle-wrapper.properties'
   branch = { -> project.getProperty('branch') }
   username = githubOauthToken
