@@ -1097,7 +1097,6 @@
     "org.bytearray:gifplayer": {
       "license": "MIT",
       "licenseSource": "data",
-      "comment": "Two sites list different licenses MIT/CCAL-3.0, waiting for information from author."
     },
     "com.google.code.flex-iframe:flex-iframe": {
       "license": "MIT-FLEXIFRAME",
