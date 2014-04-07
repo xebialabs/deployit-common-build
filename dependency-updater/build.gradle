@@ -22,6 +22,7 @@ ext {
   ]
   middleWarePluginProjectData = [
     [ 'tomcat-plugin',         [ url: 'git@github.com:xebialabs/tomcat-plugin.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'biztalk-plugin',         [ url: 'git@github.com:xebialabs/biztalk-plugin.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'glassfish-plugin',      [ url: 'git@github.com:xebialabs/glassfish-plugin.git', toUpdate: [ 'depcfg' ] ] ],
 
     [ 'jbossas-plugin',        [ url: 'git@github.com:xebialabs/jbossas-plugin.git', toUpdate: [ 'depcfg' ] ] ],
