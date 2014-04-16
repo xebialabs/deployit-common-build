@@ -40,9 +40,25 @@ $DRYRUN = 0;
 # Push the updated branch with tags back to the origin:
 # $ git push --tags origin master
 
+use DateTime qw();
+
 sub waitKey {
 	print "Waiting for key\n";
 	$dummy = <STDIN>;
+}
+
+sub askQuestion {
+    my $text = shift;
+    my $defaultAnswer = shift;
+
+    print($text);
+    chomp(my $answer=<STDIN>);
+
+    if ($answer eq '') {
+        return $defaultAnswer
+    }
+
+    return $answer
 }
 
 sub execute {
@@ -240,24 +256,69 @@ sub createMaintenanceBranchIfNeeded {
 	}
 }
 
-sub prepareReleaseNotes {
-  
-  my $project = shift;
-  my $branch = shift;
-  my $version = shift;
-  
-  print("Querying JIRA for release notes for $project on $branch\n");
-  
+sub askJiraCredentials {
+
   print("Jira username: ");
-  chomp($username=<STDIN>);
+  chomp(my $username=<STDIN>);
   system('stty','-echo');
   print("Jira password: ");
-  chomp($password=<STDIN>);
+  chomp(my $password=<STDIN>);
   system('stty','echo');
   print("\n");
+
+  return "$username:$password";
+}
+
+
+sub releaseJiraVersion {
+
+  my $defaultVersion = shift;
+  my $version = askQuestion("JIRA version name? [$defaultVersion] ", $defaultVersion);
+
+  print("Releasing version $version in JIRA\n");
+
+  my $credentials = askJiraCredentials();
+
+  my $jsAwkScript = "'if (this.name==\"$version\") {out(this.self)}'";
+
+  my $versionUrl = execute("curl -s -u $credentials -X GET https://xebialabs.atlassian.net/rest/api/latest/project/DEPL/versions | jsawk -n $jsAwkScript", "Failed to find version. Incorrect credentials?");
+
+  print("Releasing version $version with url=$versionUrl");
+
+  if ($DRYRUN == 0) {
+    execute("curl -s -u $credentials -X PUT -d '{\"released\": true}' -H 'Content-Type: application/json' $versionUrl", "Failed to find version. Incorrect credentials?");
+  }
+  print("Released version $version. \n");
+
+}
+
+sub createJiraVersion {
+
+  my $defaultVersion = shift;
+  my $version = askQuestion("JIRA version name? [$defaultVersion] ", $defaultVersion);
+  my $today = DateTime->now->strftime('%Y-%m-%d');
+
+  print("Creating an unreleased version $version in JIRA\n");
+
+  my $credentials = askJiraCredentials();
+
+  my $versionJson = "'{\"name\": \"$version\", \"startDate\": \"$today\", \"project\": \"DEPL\"}'";
+
+  if ($DRYRUN == 0) {
+    execute("curl -s -u $credentials -X POST -H 'Content-type: application/json' -d $versionJson https://xebialabs.atlassian.net/rest/api/latest/version", "Failed to create version. Incorrect credentials?");
+  }
+  print("Created $version with start date $today \n")
+}
+
+sub prepareReleaseNotes {
+  my $version = shift;
+  $version = askQuestion("Fix version to search for release notes? [$version] ", $version);
+
+  print("Querying JIRA for release notes for $version\n");
+  
+  my $credentials = askJiraCredentials();
   
   my $jsAwkScript = "'
-  out(\"*** Version ${version}\")
   var issuesByType = _.reduce(this.issues, function(memo, i) {
     if (i.fields.issuetype.name == \"Bug\") {
       memo[\"Bug fixes\"].push(i) 
@@ -274,17 +335,15 @@ sub prepareReleaseNotes {
     })
   })
   '";
-  
-  my $escapedBranch = $branch;
-  $escapedBranch =~ s/\./\\u002e/g;
-  my $releaseNotes = execute("curl -s -u $username:$password -X GET -H 'Content-Type: application/json' https://xebialabs.atlassian.net/rest/api/latest/search?jql=fixVersion='$escapedBranch'+AND+status='Release\\u0020Ready'+AND+component=$project | jsawk -n $jsAwkScript", "Failed to request release notes. Incorrect credentials?");
+
+  my $releaseNotes = execute("curl -s -u $credentials -X GET -H 'Content-Type: application/json' https://xebialabs.atlassian.net/rest/api/latest/search?jql=fixVersion='$version'+AND+resolution='Fixed'+AND+component=$project | jsawk -n $jsAwkScript", "Failed to request release notes. Incorrect credentials?");
   
   print("-----------------------------------------------------------------------------------------  \n");
   print($releaseNotes);
   print("-----------------------------------------------------------------------------------------  \n");  
-  print("Are you OK with adding this to release-notes.txt? [y] y/n? ");
-  chomp($answer=<STDIN>);
-  
+
+  my $answer = askQuestion("Are you OK with adding this to release-notes.txt? [y] y/n? ", 'yes');
+
   if ($answer eq 'y' || $answer eq 'yes' || $answer eq '') {
     $releaseNotes =~ s/'/\\'/g;
     my $head = execute("head -n 1 release-notes.txt");
@@ -350,7 +409,8 @@ $releaseVersion = $1;
 print "Release version: $releaseVersion\n";
 
 $releaseVersion =~ /^([0-9])\.([0-9])(\.([0-9]+))?$/;
-$developmentVersion = "$1" . "." . "$2" . "." . (int($4) + 1) . "-SNAPSHOT";
+my $nextVersion = "$1" . "." . "$2" . "." . (int($4) + 1);
+$developmentVersion = $nextVersion . "-SNAPSHOT";
 print "Development version: $developmentVersion\n";
 
 print "\n";
@@ -358,10 +418,12 @@ print "\n";
 checkCommonBuildOrigin();
 checkOutstandingWork();
 updateLocalRepo();
-prepareReleaseNotes($project, $branch, $releaseVersion);
+prepareReleaseNotes($project . '-' . $releaseVersion);
 setReleaseVersion($version, $releaseVersion);
 buildReleaseVersion($project, $releaseVersion);
 commitAndTagRelease($project, $releaseVersion);
+releaseJiraVersion($project . '-' . $releaseVersion);
+createJiraVersion($project . '-' . $nextVersion);
 setAndCommitDevelopmentVersion($releaseVersion, $developmentVersion);
 pushChanges($branch);
 updateDependenciesIfNeeded($project, $releaseVersion);
