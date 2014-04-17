@@ -4,13 +4,13 @@ apply plugin: 'maven'
 apply plugin: 'java'
 
 group = 'com.xebialabs.deployit.documentation'
-version = '1.0.1-SNAPSHOT'
+version = '1.0.1'
 
 defaultTasks 'buildDocumentationZip'
 
 task buildDocumentationZip(type:Zip) {
   baseName = 'base-documentation-style'
-  exclude '**/pdf*', '**/unversioned-htmlTemplate.html'
+  exclude '**/pdf*'
   from 'generation'
 }
 
