@@ -10,6 +10,7 @@ import org.codehaus.jettison.json.JSONObject;
 import com.xebialabs.xltype.serialization.json.JsonWriter;
 
 import static com.google.common.collect.Maps.newTreeMap;
+import static com.google.common.collect.Sets.newLinkedHashSet;
 import static com.google.common.collect.Sets.newTreeSet;
 
 /**
@@ -20,7 +21,7 @@ import static com.google.common.collect.Sets.newTreeSet;
 public class FeatureMatrix implements Comparable<FeatureMatrix> {
 
     private final String name;
-    private final Set<String> supportedVersions = newTreeSet();
+    private final Set<String> supportedVersions = newLinkedHashSet();
     private final Map<String, FeatureMatrix> children = newTreeMap();
 
     public FeatureMatrix(String name) {
