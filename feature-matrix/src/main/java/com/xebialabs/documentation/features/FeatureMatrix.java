@@ -23,6 +23,7 @@ public class FeatureMatrix implements Comparable<FeatureMatrix> {
     private final String name;
     private final Set<String> supportedVersions = newLinkedHashSet();
     private final Map<String, FeatureMatrix> children = newTreeMap();
+    private boolean virtual = false;
 
     public FeatureMatrix(String name) {
         this.name = name;
@@ -35,6 +36,7 @@ public class FeatureMatrix implements Comparable<FeatureMatrix> {
 
     public FeatureMatrix(JSONObject json) throws JSONException {
         this.name = json.getString("name");
+        this.virtual = json.optBoolean("virtual");
 
         // Versions
         JSONArray versions = json.getJSONArray("versions");
@@ -53,9 +55,14 @@ public class FeatureMatrix implements Comparable<FeatureMatrix> {
     }
 
     public FeatureMatrix getFeature(String name) {
+        return getFeature(name, false);
+    }
+
+    private FeatureMatrix getFeature(String name, boolean addAsvirtual) {
         FeatureMatrix feature = children.get(name);
         if (feature == null) {
             feature = new FeatureMatrix(name);
+            feature.setVirtual(addAsvirtual);
             add(feature);
         }
         return feature;
@@ -71,7 +78,8 @@ public class FeatureMatrix implements Comparable<FeatureMatrix> {
         Set<String> names = newTreeSet(children.keySet());
         names.addAll(other.getChildren().keySet());
         for (String name : names) {
-            getFeature(name).combine(other.getFeature(name));
+            FeatureMatrix otherFeature = other.getFeature(name);
+            getFeature(name, otherFeature.isVirtual()).combine(otherFeature);
         }
     }
 
@@ -83,6 +91,9 @@ public class FeatureMatrix implements Comparable<FeatureMatrix> {
     public void writeJson(JsonWriter writer) {
         writer.object();
         writer.key("name").value(name);
+        if (virtual) {
+            writer.key("virtual").value(virtual);
+        }
         writer.key("versions").array();
         for (String version : supportedVersions) {
             writer.value(version);
@@ -119,5 +130,13 @@ public class FeatureMatrix implements Comparable<FeatureMatrix> {
     @Override
     public int compareTo(FeatureMatrix o) {
         return name.compareTo(o.name);
+    }
+
+    public boolean isVirtual() {
+        return virtual;
+    }
+
+    public void setVirtual(boolean virtual) {
+        this.virtual = virtual;
     }
 }

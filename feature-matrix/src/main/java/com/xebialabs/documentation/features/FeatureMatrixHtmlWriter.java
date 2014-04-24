@@ -37,7 +37,7 @@ public class FeatureMatrixHtmlWriter extends HtmlWriter {
         element("tr", headerCells.toArray()).write();
 
         // Content
-        writeFeatureRows(matrix, "");
+        writeFeatureRows(matrix, "", true);
 
         table().writeClose();
         body().writeClose();
@@ -54,11 +54,15 @@ public class FeatureMatrixHtmlWriter extends HtmlWriter {
         }
     }
 
-    protected void writeFeatureRows(FeatureMatrix features, String indent) {
+    protected void writeFeatureRows(FeatureMatrix features, String indent, boolean showVirtual) {
+        if (features.isVirtual() && !showVirtual) {
+            return;
+        }
+
         for (FeatureMatrix feature: features.getChildren().values()) {
             createRow(feature, indent).write();
 
-            writeFeatureRows(feature, indent + " - ");
+            writeFeatureRows(feature, indent + " - ", false);
         }
     }
 

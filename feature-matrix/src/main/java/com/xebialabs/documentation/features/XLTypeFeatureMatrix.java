@@ -29,9 +29,9 @@ public class XLTypeFeatureMatrix extends FeatureMatrix {
     public void scanTypes(String version, String prefix) {
         for (Descriptor descriptor : DescriptorRegistry.getDescriptors()) {
 
-            // No vritual types
+            // Mark virtual types
             if (descriptor.isVirtual()) {
-                continue;
+                setVirtual(true);
             }
 
             // Only selected types
@@ -61,11 +61,9 @@ public class XLTypeFeatureMatrix extends FeatureMatrix {
                 continue;
             }
 
-            if (isInherited(property)) {
-                continue;
-            }
-
-            typeFeatures.getFeature(property.getName()).addVersion(version);
+            FeatureMatrix feature = typeFeatures.getFeature(property.getName());
+            feature.setVirtual(isInherited(property));
+            feature.addVersion(version);
         }
     }
 

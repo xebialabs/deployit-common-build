@@ -19,7 +19,7 @@ Feature Matrix launcher
 */
 
 def plugin = [
-  name:"was-plugin-extensions", 
+  name:"was-plugin", 
   version:"4.1.0-SNAPSHOT", 
   prefix:"was", 
   group:"com.xebialabs.deployit.plugins"
