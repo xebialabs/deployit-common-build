@@ -1,0 +1,15 @@
+group = 'com.xebialabs'
+version = '1.0-SNAPSHOT'
+
+apply plugin: 'deployit-java'
+apply plugin: 'deployit-artifact'
+
+dependencies {
+    compile guava
+    compile deployit_udm_plugin_api
+    compile deployit_local_booter
+    compile deployit_engine_xml
+    compile jettison
+    compile xebialabs_html_writer
+    compile args4j 
+}
