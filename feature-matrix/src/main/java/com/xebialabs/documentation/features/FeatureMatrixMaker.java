@@ -86,11 +86,10 @@ public class FeatureMatrixMaker {
         File parent = new File("/Users/Hes/Code/deployit-common-build/feature-matrix/build");
         FeatureMatrix matrix = maker.combine(Arrays.asList(
             new File(parent, "was-plugin-3.9.0-features.json"),
-            new File(parent, "was-plugin-extensions-3.9.0-features.json"),
             new File(parent, "was-plugin-4.0.0-features.json"),
-            new File(parent, "was-plugin-extensions-4.0.0-features.json"),
             new File(parent, "was-plugin-4.1.0-SNAPSHOT-features.json"),
-            new File(parent, "was-plugin-extensions-4.1.0-SNAPSHOT-features.json")
+            new File(parent, "was-plugin-extensions-3.9.0-features.json"),
+            new File(parent, "was-plugin-extensions-4.0.0-features.json")
             ));
 
         maker.saveAsHtml(matrix, new File("feature-matrix.html"));
