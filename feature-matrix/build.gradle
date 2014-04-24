@@ -13,3 +13,41 @@ dependencies {
     compile xebialabs_html_writer
     compile args4j 
 }
+
+/*
+Feature Matrix launcher
+*/
+
+def plugin = [
+  name:"was-plugin-extensions", 
+  version:"4.1.0-SNAPSHOT", 
+  prefix:"was", 
+  group:"com.xebialabs.deployit.plugins"
+]
+
+
+configurations {
+  features
+}
+
+dependencies {
+  features "${plugin.group}:${plugin.name}:${plugin.version}"
+}
+
+task featureList(type: JavaExec, dependsOn: ["classes"]) {
+    def featureFile = "${project.projectDir}/build/${plugin.name}-${plugin.version}-features.json"
+
+    doFirst {
+        println("Creating feature list in " + featureFile)
+    }
+
+    classpath sourceSets.main.output.classesDir
+    classpath sourceSets.main.output.resourcesDir
+    classpath (configurations.runtime + configurations.features)
+    main "com.xebialabs.documentation.features.CreateList"
+    args "-name", plugin.name,
+        "-version", plugin.version,
+        "-prefix", plugin.prefix,
+        "-file", featureFile
+}
+
