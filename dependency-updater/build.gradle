@@ -14,7 +14,7 @@ ext {
     [ 'engine',           [ url: 'git@github.com:xebialabs/engine.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'bundled-plugins',  [ url: 'git@github.com:xebialabs/bundled-plugins.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'cloud-pack',       [ url: 'git@github.com:xebialabs/cloud-pack.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'deployit',         [ url: 'git@github.com:xebialabs/deployit.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'xl-deploy',         [ url: 'git@github.com:xebialabs/xl-deploy.git', toUpdate: [ 'depcfg' ] ] ],
   ]
   ciPluginProjectData = [
     [ 'bamboo-deployit-plugin', [ url: 'git@github.com:xebialabs/bamboo-deployit-plugin.git', toUpdate: [ 'depcfg', 'pom' ] ] ],
