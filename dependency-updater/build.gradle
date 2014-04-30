@@ -42,7 +42,7 @@ ext {
   pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
   projectData = mainProjectData + pluginProjectData // + testData
 
-  versionProperties = ['apiVersion',
+  versionProperties = ['platformVersion',
                        'licenseDatabaseVersion',
                        'bundledPluginsVersion',
                        'cloudPackVersion',
@@ -50,7 +50,7 @@ ext {
                        'engineVersion',
                        'overthereVersion',
                        'overcastVersion']
-  propToProject = ['apiVersion'            : 'plugin-api',
+  propToProject = ['platformVersion'       : 'xl-platform',
                    'licenseDatabaseVersion': 'license-database',
                    'bundledPluginsVersion' : 'bundled-plugins',
                    'cloudPackVersion'      : 'cloud-pack',
@@ -79,17 +79,17 @@ added/updated.
 So to update all XL Deploy dependencies:
 
     gradle groupUpdateXlDeployDependencies \\
-      -PapiVersion=5.0.1 \\
+      -PplatformVersion=5.0.1 \\
       -PengineVersion=5.0.1 \\
       -Pbranch=master
 
 Or using task abbreviations:
 
-    gradle gUXD -PapiVersion=5.0.1 -PengineVersion=5.0.1  -Pbranch=master
+    gradle gUXD -PplatformVersion=5.0.1 -PengineVersion=5.0.1  -Pbranch=master
 
 To update only the jenkins deployit plugin:
 
-    gradle updateJenkinsDeployitPluginDependencies -PapiVersion=5.0.1 -Pbranch=master
+    gradle updateJenkinsDeployitPluginDependencies -PplatformVersion=5.0.1 -Pbranch=master
 
 To specify the branch you want to update use -Pbranch=<branch>. There is no
 default by design.
