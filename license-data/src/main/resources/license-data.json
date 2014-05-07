@@ -445,6 +445,16 @@
             "additionalLicenses": "LGPL-2.1",
             "licenseSource": "data"
         },
+        "ch.qos.logback:logback-access": {
+            "license": "EPL-1.0",
+            "additionalLicenses": "LGPL-2.1",
+            "licenseSource": "data"
+        },
+        "ch.qos.logback:logback-core": {
+            "license": "EPL-1.0",
+            "additionalLicenses": "LGPL-2.1",
+            "licenseSource": "data"
+        },
         "commons-io:commons-io": {
             "license": "Apache-2.0",
             "licenseSource": "jar"
