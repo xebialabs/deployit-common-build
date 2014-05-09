@@ -10,10 +10,7 @@ buildscript {
 
 ext {
   mainProjectData = [
-    [ 'plugin-api',       [ url: 'git@github.com:xebialabs/plugin-api.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'engine',           [ url: 'git@github.com:xebialabs/engine.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'bundled-plugins',  [ url: 'git@github.com:xebialabs/bundled-plugins.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'cloud-pack',       [ url: 'git@github.com:xebialabs/cloud-pack.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'cloud-pack',        [ url: 'git@github.com:xebialabs/cloud-pack.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'xl-deploy',         [ url: 'git@github.com:xebialabs/xl-deploy.git', toUpdate: [ 'depcfg' ] ] ],
   ]
   ciPluginProjectData = [
@@ -50,12 +47,11 @@ ext {
                        'engineVersion',
                        'overthereVersion',
                        'overcastVersion']
-  propToProject = ['platformVersion'       : 'xl-platform',
+  propToProject = ['xlPlatformVersion'     : 'xl-platform',
+                   'xlDeployVersion'       : 'xl-deploy',
                    'licenseDatabaseVersion': 'license-database',
-                   'bundledPluginsVersion' : 'bundled-plugins',
                    'cloudPackVersion'      : 'cloud-pack',
                    'docBaseStyleVersion'   : 'doc-base-style',
-                   'engineVersion'         : 'engine',
                    'overthereVersion'      : 'overthere',
                    'overcastVersion'       : 'overcast']
 
