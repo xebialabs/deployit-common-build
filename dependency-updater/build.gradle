@@ -10,6 +10,7 @@ buildscript {
 
 ext {
   mainProjectData = [
+    [ 'xl-platform',         [ url: 'git@github.com:xebialabs/xl-platform.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'cloud-pack',        [ url: 'git@github.com:xebialabs/cloud-pack.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'xl-deploy',         [ url: 'git@github.com:xebialabs/xl-deploy.git', toUpdate: [ 'depcfg' ] ] ],
   ]
@@ -39,12 +40,11 @@ ext {
   pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
   projectData = mainProjectData + pluginProjectData // + testData
 
-  versionProperties = ['platformVersion',
+  versionProperties = ['xlPlatformVersion',
                        'licenseDatabaseVersion',
-                       'bundledPluginsVersion',
+                       'xlDeployVersion',
                        'cloudPackVersion',
                        'docBaseStyleVersion',
-                       'engineVersion',
                        'overthereVersion',
                        'overcastVersion']
   propToProject = ['xlPlatformVersion'     : 'xl-platform',
@@ -75,17 +75,16 @@ added/updated.
 So to update all XL Deploy dependencies:
 
     gradle groupUpdateXlDeployDependencies \\
-      -PplatformVersion=5.0.1 \\
-      -PengineVersion=5.0.1 \\
+      -PxlPlatformVersion=5.0.1 \\
       -Pbranch=master
 
 Or using task abbreviations:
 
-    gradle gUXD -PplatformVersion=5.0.1 -PengineVersion=5.0.1  -Pbranch=master
+    gradle gUXD -PxlPlatformVersion=5.0.1 -PxlDeployVersion=5.0.1  -Pbranch=master
 
 To update only the jenkins deployit plugin:
 
-    gradle updateJenkinsDeployitPluginDependencies -PplatformVersion=5.0.1 -Pbranch=master
+    gradle updateJenkinsDeployitPluginDependencies -PxlPlatformVersion=5.0.1 -Pbranch=master
 
 To specify the branch you want to update use -Pbranch=<branch>. There is no
 default by design.
