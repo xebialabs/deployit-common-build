@@ -17,7 +17,7 @@ ext {
     [ 'xl-deploy',         [ url: 'git@github.com:xebialabs/xl-deploy.git', toUpdate: [ 'depcfg' ] ] ],
   ]
   ciPluginProjectData = [
-    [ 'bamboo-xldeploy-plugin', [ url: 'git@github.com:xebialabs/bamboo-xldeploy-plugin.git', toUpdate: [ 'depcfg', 'pom' ] ] ],
+    [ 'bamboo-xldeploy-plugin', [ url: 'git@github.com:xebialabs/bamboo-xl-deploy-plugin.git', toUpdate: [ 'depcfg', 'pom' ] ] ],
     [ 'maven-xldeploy-plugin',  [ url: 'git@github.com:xebialabs/maven-xldeploy-plugin.git', toUpdate: [ 'pom' ] ] ],
   ]
   middleWarePluginProjectData = [
