@@ -8,6 +8,7 @@ buildscript {
   }
 }
 
+// The keys of mainProjectData should match with repository name from the URL
 ext {
   mainProjectData = [
     [ 'xl-platform',         [ url: 'git@github.com:xebialabs/xl-platform.git', toUpdate: [ 'depcfg' ] ] ],
@@ -15,7 +16,7 @@ ext {
     [ 'xl-deploy',         [ url: 'git@github.com:xebialabs/xl-deploy.git', toUpdate: [ 'depcfg' ] ] ],
   ]
   ciPluginProjectData = [
-    [ 'bamboo-xldeploy-plugin', [ url: 'git@github.com:xebialabs/bamboo-xldeploy-plugin.git', toUpdate: [ 'depcfg', 'pom' ] ] ],
+    [ 'bamboo-xl-deploy-plugin', [ url: 'git@github.com:xebialabs/bamboo-xl-deploy-plugin.git', toUpdate: [ 'depcfg', 'pom' ] ] ],
     [ 'maven-xldeploy-plugin',  [ url: 'git@github.com:xebialabs/maven-xldeploy-plugin.git', toUpdate: [ 'pom' ] ] ],
   ]
   middleWarePluginProjectData = [
