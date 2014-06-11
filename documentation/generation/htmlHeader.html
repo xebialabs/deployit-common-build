@@ -1,15 +1,31 @@
-<link rel="stylesheet" href="layout.css" type="text/css"/>
-<link rel="stylesheet" href="ci-reference-api.css" type="text/css"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{{title}}</title>
+<link type="text/css" rel="stylesheet" media="all" href="layout.css" />
+<link type="text/css" rel="stylesheet" media="all" href="ci-reference-api.css" />
 <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="js/jquery.tableofcontents.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-$(document).ready(function(){
-    var title = $(".manual-title");
-    var majorVersion = /((\d+)\.(\d+))/.exec('{{version}}')[0] + ".x";
-    title.html("<div class='title'>{{title}}</div><div class='version'>{{product}} <span class='version-number'>" + majorVersion + "</span></div>");
-    $("ol#toc").tableOfContents("body", { topLinks: false, startLevel: 2 } );
-});
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        var versionNumber = $(".version-number");
+        if (versionNumber.text() != '') {
+            var majorVersion = /((\d+)\.(\d+))/.exec(versionNumber.text())[0] + ".x";
+            versionNumber.text(majorVersion);
+            versionNumber.attr('style', '');
+        }
+
+        $("ol#toc").tableOfContents("body", { topLinks: false, startLevel: 2 });
+    });
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32396304-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
 
 </script>
-<title>{{title}}</title>
