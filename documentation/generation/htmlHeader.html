@@ -16,6 +16,11 @@
         }
 
         $("ol#toc").tableOfContents("body", { topLinks: false, startLevel: 2 });
+
+        //remove the toc if it is empty
+        if($("ol#toc").text().replace(/\n/g, '') == ''){
+            $("ol#toc").remove();
+        }
     });
 
     var _gaq = _gaq || [];
