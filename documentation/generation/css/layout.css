@@ -24,7 +24,6 @@ h3{font-size:14px;}
 h4{font-size:12px;}
 td, th{
   padding:2px 4px 2px 10px!important;
-  font-size: 12px;
 }
 h2, h1 {
   font-family: Arial, Helvetica!important;
@@ -411,12 +410,6 @@ width:100%;
 	background: #EEE;
 	border: 1px solid lightgray;
 	padding:10px 14px;
-	/* font-size: 10pt;
-	padding-right: 1em;
-	padding-top: 1em;
-	padding-bottom: 1em;
-	width: 20em;
-	margin-right: -25em; */
 }
 #toc ol {
 	padding-left: 16pt;
@@ -470,6 +463,8 @@ pre code {
 	display: block;
 }
 #start-listing .deployed-matrix {
+    font-size: 11px;
+    font-family: Arial, Helvetica, sans-serif;
     border: 1px solid #333333;
     border-collapse: collapse;
     color: #333;
@@ -494,18 +489,13 @@ pre code {
     background-color: #0683BF;
     border: 1px solid #000000;
     color: #FFFFFF;
-    font-size: 1.2em;
+    font-size: 14px;
     padding: 0.8em;
     text-align: center;
 }
 
-#start-listing .deployed-matrix td li {
-  font-size: 0.9em;
-}
-
 #start-listing .deployed-matrix td {
     border: 1px dotted #666666;
-    font-size: 0.9em;
     padding: 0.8em;
     text-align: left;
     vertical-align: top;
@@ -853,14 +843,15 @@ h2{
 	padding-bottom:0px;
 }
 
-.leftcol p{
-	
-	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+#start-listing {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-size:16px;
 	color:#333333;
-	line-height:20px;
-	
-}	
+}
+
+.leftcol p {
+    line-height:20px;
+}
 
 .leftcol{
 	margin-top:-15px;
@@ -883,37 +874,26 @@ h2{
 	
 	list-style-type:disc;
 	margin-left:35px;
-	font-size:16px;
-	color:#333333;
 	line-height:18px;
 	font-weight:normal;
 
 }
 #start-listing ul li{
-	
-	margin-bottom:15px;	
-	
+	margin-bottom:15px;
 }
+
 #start-listing ul li strong{
-	font-size:16px;
-	color:#333333;
 	line-height:18px;
 	font-weight:bold;
 }
 
 #start-listing ul li{
-	font-size:16px;
-	color:#333333;
-	line-height:18px;
+  line-height:18px;
   font-weight:normal;
 }
 
 #start-listing ul li a{
-	
-	
 	color:#333333;
-	
-	
 }
 
 #start-listing ul li a:hover{
