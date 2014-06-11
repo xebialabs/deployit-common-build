@@ -5,8 +5,8 @@
 <script type="text/javascript" src="js/jquery.tableofcontents.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
-    var title = $(".manual-title")
-    var majorVersion = /((\d+)\.(\d+))/.exec('{{version}}')[0] + ".x"
+    var title = $(".manual-title");
+    var majorVersion = /((\d+)\.(\d+))/.exec('{{version}}')[0] + ".x";
     title.html("<div class='title'>{{title}}</div><div class='version'>{{product}} <span class='version-number'>" + majorVersion + "</span></div>");
     $("ol#toc").tableOfContents("body", { topLinks: false, startLevel: 2 } );
 });
