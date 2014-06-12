@@ -86,7 +86,7 @@ a:link, a:visited {
     color: #027AC6;
     text-decoration: none;
 }
-a:hover{color:#156932}
+a:hover {color:#0683BF}
 
 .leftcol{float:left; margin:5px 0 0; width:654px;}
 .rightcol{float:right; margin:5px 0 0; width:257px;}
@@ -208,7 +208,7 @@ a:hover{color:#156932}
 
 
 /* footer */
-.footerbottom div.block-menu ul li a, a.active{color:#156932; text-decoration:none; font-family:Arial; font-size:12px;}
+.footerbottom div.block-menu ul li a, a.active{font-family:Arial; font-size:12px;}
 .footerbottom div.block-menu {width:97%; float:left}
 .footer .block .content{margin:0;}
 .footerbottom div.block {float:left; padding-top:18px; margin-left:20px; font-size:12px;}
@@ -240,11 +240,7 @@ a:hover{color:#156932}
 	margin-left:181px;
 	width:403px;
 }
-.footer h2 {
-	color:#6fb42b;
-	font-size:15px;
-    font-weight:bold;
-}
+
 .footer h3 {
 	color:#fff;
 	font-size:12px;
@@ -254,18 +250,12 @@ a:hover{color:#156932}
 .footer p {
 	color:#a1a0a0
 }
-.footer p span, .footer p span a {
-	color:#6fb42b;
-	text-decoration:none;
-}
+
 .footer address {
 	font-style:normal;
 	margin:20px 0;
 }
-.footer address a {
-	color:#6fb42b;
-	text-decoration:underline;
-}
+
 .footer h2 span img {
 	vertical-align:top
 }
@@ -415,12 +405,12 @@ width:100%;
 	padding-left: 16pt;
 }
 h1, h2, h3, h4, h5 {
-    color: #106931;
+    color: #0683BF;
     position: relative;
 }
 
 .manual-title {
-    color: #106931;
+    color: #0683BF;
     font-size:1.7em;
     font-weight: bold;
 }
@@ -545,7 +535,7 @@ input[type="submit"]:hover{color:#111}
 .basictab li a span{float:left; display:block; color:#2c78a9; background-image:url(../image/tabrightB.gif); background-repeat:no-repeat; background-position:right top; padding:8px 19px 6px 2px; font-weight:normal; line-height:15px; font-size:13px;}
 .basictab a span img{float:left; margin-right:5px;}
 .basictab a span{float:none;}
-.basictab a:hover span{color:#106931; height:15px;}
+.basictab a:hover span{color:#0683BF; height:15px;}
 .basictab a:hover{background-position:0% -30px;}
 .basictab a:hover span {background-position:100% -30px;}
 
@@ -860,14 +850,11 @@ h2{
 }
 /*ID & Styles for bulleted lists on "start here page"*/
 #start-listing h3{
-	
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
 	font-size:21px;
 	color:#333333;
-	line-height:18px;
+	line-height:23px;
 	font-weight:300;
-	
-	
 }
 
 #start-listing ul {
