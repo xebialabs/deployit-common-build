@@ -20,8 +20,9 @@ html, body {
 }
 h1{font-size:32px;}
 h2{font-size:25px;}
-h3{font-size:14px;}
-h4{font-size:12px;}
+h3{font-size:21px;}
+h4{font-size:15px;}
+h5{font-size: 13px}
 td, th{
   padding:2px 4px 2px 10px!important;
 }
@@ -452,8 +453,12 @@ pre code {
 	margin: 0 0 0 8px;  /*--Left Margin--*/
 	display: block;
 }
+
+#start-listing h1 {
+    line-height: 35px;
+}
 #start-listing .deployed-matrix {
-    font-size: 11px;
+    font-size: 12px;
     font-family: Arial, Helvetica, sans-serif;
     border: 1px solid #333333;
     border-collapse: collapse;
@@ -503,6 +508,19 @@ pre code {
 #start-listing .deployed-matrix th[scope="row"] {
     border-right: 1px solid #333333;
 }
+
+#start-listing ol li {
+    padding: 5px;
+}
+
+#start-listing ol li ol {
+    padding-left: 30px;
+}
+
+#start-listing ol {
+    padding-left: 25px;
+}
+
 th {
     font-weight: bold;
     text-align: left;
@@ -690,6 +708,7 @@ ul.dpd li b {
 	-webkit-margin-end: 0px;
 	width: auto;	
 	margin:0;
+    line-height: 35px;
 	
 }
 
@@ -826,8 +845,7 @@ ul.dpd li b {
 }
 
 h2{
-	color:#0683BF;	
-	font-size:20px;
+	color:#0683BF;
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
 	font-weight:100;
 	padding-bottom:0px;
@@ -851,7 +869,6 @@ h2{
 /*ID & Styles for bulleted lists on "start here page"*/
 #start-listing h3{
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-	font-size:21px;
 	color:#333333;
 	line-height:23px;
 	font-weight:300;

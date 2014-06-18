@@ -5,6 +5,7 @@ td {
 }
   
 .ci-reference table {
+  font-size: 13px;
   border-collapse: collapse;
   padding: 3px;
   page-break-inside: avoid;
@@ -18,8 +19,6 @@ td {
 
 .ci-toc-category {
     font-weight: bold;
-    padding-bottom: 5px;
-    padding-top: 20px;
 }
 
 .ci-toc, .ci-table {
@@ -60,6 +59,10 @@ td {
 }
 
 /* Details */
+
+h2 .ci-detail-title {
+    font-weight: normal;
+}
 
 .ci-details-title {
     font-weight: bold;
