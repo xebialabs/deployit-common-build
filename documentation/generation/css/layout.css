@@ -974,7 +974,7 @@ h2{
 
 #toc{
 
-	position:fixed;	
+	position:absolute;
 	width:227px;
 	height:400px;
 	overflow:auto;
