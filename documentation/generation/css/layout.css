@@ -454,7 +454,7 @@ pre code {
 	display: block;
 }
 
-#start-listing h1 {
+h1 {
     line-height: 35px;
 }
 #start-listing .deployed-matrix {
@@ -849,6 +849,7 @@ h2{
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
 	font-weight:100;
 	padding-bottom:0px;
+    line-height: 32px;
 }
 
 #start-listing {
