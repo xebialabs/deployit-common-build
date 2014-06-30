@@ -1,62 +1,89 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-{{{header}}}
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-32396304-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
+    {{{header}}}
 </head>
 <body id="top-toc">
 <div id="page"><!-- main page start -->
-<div id="Main_container"><!--main container start here-->
+    <div id="Main_container"><!--main container start here-->
 
-<div id="header"><!--header start here-->
+        <div id="header"><!--header start here-->
+
+            <div id="top_Subnav" style="height:40px;">
+           	</div>
+           	<div class="cleardiv"></div>
+
+            <div id="menubar"><!--Navigation start here-->
+           	    <span class="logo"><a href="index.html"><img src="image/xebialabs_logo.png" alt="Home" width="287" height="75" border="0" /></a></span>
+           	    <div id="google_search" style="height:40px;width:50%">
+                           <script>
+                             (function() {
+                               var cx = '001962156878164368335:2zdytqwe4ms';
+                               var gcse = document.createElement('script');
+                               gcse.type = 'text/javascript';
+                               gcse.async = true;
+                               gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                                   '//www.google.com/cse/cse.js?cx=' + cx;
+                               var s = document.getElementsByTagName('script')[0];
+                               s.parentNode.insertBefore(gcse, s);
+                             })();
+                           </script>
+                           <gcse:search enableAutoComplete="true"></gcse:search>
+                   </div>
+           	    <div class="clear-block block block-nice_menus firstlast" id="block-nice_menus-1"></div>
+            </div>
+
+        </div>  <!--header ends here-->
 
         <div class="cleardiv"></div>
 
-        <div id="menubar"><!--Navigation start here-->
-        <span class="logo"><img src="image/xebialabs_logo.png" alt="Home" border="0" /></span>
-   </div>
+        <div id="main_white_bg" ><!-- main content start -->
+            <div id="breadcrumb">
+                <ul>
+                    <li><a href="/index.html">Product Docs</a></li>
+                    <li>&nbsp;&gt;&nbsp;</li>
+                    <li><a href="javascript:void(0)" class="active">{{title}}</a></li>
+                </ul>
+            </div>
 
-</div>  <!--header ends here-->
-<div class="cleardiv"></div>
-<div id="main_white_bg" style="min-height:400px;"><!-- main content start -->
-<div class="top_left_corner"></div>
-<div class="top_right_corner"></div>
 
-<div class="rightcol"><!--right column start here-->
-<ol id="toc">
-</ol>
-</div><!--right column ends here-->
+            <div id="product-doc-height">
+                <h1>{{title}}
+                    <span class='version-number' style="display: none">{{version}}</span>
+                </h1>
+                <!--<ul id="navlist-tall">-->
+                    <!--<li class="mail-icon"><a href="#"></a></li>-->
+                    <!--<li class="link-icon"><a href="#"></a></li>-->
+                    <!--<li class="print-icon"><a href="#"></a></li>-->
+                <!--</ul>-->
+            </div>
 
-<div class="leftcol"><!--left column start here-->
-<div class='manual-title'></div>
-{{{body}}}
-</div><!--left column ends here-->
+            <div class="rightcol"><!--right column start here-->
+                <ol id="toc"></ol>
+            </div><!--right column ends here-->
 
-<div class="cleardiv"></div>
-<div class="push"></div>
-</div>  <!-- main content Ends -->
-</div><!--main container start here-->
-<div class="cleardiv"></div>
-<div class="footer"><!--footer section Start here-->
-<div class="footerbottom">
-<div id="block-block-5" class="clear-block block block-block first">
-  <div class="content">
-{{{footer}}}
-  </div>
-</div>
-</div>
-</div><!--footer section ends here-->
+            <div class="leftcol"><!--left column start here-->
+                <div id="start-listing">
+                    {{{body}}}
+                </div><!--left column ends here-->
+            </div>
+
+            <div class="cleardiv"></div>
+            <div class="push"></div>
+        </div>  <!-- main content Ends -->
+    </div><!--main container start here-->
+    <div class="cleardiv"></div>
+    <div class="footer"><!--footer section Start here-->
+        <div class="footer-border"></div>
+        <div class="footerbottom">
+            <div id="block-block-5" class="clear-block block block-block first">
+                <div class="content">
+                    {{{footer}}}
+                </div>
+            </div>
+
+        </div><!--footer section ends here--><div class="footer-border"></div>
+    </div>
 
 </div><!-- main page ends -->
 </body></html>
