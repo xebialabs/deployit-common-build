@@ -1223,6 +1223,10 @@
             "license": "MPL-1.1",
             "licenseSource": "data"
         },
+        "com.github.drapostolos:type-parser": {
+            "license": "MIT",
+            "licenseSource": "data"
+        },
         "dummy:dummy": {
             "license": "Apache-2.0",
             "licenseSource": "data",
