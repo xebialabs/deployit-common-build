@@ -432,26 +432,31 @@ task checkVersions(type: CheckGithubFile) {
     } else {
       cfg.entrySet().each { Map.Entry<String, ConfigValue> entry ->
         String key = entry.getKey()
-        def value = null
-        if (entry.getValue().valueType() == ConfigValueType.STRING) {
-          value = cfg.getString(key)
-        } else if (entry.getValue().valueType() == ConfigValueType.NUMBER) {
-          value = cfg.getNumber(key).toString()
-        } else {
-          throw new RuntimeException("$repository gradle/dependencies.conf $key has unsupported type ${entry.getValue().valueType()}");
-        }
 
-        if (previousCfg.hasPath(key)) {
-          def previousValue = previousCfg.getString(key)
-          if (!previousValue.equals(value)) {
-            nonMatching += [[repository, key, previousValue, value]]
+        if(!key.equals("xebialabs.dependencies.versions.overcastVersion")){
+          def value = null
+          if (entry.getValue().valueType() == ConfigValueType.STRING) {
+            value = cfg.getString(key)
+          } else if (entry.getValue().valueType() == ConfigValueType.NUMBER) {
+            value = cfg.getNumber(key).toString()
+          } else {
+            throw new RuntimeException("$repository gradle/dependencies.conf $key has unsupported type ${entry.getValue().valueType()}");
+          }
+
+          if (previousCfg.hasPath(key)) {
+            def previousValue = previousCfg.getString(key)
+            if (!previousValue.equals(value)) {
+              nonMatching += [[repository, key, previousValue, value]]
+            }
+          } else {
+            logger.debug("Repository $repository adding $key=$value to previousCfg")
+            def update = [:]
+            update[key] = value
+            def newCfg = ConfigFactory.parseMap(update, "updated values")
+            previousCfg = newCfg.withFallback(previousCfg)
           }
         } else {
-          logger.debug("Repository $repository adding $key=$value to previousCfg")
-          def update = [:]
-          update[key] = value
-          def newCfg = ConfigFactory.parseMap(update, "updated values")
-          previousCfg = newCfg.withFallback(previousCfg)
+          println "WARNING: ignoring overcastVersion should be fixed when overcast is upgraded"
         }
       }
     }
