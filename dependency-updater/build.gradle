@@ -35,7 +35,10 @@ ext {
     [ 'iis-plugin',            [ url: 'git@github.com:xebialabs/iis-plugin.git', toUpdate: [ 'depcfg' ] ] ],
 
     [ 'weblogic-plugins',      [ url: 'git@github.com:xebialabs/weblogic-plugins', toUpdate: [ 'depcfg' ] ] ],
+
+    [ 'xl-config-compare',         [ url: 'git@github.com:xebialabs/xl-config-compare', toUpdate: [ 'depcfg' ] ] ],
   ]
+
   testData = [ [ 'temp4test', [ url:'git@github.com:xebialabs/temp4test.git', toUpdate: [ 'depcfg', 'pom'] ] ] ]
 
   pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
