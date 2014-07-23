@@ -50,14 +50,16 @@ ext {
                        'cloudPackVersion',
                        'docBaseStyleVersion',
                        'overthereVersion',
-                       'overcastVersion']
+                       'overcastVersion',
+                       'compareVersion']
   propToProject = ['xlPlatformVersion'     : 'xl-platform',
                    'xlDeployVersion'       : 'xl-deploy',
                    'licenseDatabaseVersion': 'license-database',
                    'cloudPackVersion'      : 'cloud-pack',
                    'docBaseStyleVersion'   : 'doc-base-style',
                    'overthereVersion'      : 'overthere',
-                   'overcastVersion'       : 'overcast']
+                   'overcastVersion'       : 'overcast',
+                   'compareVersion'        : 'xl-config-compare']
 
   numInconsistencies = 0
 }
