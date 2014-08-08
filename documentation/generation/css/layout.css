@@ -897,16 +897,8 @@ h2{
   font-weight:normal;
 }
 
-#start-listing ul li a{
-	color:#333333;
-}
-
 #start-listing ul li a:hover{
-	
-	
-	color:#999999;
-	
-	
+  color:#999999;
 }
 
 #start-listing em{
