@@ -8,11 +8,17 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
-        var versionNumber = $(".version-number");
-        if (versionNumber.text() != '') {
-            var majorVersion = /((\d+)\.(\d+))/.exec(versionNumber.text())[0] + ".x";
-            versionNumber.text(majorVersion);
-            versionNumber.attr('style', '');
+        if (document.productVersion) {
+            var majorVersion = /((\d+)\.(\d+))/.exec(document.productVersion)[0];
+            $(".version-number").text(majorVersion + ".x").attr('style', '');
+
+            // The following code dynamically builds URLs to the Jython API, which is not included
+            // into XL Deploy distribution.
+            // That's why we point to docs.xebialabs.com if the document was open via filesystem
+            var docHost = $(location).attr('protocol') == 'file:' ? 'docs.xebialabs.com' : $(location).attr('hostname');
+            var versionPath = (document.productVersion.match(/SNAPSHOT$/) ? 'snapshots/' : '') + 'releases/' + majorVersion;
+
+            $('.api-doc-url').attr('href', 'http://'+ docHost + '/jython-docs/#!/' + versionPath + '/xl-deploy');
         }
 
         $("ol#toc").tableOfContents("body", { topLinks: false, startLevel: 2 });
