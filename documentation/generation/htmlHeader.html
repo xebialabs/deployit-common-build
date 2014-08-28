@@ -8,9 +8,16 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
+        var hideVersion = function() {
+            return $('title').text() === "Release Notes";
+        };
+
         if (document.productVersion) {
             var majorVersion = /((\d+)\.(\d+))/.exec(document.productVersion)[0];
-            $(".version-number").text(majorVersion + ".x").attr('style', '');
+
+            if (!hideVersion()) {
+                $(".version-number").text(majorVersion + ".x").attr('style', '');
+            }
 
             // The following code dynamically builds URLs to the Jython API, which is not included
             // into XL Deploy distribution.
