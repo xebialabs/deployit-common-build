@@ -175,7 +175,7 @@ project.ext.deps = [
   truezip_kernel: "de.schlichtherle.truezip:truezip-kernel:${trueZipVersion}",
   typesafe_config: "com.typesafe:config:1.2.0",
   velocity: "org.apache.velocity:velocity:1.7",
-  vijava: 'com.vmware:vijava:5.1',
+  vijava: 'com.xebialabs.thirdparty:vijava:v5.1',
   xstream: 'com.thoughtworks.xstream:xstream:1.4.4'
 ]
 
