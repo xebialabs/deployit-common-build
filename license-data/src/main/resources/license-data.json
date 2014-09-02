@@ -1083,6 +1083,10 @@
             "license": "Apache-2.0",
             "licenseSource": "data"
         },
+        "com.xebialabs.thirdparty:vijava": {
+            "license": "BSD-vijava",
+            "licenseSource": "data"
+        },
         "org.scalatest:scalatest_2.10": {
             "license": "Apache-2.0",
             "licenseSource": "data"
@@ -1349,6 +1353,10 @@
         "BSD-jline": {
             "type": "BSD",
             "file": "BSD-JLINE"
+        },
+        "BSD-vijava": {
+            "type": "BSD",
+            "file": "BSD-VIJAVA"
         },
         "CCAL-2.5-jcip": {
             "comment": "Not including full text. This seems sufficient from the license perspective.",
