@@ -11,67 +11,64 @@ buildscript {
 // The keys of mainProjectData should match with repository name from the URL
 ext {
   mainProjectData = [
-    [ 'xl-platform',         [ url: 'git@github.com:xebialabs/xl-platform.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'cloud-pack',        [ url: 'git@github.com:xebialabs/cloud-pack.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'xl-deploy',         [ url: 'git@github.com:xebialabs/xl-deploy.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'cloud-pack',               [ url: 'git@github.com:xebialabs/cloud-pack.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'xl-deploy',                [ url: 'git@github.com:xebialabs/xl-deploy.git', toUpdate: [ 'depcfg' ] ] ],
   ]
   ciPluginProjectData = [
-    [ 'bamboo-xl-deploy-plugin', [ url: 'git@github.com:xebialabs/bamboo-xl-deploy-plugin.git', toUpdate: [ 'depcfg', 'pom' ] ] ],
-    [ 'maven-xldeploy-plugin',  [ url: 'git@github.com:xebialabs/maven-xldeploy-plugin.git', toUpdate: [ 'pom' ] ] ],
+    [ 'bamboo-xl-deploy-plugin',  [ url: 'git@github.com:xebialabs/bamboo-xl-deploy-plugin.git', toUpdate: [ 'depcfg', 'pom' ] ] ],
+    [ 'maven-xldeploy-plugin',    [ url: 'git@github.com:xebialabs/maven-xldeploy-plugin.git', toUpdate: [ 'pom' ] ] ],
   ]
   middleWarePluginProjectData = [
-    [ 'tomcat-plugin',         [ url: 'git@github.com:xebialabs/tomcat-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'biztalk-plugin',         [ url: 'git@github.com:xebialabs/biztalk-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'glassfish-plugin',      [ url: 'git@github.com:xebialabs/glassfish-plugin.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'tomcat-plugin',            [ url: 'git@github.com:xebialabs/tomcat-plugin.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'biztalk-plugin',           [ url: 'git@github.com:xebialabs/biztalk-plugin.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'glassfish-plugin',         [ url: 'git@github.com:xebialabs/glassfish-plugin.git', toUpdate: [ 'depcfg' ] ] ],
 
-    [ 'jbossas-plugin',        [ url: 'git@github.com:xebialabs/jbossas-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'jbossdm-plugin',        [ url: 'git@github.com:xebialabs/jbossdm-plugin.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'jbossas-plugin',           [ url: 'git@github.com:xebialabs/jbossas-plugin.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'jbossdm-plugin',           [ url: 'git@github.com:xebialabs/jbossdm-plugin.git', toUpdate: [ 'depcfg' ] ] ],
 
-    [ 'loadbalancer-plugin',   [ url: 'git@github.com:xebialabs/loadbalancer-plugin.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'loadbalancer-plugin',      [ url: 'git@github.com:xebialabs/loadbalancer-plugin.git', toUpdate: [ 'depcfg' ] ] ],
 
-    [ 'websphere-plugins',     [ url: 'git@github.com:xebialabs/websphere-plugins.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'websphere-plugins',        [ url: 'git@github.com:xebialabs/websphere-plugins.git', toUpdate: [ 'depcfg' ] ] ],
 
-    [ 'windows-plugin',        [ url: 'git@github.com:xebialabs/windows-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'iis-plugin',            [ url: 'git@github.com:xebialabs/iis-plugin.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'windows-plugin',           [ url: 'git@github.com:xebialabs/windows-plugin.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'iis-plugin',               [ url: 'git@github.com:xebialabs/iis-plugin.git', toUpdate: [ 'depcfg' ] ] ],
 
-    [ 'weblogic-plugins',      [ url: 'git@github.com:xebialabs/weblogic-plugins', toUpdate: [ 'depcfg' ] ] ],
-
-    [ 'xl-config-compare',         [ url: 'git@github.com:xebialabs/xl-config-compare', toUpdate: [ 'depcfg' ] ] ],
+    [ 'weblogic-plugins',         [ url: 'git@github.com:xebialabs/weblogic-plugins', toUpdate: [ 'depcfg' ] ] ],
   ]
 
   miscPluginProjectData = [
-    [ 'online-docs',           [ url: 'git@github.com:xebialabs/online-docs.git', toUpdate: [ 'depcfg' ] ] ]
+    [ 'online-docs',              [ url: 'git@github.com:xebialabs/online-docs.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'xl-config-compare',        [ url: 'git@github.com:xebialabs/xl-config-compare', toUpdate: [ 'depcfg' ] ] ],
   ]
 
-
-  testData = [ [ 'temp4test', [ url:'git@github.com:xebialabs/temp4test.git', toUpdate: [ 'depcfg', 'pom'] ] ] ]
+  testData = [ [ 'temp4test',     [ url:'git@github.com:xebialabs/temp4test.git', toUpdate: [ 'depcfg', 'pom'] ] ] ]
 
   pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
   projectData = mainProjectData + pluginProjectData + miscPluginProjectData // + testData
 
-  versionProperties = ['xlPlatformVersion',
-                       'licenseDatabaseVersion',
-                       'xlDeployVersion',
-                       'cloudPackVersion',
-                       'docBaseStyleVersion',
-                       'overthereVersion',
-                       'overcastVersion',
-                       'compareVersion']
-  propToProject = ['xlPlatformVersion'     : 'xl-platform',
-                   'xlDeployVersion'       : 'xl-deploy',
-                   'licenseDatabaseVersion': 'license-database',
-                   'cloudPackVersion'      : 'cloud-pack',
-                   'docBaseStyleVersion'   : 'doc-base-style',
-                   'overthereVersion'      : 'overthere',
-                   'overcastVersion'       : 'overcast',
-                   'compareVersion'        : 'xl-config-compare']
+  versionProperties = [ 'xlPlatformVersion',
+                        'licenseDatabaseVersion',
+                        'xlDeployVersion',
+                        'cloudPackVersion',
+                        'docBaseStyleVersion',
+                        'overthereVersion',
+                        'overcastVersion',
+                        'compareVersion']
+  propToProject = [ 'xlPlatformVersion'     : 'xl-platform',
+                    'xlDeployVersion'       : 'xl-deploy',
+                    'licenseDatabaseVersion': 'license-database',
+                    'cloudPackVersion'      : 'cloud-pack',
+                    'docBaseStyleVersion'   : 'doc-base-style',
+                    'overthereVersion'      : 'overthere',
+                    'overcastVersion'       : 'overcast',
+                    'compareVersion'        : 'xl-config-compare']
 
   numInconsistencies = 0
 }
 
 description = """
 Use this gradle build to update the gradle/dependencies.conf, pom.xml and/or gradle
-distribution URL's across many projects. The pom.xml has to have a special format 
+distribution URL's across many projects. The pom.xml has to have a special format
 with a properties section with the same property names as the supported properties
 as described below.
 
@@ -532,6 +529,7 @@ class UpdateGithubFile extends DefaultTask {
 class CheckGithubFile extends DefaultTask {
   String organization
   String contentPath
+  def ignoreMissing = true
   def branch
   def repositories = []
 
@@ -564,7 +562,11 @@ class CheckGithubFile extends DefaultTask {
         def sha = response.data.sha
         logger.debug("Loaded from '{}': '{}'", url, content)
       } catch (RuntimeException e) {
-        throw new RuntimeException("Failed to read from repository $repository ($branch)", e)
+        if(ignoreMissing) {
+          logger.warn("Could not access repository {} => skipping", repository)
+        } else {
+          throw new RuntimeException("Failed to read from repository $repository ($branch)", e)
+        }
       }
 
       check repository, content
