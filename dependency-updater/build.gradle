@@ -482,6 +482,7 @@ import org.apache.http.auth.*
 class UpdateGithubFile extends DefaultTask {
   String organization
   String repository
+  def ignoreMissing = true
   String contentPath
   def branch
 
@@ -506,22 +507,30 @@ class UpdateGithubFile extends DefaultTask {
       delegate
     }
     def url = "/repos/$organization/$repository/contents/$contentPath"
-    def response = github.get(path: url, query: ['ref': "${branch}".toString()])
-    def content = new String(response.data.content.decodeBase64(), 'UTF-8');
-    def sha = response.data.sha
-    logger.debug("Loaded from '{}': '{}'", url, content)
+    try {
+      def response = github.get(path: url, query: ['ref': "${branch}".toString()])
+      def content = new String(response.data.content.decodeBase64(), 'UTF-8');
+      def sha = response.data.sha
+      logger.debug("Loaded from '{}': '{}'", url, content)
 
-    def updateMap = doUpdate content
-    if (updateMap.size() > 0) {
-      logger.debug("Updating with {}", updateMap)
+      def updateMap = doUpdate content
+      if (updateMap.size() > 0) {
+        logger.debug("Updating with {}", updateMap)
 
-      def body = ['content': updateMap.content.bytes.encodeBase64().toString(), 'message': updateMap.message.toString(), 'sha': sha, 'branch': "${branch}".toString()]
-      logger.debug("Update request body: {}", body)
+        def body = ['content': updateMap.content.bytes.encodeBase64().toString(), 'message': updateMap.message.toString(), 'sha': sha, 'branch': "${branch}".toString()]
+        logger.debug("Update request body: {}", body)
 
-      def putResponse = github.put('path': url, 'body': body)
-      logger.debug("Update response: {}", putResponse.data)
-    } else {
-      logger.debug("No update to do.")
+        def putResponse = github.put('path': url, 'body': body)
+        logger.debug("Update response: {}", putResponse.data)
+      } else {
+        logger.debug("No update to do.")
+      }
+    } catch (RuntimeException e) {
+      if(ignoreMissing) {
+        logger.warn("Could not access repository {} => skipping", repository)
+      } else {
+        throw new RuntimeException("Failed to read from repository $repository ($branch)", e)
+      }
     }
   }
 }
