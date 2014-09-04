@@ -152,7 +152,7 @@ project.ext.deps = [
   truezip_kernel: "de.schlichtherle.truezip:truezip-kernel:${trueZipVersion}",
   velocity: "org.apache.velocity:velocity:1.7",
   vijava: "com.cloudbees.thirdparty:vijava:5.1-beta",
-  xstream: "com.thoughtworks.xstream:xstream:1.4.4"
+  xstream: "com.thoughtworks.xstream:xstream:1.4.7"
 ]
 
 deps.each { k, v ->
