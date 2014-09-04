@@ -6,7 +6,7 @@ project.ext {
   licenseDatabaseVersion = '1.0.8'
 
   apacheDsVersion = '1.5.5'
-  jackrabbitVersion = '2.6.0'
+  jackrabbitVersion = '2.6.5'
   jcloudsVersion = '1.5.5'
   jettyVersion = '6.1.11'
   jythonVersion = '2.5.3'
