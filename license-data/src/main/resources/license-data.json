@@ -975,6 +975,10 @@
             "license": "Apache-2.0",
             "licenseSource": "data"
         },
+        "com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer": {
+            "license": "BSD-3CLAUSE",
+            "licenseSource": "data"
+        },
         "com.drewnoakes:metadata-extractor": {
             "license": "Apache-2.0",
             "licenseSource": "data"
