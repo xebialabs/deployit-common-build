@@ -399,7 +399,11 @@ task checkGradleWrappers(type: CheckGithubFile) {
       previousUrl = currentUrl;
     } else {
       if (!currentUrl.equals(previousUrl)) {
-        nonMatching += [[repository, previousUrl, currentUrl]]
+        if (currentUrl == null) {
+            logger.debug "No XL-gradle url for $repository; not registering it as non-matching!"
+        } else {
+            nonMatching += [[repository, previousUrl, currentUrl]]
+        }
       }
     }
   }
@@ -407,7 +411,7 @@ task checkGradleWrappers(type: CheckGithubFile) {
     if (nonMatching.size() > 0) {
       project.ext.numInconsistencies += nonMatching.size()
       nonMatching.each { repo, goodUrl, url ->
-        println "$repo gradle version is ${getGradleVersionFromUrl(url)} not ${getGradleVersionFromUrl(goodUrl)}"
+        logger.error "$repo gradle version is ${getGradleVersionFromUrl(url)} not ${getGradleVersionFromUrl(goodUrl)}"
       }
     }
   }
