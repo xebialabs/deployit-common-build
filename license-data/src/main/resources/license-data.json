@@ -1235,6 +1235,30 @@
             "license": "MIT",
             "licenseSource": "data"
         },
+        "com.github.romix.akka:akka-kryo-serialization_2.10": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.typesafe.akka:akka-stream-experimental_2.10": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.typesafe.akka:akka-kernel_2.10": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.typesafe.akka:akka-remote_2.10": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.esotericsoftware.kryo:kryo": {
+            "license": "BSD-3CLAUSE",
+            "licenseSource": "data"
+        },
+        "net.jpountz.lz4:lz4": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
         "dummy:dummy": {
             "license": "Apache-2.0",
             "licenseSource": "data",
