@@ -34,6 +34,7 @@ ext {
     [ 'iis-plugin',               [ url: 'git@github.com:xebialabs/iis-plugin.git', toUpdate: [ 'depcfg' ] ] ],
 
     [ 'weblogic-plugins',         [ url: 'git@github.com:xebialabs/weblogic-plugins', toUpdate: [ 'depcfg' ] ] ],
+    [ 'rpm-plugin',               [ url: 'git@github.com:xebialabs/rpm-plugin.git', toUpdate: [ 'depcfg' ] ] ],
   ]
 
   miscPluginProjectData = [
