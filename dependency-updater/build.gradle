@@ -37,16 +37,17 @@ ext {
     [ 'rpm-plugin',               [ url: 'git@github.com:xebialabs/rpm-plugin.git', toUpdate: [ 'depcfg' ] ] ],
   ]
 
-  miscPluginProjectData = [
+  miscProjectData = [
     [ 'online-docs',              [ url: 'git@github.com:xebialabs/online-docs.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'online-docs-jekyll',       [ url: 'git@github.com:xebialabs/online-docs-jekyll.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'xl-config-compare',        [ url: 'git@github.com:xebialabs/xl-config-compare', toUpdate: [ 'depcfg' ] ] ],
+    [ 'xl-trials-download',        [ url: 'git@github.com:xebialabs/xl-trials-download', toUpdate: [ 'depcfg' ] ] ],
   ]
 
   testData = [ [ 'temp4test',     [ url:'git@github.com:xebialabs/temp4test.git', toUpdate: [ 'depcfg', 'pom'] ] ] ]
 
   pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
-  projectData = mainProjectData + pluginProjectData + miscPluginProjectData // + testData
+  projectData = mainProjectData + pluginProjectData + miscProjectData // + testData
 
   versionProperties = [ 'xlPlatformVersion',
                         'licenseDatabaseVersion',
