@@ -92,6 +92,14 @@
             "license": "MIT-JSON",
             "licenseSource": "data"
         },
+        "org.json4s:json4s-ext_2.10": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.json4s:json4s-native_2.10": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
         "com.google.code.findbugs:jsr305": {
             "license": "BSD-2CLAUSE",
             "licenseSource": "data"
@@ -309,6 +317,22 @@
             "licenseSource": "data"
         },
         "com.fasterxml.jackson.core:jackson-databind": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.fasterxml.jackson.module:jackson-module-scala_2.10": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.fasterxml.jackson.module:jackson-module-jsonSchema": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.fasterxml.jackson.module:jackson-module-jaxb-annotations": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider": {
             "license": "Apache-2.0",
             "licenseSource": "data"
         },
@@ -1263,12 +1287,32 @@
             "license": "Apache-2.0",
             "licenseSource": "data",
             "dummy entry:": "I don't want to forget to put a , at the end again....."
+        },
+        "com.wordnik:swagger-jaxrs_2.10": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.wordnik:swagger-annotations": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.wordnik:swagger-core_2.10": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.reflections:reflections": {
+            "license": "WTFPL",
+            "licenseSource": "data"
         }
     },
     "licenses": {
         "Apache-2.0": {
             "file": "Apache-2.0",
             "type": "Apache-2.0"
+        },
+        "WTFPL": {
+            "file": "Do What the Fuck You Want to Public License",
+            "type": "WTFPL"
         },
         "CDDL-1.0": {
             "type": "CDDL-1.0",
