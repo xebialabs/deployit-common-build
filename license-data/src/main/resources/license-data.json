@@ -1488,7 +1488,7 @@
         },
         "CCAL-2.5-jcip": {
             "comment": "Not including full text. This seems sufficient from the license perspective.",
-            "type": "domainte Commons Attribution License 2.5",
+            "type": "Creative Commons Attribution License 2.5",
             "file": "CCAL-2_5-JCIP"
         },
         "AFL-2.1": {
