@@ -1303,6 +1303,58 @@
         "org.reflections:reflections": {
             "license": "WTFPL",
             "licenseSource": "data"
+        },
+        "org.uncommons.maths:uncommons-maths": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.esotericsoftware.minlog:minlog": {
+            "license": "BSD-EsotericSoftware",
+            "licenseSource": "data"
+        },
+        "com.esotericsoftware.kryo:kryo": {
+            "license": "BSD-EsotericSoftware",
+            "licenseSource": "data"
+        },
+        "org.objenesis:objenesis": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "io.netty:netty": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"            
+        },
+        "org.reactivestreams:reactive-streams": {
+            "license": "Public-Domain",
+            "licenseSource": "data"
+        },
+        "com.twitter:chill-java": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"  
+        },
+        "com.twitter:chill_2.10": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"  
+        },
+        "net.jpountz.lz4:lz4": {
+          "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.typesafe.akka:akka-kernel_2.10": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"
+        },
+        "com.typesafe.akka:akka-remote_2.10": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"
+        },
+        "com.typesafe.akka:akka-stream-experimental_2.10": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"
+        },
+        "com.github.romix.akka:akka-kryo-serialization_2.10": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"   
         }
     },
     "licenses": {
@@ -1410,6 +1462,10 @@
             "type": "BSD",
             "file": "BSD-ASM"
         },
+        "BSD-EsotericSoftware": {
+            "type": "BSD",
+            "file": "BSD-EsotericSoftware"
+        },
         "BSD-GRIZZLED": {
             "type": "BSD",
             "file": "BSD-GRIZZLED"
@@ -1432,7 +1488,7 @@
         },
         "CCAL-2.5-jcip": {
             "comment": "Not including full text. This seems sufficient from the license perspective.",
-            "type": "Create Commons Attribution License 2.5",
+            "type": "domainte Commons Attribution License 2.5",
             "file": "CCAL-2_5-JCIP"
         },
         "AFL-2.1": {
