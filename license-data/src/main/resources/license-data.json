@@ -1316,6 +1316,10 @@
             "license": "BSD-EsotericSoftware",
             "licenseSource": "data"
         },
+        "com.esotericsoftware.reflectasm:reflectasm": {
+            "license": "BSD-EsotericSoftware",
+            "licenseSource": "data"
+        }
         "org.objenesis:objenesis": {
             "license": "Apache-2.0",
             "licenseSource": "data"
@@ -1354,6 +1358,14 @@
         },
         "com.github.romix.akka:akka-kryo-serialization_2.10": {
             "licenseSource": "data",
+            "license": "Apache-2.0"   
+        },
+        "de.javakaffee:kryo-serializers": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"   
+        },
+        "org.ow2.asm:asm": {
+            "licenseSource": "INRIA",
             "license": "Apache-2.0"   
         }
     },
@@ -1514,6 +1526,10 @@
         "BSD-ANTLR": {
             "type": "BSD",
             "file": "BSD-ANTLR"
+        },
+        "INRIA": {
+            "type": "INRIA",
+            "file": "INRIA"
         },
         "BSD-ICAL4J": {
             "type": "BSD",
