@@ -1326,7 +1326,7 @@
         },
         "io.netty:netty": {
             "license": "Apache-2.0",
-            "licenseSource": "data"            
+            "licenseSource": "data"
         },
         "org.reactivestreams:reactive-streams": {
             "license": "Public-Domain",
@@ -1334,11 +1334,11 @@
         },
         "com.twitter:chill-java": {
             "license": "Apache-2.0",
-            "licenseSource": "data"  
+            "licenseSource": "data"
         },
         "com.twitter:chill_2.10": {
             "license": "Apache-2.0",
-            "licenseSource": "data"  
+            "licenseSource": "data"
         },
         "net.jpountz.lz4:lz4": {
           "license": "Apache-2.0",
@@ -1358,7 +1358,7 @@
         },
         "com.github.romix.akka:akka-kryo-serialization_2.10": {
             "licenseSource": "data",
-            "license": "Apache-2.0"   
+            "license": "Apache-2.0"
         },
         "de.javakaffee:kryo-serializers": {
             "licenseSource": "data",
@@ -1387,7 +1387,7 @@
             "type": "Apache-2.0"
         },
         "WTFPL": {
-            "file": "Do What the Fuck You Want to Public License",
+            "file": "WTFPL",
             "type": "WTFPL"
         },
         "CDDL-1.0": {
