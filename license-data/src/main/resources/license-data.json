@@ -1316,6 +1316,10 @@
             "license": "BSD-EsotericSoftware",
             "licenseSource": "data"
         },
+        "com.esotericsoftware.reflectasm:reflectasm": {
+            "license": "BSD-EsotericSoftware",
+            "licenseSource": "data"
+        },
         "org.objenesis:objenesis": {
             "license": "Apache-2.0",
             "licenseSource": "data"
@@ -1355,6 +1359,26 @@
         "com.github.romix.akka:akka-kryo-serialization_2.10": {
             "licenseSource": "data",
             "license": "Apache-2.0"
+        },
+        "de.javakaffee:kryo-serializers": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"   
+        },
+        "org.ow2.asm:asm": {
+            "licenseSource": "data",
+            "license": "BSD-INRIA"   
+        },
+        "com.assembla.scala-incubator:graph-core_2.10": {
+            "licenseSource": "data",
+            "license": "BSD-EPFL"   
+        },
+        "javassist:javassist":  {
+            "license": "Apache-2.0",
+            "additionalLicenses": [
+                "MPL-1.1",
+                "LGPL-2.1"
+            ],
+            "licenseSource": "data"
         }
     },
     "licenses": {
@@ -1393,6 +1417,10 @@
         "BSD-ADOBE": {
             "type": "BSD",
             "file": "BSD-ADOBE"
+        },
+        "BSD-EPFL": {
+            "type": "BSD",
+            "file": "BSD-EPFL"
         },
         "XebiaLabs-FLOSS": {
             "type": "GPL, proprietary",
@@ -1514,6 +1542,10 @@
         "BSD-ANTLR": {
             "type": "BSD",
             "file": "BSD-ANTLR"
+        },
+        "BSD-INRIA": {
+            "type": "BSD",
+            "file": "BSD-INRIA"
         },
         "BSD-ICAL4J": {
             "type": "BSD",
