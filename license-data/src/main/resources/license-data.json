@@ -1379,6 +1379,10 @@
                 "LGPL-2.1"
             ],
             "licenseSource": "data"
+        },
+        "org.knopflerfish:framework": {
+            "license": "BSD-Knopflerfish",
+            "licenseSource": "data"
         }
     },
     "licenses": {
@@ -1590,6 +1594,10 @@
         "Commercial": {
             "type": "Commercial",
             "file": "Commercial"
+        },
+        "BSD-Knopflerfish": {
+            "type": "BSD",
+            "file": "BSD-KNOPFLERFISH"
         }
     }
 }
