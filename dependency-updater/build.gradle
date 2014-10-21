@@ -16,7 +16,7 @@ ext {
   ]
   ciPluginProjectData = [
     [ 'bamboo-xl-deploy-plugin',  [ url: 'git@github.com:xebialabs/bamboo-xl-deploy-plugin.git', toUpdate: [ 'depcfg', 'pom' ] ] ],
-    [ 'maven-xldeploy-plugin',    [ url: 'git@github.com:xebialabs/maven-xldeploy-plugin.git', toUpdate: [ 'pom' ] ] ],
+    [ 'maven-deployit-plugin',    [ url: 'git@github.com:xebialabs/maven-deployit-plugin.git', toUpdate: [ 'pom' ] ] ],
   ]
   middleWarePluginProjectData = [
     [ 'tomcat-plugin',            [ url: 'git@github.com:xebialabs/tomcat-plugin.git', toUpdate: [ 'depcfg' ] ] ],
@@ -323,30 +323,41 @@ projectData.each { repoName, metadata ->
 
 ///// Dependency group update tasks
 
+def getUpdateTask(def cfg, def projectName) {
+  if( cfg.toUpdate.contains('depcfg') || cfg.toUpdate.contains('pom') )
+    "${updateProjectDependencyTaskName(projectName)}"
+  else
+    null
+}
+
+def getPluginName(def cfg, def task) {
+  (cfg.toUpdate.contains('depcfg') || cfg.toUpdate.contains('pom')) ? task : null
+}
+
 def nextLine = ',\n    '
-task groupUpdateXlDeployDependencies(dependsOn: mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectDependencyTaskName(it[0])}" : null }) {
+task groupUpdateXlDeployDependencies(dependsOn: mainProjectData.findResults { getUpdateTask(it[1], it[0]) }) {
   group "Group update"
-  description = "Update ${mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
+  description = "Update ${mainProjectData.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
 }
 
-task groupUpdateCiPluginDependencies(dependsOn: ciPluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectDependencyTaskName(it[0])}" : null }) {
+task groupUpdateCiPluginDependencies(dependsOn: ciPluginProjectData.findResults { getUpdateTask(it[1], it[0]) }) {
   group "Group update"
-  description = "Update ${ciPluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
+  description = "Update ${ciPluginProjectData.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
 }
 
-task groupUpdateMiddleWarePluginDependencies(dependsOn: middleWarePluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectDependencyTaskName(it[0])}" : null }) {
+task groupUpdateMiddleWarePluginDependencies(dependsOn: middleWarePluginProjectData.findResults { getUpdateTask(it[1], it[0]) }) {
   group "Group update"
-  description = "Update ${middleWarePluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
+  description = "Update ${middleWarePluginProjectData.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
 }
 
-task groupUpdatePluginDependencies(dependsOn: pluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectDependencyTaskName(it[0])}" : null }) {
+task groupUpdatePluginDependencies(dependsOn: pluginProjectData.findResults { getUpdateTask(it[1], it[0]) }) {
   group "Group update"
-  description = "Update ${pluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
+  description = "Update ${pluginProjectData.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
 }
 
-task groupUpdateAllDependencies(dependsOn: projectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectDependencyTaskName(it[0])}" : null }) {
+task groupUpdateAllDependencies(dependsOn: projectData.findResults { getUpdateTask(it[1], it[0]) }) {
   group "Group update"
-  description = "Update ${projectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
+  description = "Update ${projectData.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
 }
 
 ///// Gradle group update tasks
