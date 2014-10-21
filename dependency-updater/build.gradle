@@ -578,8 +578,8 @@ class CheckGithubFile extends DefaultTask {
   @TaskAction
   def check() {
 
-    if ("${-> branch}".toString()?.trim()) {
-      throw new RuntimeException("Please specify the branch which you try to check, ex. -Pbranch=master")
+    if (! "${branch}".trim()) {
+      throw new RuntimeException("Please specify the branch which you try to update, ex. -Pbranch=master")
     }
 
     // set auth header manually else it doesn't work
