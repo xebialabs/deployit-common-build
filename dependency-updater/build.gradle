@@ -519,7 +519,7 @@ class UpdateGithubFile extends DefaultTask {
     // set auth header manually else it doesn't work
     def userPassBase64 = "${username}:${password}".toString().bytes.encodeBase64()
 
-    if ("${-> branch}".toString()?.trim()) {
+    if (! "${branch}".trim()) {
       throw new RuntimeException("Please specify the branch which you try to update, ex. -Pbranch=master")
     }
 
