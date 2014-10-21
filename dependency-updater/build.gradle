@@ -246,7 +246,7 @@ projectData.each { repoName, metadata ->
 
                 def lws = matcher[0][1]
                 def prop = matcher[0][2]
-                def version = matcher[0][2]
+                def version = matcher[0][3]
                 def tws = matcher[0][4]
 
                 versionProperties.each {
