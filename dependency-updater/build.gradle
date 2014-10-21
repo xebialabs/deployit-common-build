@@ -507,6 +507,11 @@ class UpdateGithubFile extends DefaultTask {
   def update() {
     // set auth header manually else it doesn't work
     def userPassBase64 = "${username}:${password}".toString().bytes.encodeBase64()
+
+    if ("${-> branch}".toString()?.trim()) {
+      throw new RuntimeException("Please specify the branch which you try to update, ex. -Pbranch=master")
+    }
+
     def github = new RESTClient("https://api.github.com/").with {
       contentType = JSON
       defaultRequestHeaders.'Authorization' = "Basic $userPassBase64"
@@ -561,6 +566,11 @@ class CheckGithubFile extends DefaultTask {
 
   @TaskAction
   def check() {
+
+    if ("${-> branch}".toString()?.trim()) {
+      throw new RuntimeException("Please specify the branch which you try to check, ex. -Pbranch=master")
+    }
+
     // set auth header manually else it doesn't work
     def userPassBase64 = "${username}:${password}".toString().bytes.encodeBase64()
     def github = new RESTClient("https://api.github.com/").with {
