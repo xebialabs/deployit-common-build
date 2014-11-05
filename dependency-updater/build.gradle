@@ -497,15 +497,22 @@ class GitHubTask extends DefaultTask {
   }
 
   def checkBranch() {
-    if (! "${branch}".trim()) {
-      throw new RuntimeException("Please specify the branch which you try to update, ex. -Pbranch=master")
+    try {
+      if (!"${branch}".trim()) {
+        throw new RuntimeException("Task ${name} requires you to specify a branch, ex. -Pbranch=master")
+      }
+    } catch (MissingPropertyException e) {
+      throw new RuntimeException("Task ${name} requires you to specify a branch, ex. -Pbranch=master", e)
     }
   }
 
   def doWithRepo(def repository, Closure action) {
     try {
       def contentUrl = "/repos/$organization/$repository/contents/$contentPath"
-      action(contentUrl)
+      def response = github().get(path: contentUrl, query: ['ref': "${branch}".toString()])
+      def content = new String(response.data.content.decodeBase64(), 'UTF-8');
+      def sha = response.data.sha
+      action(contentUrl, content, sha)
     } catch (RuntimeException e) {
       if(ignoreMissing) {
         logger.warn("Could not access repository $repository branch $branch => skipping")
@@ -524,10 +531,7 @@ class UpdateGithubFile extends GitHubTask {
   @TaskAction
   def update() {
     checkBranch()
-    doWithRepo(repository, { url ->
-      def response = github().get(path: url, query: ['ref': "${branch}".toString()])
-      def content = new String(response.data.content.decodeBase64(), 'UTF-8');
-      def sha = response.data.sha
+    doWithRepo(repository, { url, content, sha ->
       logger.debug("Loaded from '{}': '{}'", url, content)
 
       def updateMap = doUpdate content
@@ -558,9 +562,8 @@ class CheckGithubFile extends GitHubTask {
     checkBranch()
     repositories.each { repository ->
       def content = ""
-      doWithRepo(repository, { url ->
-        def response = github().get(path: url, query: ['ref': "${branch}".toString()])
-        content = new String(response.data.content.decodeBase64(), 'UTF-8');
+      doWithRepo(repository, { url, urlContent, sha ->
+        content = urlContent
         logger.debug("Loaded from '{}': '{}'", url, content)
       })
 
