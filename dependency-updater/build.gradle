@@ -379,9 +379,7 @@ task checkGradleWrappers(type: CheckGithubFile) {
 
   check { repository, content ->
     logger.debug("Checking $repository...")
-    Properties props = new Properties();
-    props.load(new StringReader(content))
-    def currentUrl = props['distributionUrl']
+    def currentUrl = readDistributionUrl(content)
     logger.info("${repository}:\n\t Touchstone URL=${touchstoneUrl}\n\t Current    URL=${currentUrl}")
     if (touchstoneUrl == null) {
       logger.warn("Touchstone gradle wrapper url taken from $repository: $currentUrl")
@@ -389,7 +387,7 @@ task checkGradleWrappers(type: CheckGithubFile) {
     } else {
       if (!currentUrl.equals(touchstoneUrl)) {
         if (currentUrl == null) {
-            logger.warn "No XL-gradle url defined in $repository $contentPath; not registering it as non-matching!"
+            logger.warn "No distributionUrl defined in $repository $contentPath; not registering it as non-matching!"
         } else {
             nonMatching += [[repository, touchstoneUrl, currentUrl]]
         }
@@ -407,15 +405,21 @@ task checkGradleWrappers(type: CheckGithubFile) {
   }
 }
 
+def readDistributionUrl(content) {
+  Properties props = new Properties();
+  props.load(new StringReader(content))
+  props['distributionUrl']
+}
+
 def renderCfg(def cfg) {
   cfg.root().render(ConfigRenderOptions.defaults().setOriginComments(false).setJson(false))
 }
 
 def getEntryValue(def cfg, def entry) {
   if (entry.getValue().valueType() == ConfigValueType.STRING) {
-    return cfg.getString(entry.getKey())
+    cfg.getString(entry.getKey())
   } else if (entry.getValue().valueType() == ConfigValueType.NUMBER) {
-    return cfg.getNumber(entry.getKey()).toString()
+    cfg.getNumber(entry.getKey()).toString()
   } else {
     throw new RuntimeException("$repository: gradle/dependencies.conf has key ${entry.getKey()} with unsupported type ${entry.getValue().valueType()}");
   }
