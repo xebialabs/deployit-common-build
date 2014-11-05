@@ -134,7 +134,7 @@ import com.typesafe.config.ConfigParseOptions
 projectData.each { repoName, metadata ->
 
   task "${updateProjectDependencyTaskName(repoName)}" {
-    group = "Single project update "
+    group = "Single project update"
     description = "Update"
   }
 
@@ -187,6 +187,43 @@ projectData.each { repoName, metadata ->
     }
     tasks["${updateProjectDependencyTaskName(repoName)}"].dependsOn taskName
     tasks["${updateProjectDependencyTaskName(repoName)}"].description += " gradle/dependencies.conf"
+
+    // depcfg implies gradle wrapper
+    task "${updateProjectGradleTaskName(repoName)}"(type: UpdateGithubFile) {
+      group = "Single project Gradle Wrapper Update"
+
+      organization = 'xebialabs'
+      repository = repoName
+      contentPath = 'gradle/wrapper/gradle-wrapper.properties'
+      branch = { -> project.getProperty('branch') }
+      username = githubOauthToken
+      password = 'x-oauth-basic'
+
+      doUpdate { content ->
+        if (project.hasProperty('gradleDistributionUrl')) {
+          def url = project.getProperty('gradleDistributionUrl')
+
+          Properties props = new Properties();
+          props.load(new StringReader(content))
+          def currentUrl = props['distributionUrl']
+
+          if (!url.equals(currentUrl)) {
+            logger.info("Updating gradle distribution $currentUrl -> $url")
+            props['distributionUrl'] = url
+            def newContent = new StringWriter()
+            props.store(newContent, null)
+            String gradleZip = url.substring(url.lastIndexOf('/') + 1).replace('-bin.zip', '')
+            return [content: newContent.toString(), message: gradleZip]
+          } else {
+            logger.debug("Not updating gradle distributionUrl no change (${currentUrl})")
+          }
+        } else {
+          throw new RuntimeException("Property gradleDistributionUrl not set, don't know which gradle to update to.")
+        }
+
+        return [:]
+      }
+    }
   }
 
   if( metadata.toUpdate.contains('pom') ) {
@@ -258,45 +295,6 @@ projectData.each { repoName, metadata ->
     }
     tasks["${updateProjectDependencyTaskName(repoName)}"].dependsOn taskName
     tasks["${updateProjectDependencyTaskName(repoName)}"].description += " pom.xml"
-  }
-
-  // depcfg implies gradle wrapper
-  if( metadata.toUpdate.contains('depcfg') ) {
-    task "${updateProjectGradleTaskName(repoName)}"(type: UpdateGithubFile) {
-      group = "Single project Gradle Wrapper Update"
-
-      organization = 'xebialabs'
-      repository = repoName
-      contentPath = 'gradle/wrapper/gradle-wrapper.properties'
-      branch = { -> project.getProperty('branch') }
-      username = githubOauthToken
-      password = 'x-oauth-basic'
-
-      doUpdate { content ->
-        if (project.hasProperty('gradleDistributionUrl')) {
-          def url = project.getProperty('gradleDistributionUrl')
-
-          Properties props = new Properties();
-          props.load(new StringReader(content))
-          def currentUrl = props['distributionUrl']
-
-          if (!url.equals(currentUrl)) {
-            logger.info("Updating gradle distribution $currentUrl -> $url")
-            props['distributionUrl'] = url
-            def newContent = new StringWriter()
-            props.store(newContent, null)
-            String gradleZip = url.substring(url.lastIndexOf('/') + 1).replace('-bin.zip', '')
-            return [content: newContent.toString(), message: gradleZip]
-          } else {
-            logger.debug("Not updating gradle distributionUrl no change (${currentUrl})")
-          }
-        } else {
-          throw new RuntimeException("Property gradleDistributionUrl not set, don't know which gradle to update to.")
-        }
-
-        return [:]
-      }
-    }
   }
 }
 
@@ -373,12 +371,8 @@ def getGradleVersionFromUrl(def url) {
 task checkGradleWrappers(type: CheckGithubFile) {
   group = "Check that gradle wrappers are the same across projects"
 
-  organization = 'xebialabs'
   repositories = projectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }
   contentPath = 'gradle/wrapper/gradle-wrapper.properties'
-  branch = { -> project.getProperty('branch') }
-  username = githubOauthToken
-  password = 'x-oauth-basic'
 
   def nonMatching = []
   def previousUrl = null
@@ -387,7 +381,7 @@ task checkGradleWrappers(type: CheckGithubFile) {
     Properties props = new Properties();
     props.load(new StringReader(content))
     def currentUrl = props['distributionUrl']
-    logger.info("${repository}: Previous URL=${previousUrl} Current URL=${currentUrl}")
+    logger.info("${repository}:\n\t Previous URL=${previousUrl}\n\t Current  URL=${currentUrl}")
     if (previousUrl == null) {
       previousUrl = currentUrl;
     } else {
@@ -417,12 +411,8 @@ def renderCfg(def cfg) {
 task checkVersions(type: CheckGithubFile) {
   group = "Check that gradle wrappers are the same across projects"
 
-  organization = 'xebialabs'
   repositories = projectData.grep{it[1].toUpdate.contains('depcfg')}.collect{it[0]}
   contentPath = 'gradle/dependencies.conf'
-  branch = { -> project.getProperty('branch') }
-  username = githubOauthToken
-  password = 'x-oauth-basic'
 
   description = "Check versions in ${repositories.join(' ')}"
 
@@ -481,41 +471,61 @@ import org.apache.http.*
 import org.apache.http.protocol.*
 import org.apache.http.auth.*
 
-class UpdateGithubFile extends DefaultTask {
-  String organization
-  String repository
-  def ignoreMissing = true
+class GitHubTask extends DefaultTask {
+  String username = "${ -> project.githubOauthToken }"
+  String password = 'x-oauth-basic'
+  String organization = 'xebialabs'
   String contentPath
-  def branch
+  def ignoreMissing = true
+  def branch = { -> project.getProperty('branch')}
 
-  String username
-  String password
-
-  Closure doUpdate
-
-  @TaskAction
-  def update() {
+  def github() {
     // set auth header manually else it doesn't work
     def userPassBase64 = "${username}:${password}".toString().bytes.encodeBase64()
 
-    if (! "${branch}".trim()) {
-      throw new RuntimeException("Please specify the branch which you try to update, ex. -Pbranch=master")
-    }
-
-    def github = new RESTClient("https://api.github.com/").with {
+    return new RESTClient("https://api.github.com/").with {
       contentType = JSON
       defaultRequestHeaders.'Authorization' = "Basic $userPassBase64"
       defaultRequestHeaders.'Accept' = 'application/vnd.github.v3+json'
       // will not work without User-Agent!
-      defaultRequestHeaders.'User-Agent' = 'UpdateGithubTask'
+      defaultRequestHeaders.'User-Agent' = 'GradleGithubTask'
       handler.failure = { resp ->
         throw new RuntimeException("GitHub API Failure: ${resp.statusLine}")
       }
       delegate
     }
-    def url = "/repos/$organization/$repository/contents/$contentPath"
+  }
+
+  def checkBranch() {
+    if (! "${branch}".trim()) {
+      throw new RuntimeException("Please specify the branch which you try to update, ex. -Pbranch=master")
+    }
+  }
+
+  def doWithRepo(def repository, Closure action) {
     try {
-      def response = github.get(path: url, query: ['ref': "${branch}".toString()])
+      def contentUrl = "/repos/$organization/$repository/contents/$contentPath"
+      action(contentUrl)
+    } catch (RuntimeException e) {
+      if(ignoreMissing) {
+        logger.warn("Could not access repository $repository branch $branch => skipping")
+      } else {
+        throw new RuntimeException("Failed to read from repository $repository ($branch)", e)
+      }
+    }
+  }
+}
+
+
+class UpdateGithubFile extends GitHubTask {
+  String repository
+  Closure doUpdate
+
+  @TaskAction
+  def update() {
+    checkBranch()
+    doWithRepo(repository, { url ->
+      def response = github().get(path: url, query: ['ref': "${branch}".toString()])
       def content = new String(response.data.content.decodeBase64(), 'UTF-8');
       def sha = response.data.sha
       logger.debug("Loaded from '{}': '{}'", url, content)
@@ -524,71 +534,35 @@ class UpdateGithubFile extends DefaultTask {
       if (updateMap.size() > 0) {
         logger.debug("Updating with {}", updateMap)
 
-        def body = ['content': updateMap.content.bytes.encodeBase64().toString(), 'message': updateMap.message.toString(), 'sha': sha, 'branch': "${branch}".toString()]
+        def body = ['content': updateMap.content.bytes.encodeBase64().toString(),
+                    'message': updateMap.message.toString(),
+                    'sha': sha,
+                    'branch': "${branch}".toString()]
         logger.debug("Update request body: {}", body)
 
-        def putResponse = github.put('path': url, 'body': body)
+        def putResponse = github().put('path': url, 'body': body)
         logger.debug("Update response: {}", putResponse.data)
       } else {
         logger.debug("No update to do.")
       }
-    } catch (RuntimeException e) {
-      if(ignoreMissing) {
-        logger.warn("Could not access repository {} => skipping", repository)
-      } else {
-        throw new RuntimeException("Failed to read from repository $repository ($branch)", e)
-      }
-    }
+    })
   }
 }
 
-class CheckGithubFile extends DefaultTask {
-  String organization
-  String contentPath
-  def ignoreMissing = true
-  def branch
+class CheckGithubFile extends GitHubTask {
   def repositories = []
-
-  String username
-  String password
-
   Closure check
 
   @TaskAction
   def check() {
-
-    if (! "${branch}".trim()) {
-      throw new RuntimeException("Please specify the branch which you try to update, ex. -Pbranch=master")
-    }
-
-    // set auth header manually else it doesn't work
-    def userPassBase64 = "${username}:${password}".toString().bytes.encodeBase64()
-    def github = new RESTClient("https://api.github.com/").with {
-      contentType = JSON
-      defaultRequestHeaders.'Authorization' = "Basic $userPassBase64"
-      defaultRequestHeaders.'Accept' = 'application/vnd.github.v3+json'
-      // will not work without User-Agent!
-      defaultRequestHeaders.'User-Agent' = 'UpdateGithubTask'
-      handler.failure = { resp ->
-        throw new RuntimeException("GitHub API Failure: ${resp.statusLine}")
-      }
-      delegate
-    }
+    checkBranch()
     repositories.each { repository ->
-      def url = "/repos/$organization/$repository/contents/$contentPath"
       def content = ""
-      try {
-        def response = github.get(path: url, query: ['ref': "${branch}".toString()])
+      doWithRepo(repository, { url ->
+        def response = github().get(path: url, query: ['ref': "${branch}".toString()])
         content = new String(response.data.content.decodeBase64(), 'UTF-8');
-        def sha = response.data.sha
         logger.debug("Loaded from '{}': '{}'", url, content)
-      } catch (RuntimeException e) {
-        if(ignoreMissing) {
-          logger.warn("Could not access repository {} => skipping", repository)
-        } else {
-          throw new RuntimeException("Failed to read from repository $repository ($branch)", e)
-        }
-      }
+      })
 
       check repository, content
     }
