@@ -8,55 +8,32 @@ buildscript {
   }
 }
 
+def projectData(def repoName, def cfgs = [ 'depcfg' ]) {
+  return [ repoName, [ url: "git@github.com:xebialabs/${repoName}.git", toUpdate: cfgs ] ]
+}
+
+def mainProjectNames = ['cloud-pack', 'xl-deploy']
+
+def middlewarePluginNames = ['tomcat-plugin', 'biztalk-plugin', 'glassfish-plugin', 'jbossas-plugin', 'jbossdm-plugin',
+        'loadbalancer-plugin', 'websphere-plugins', 'windows-plugin', 'iis-plugin', 'weblogic-plugins', 'rpm-plugin']
+
+def miscProjectNames = ['online-docs', 'online-docs-jekyll', 'xl-config-compare', 'xl-download']
+
+
 // The keys of mainProjectData should match with repository name from the URL
 ext {
-  mainProjectData = [
-    [ 'cloud-pack',               [ url: 'git@github.com:xebialabs/cloud-pack.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'xl-deploy',                [ url: 'git@github.com:xebialabs/xl-deploy.git', toUpdate: [ 'depcfg' ] ] ],
-  ]
+  mainProjectData = mainProjectNames.collect( { projectData(it)})
+  middleWarePluginProjectData = middlewarePluginNames.collect( { projectData(it) } )
+  miscProjectData = miscProjectNames.collect( { projectData(it) } )
   ciPluginProjectData = [
-    [ 'bamboo-xl-deploy-plugin',  [ url: 'git@github.com:xebialabs/bamboo-xl-deploy-plugin.git', toUpdate: [ 'depcfg', 'pom' ] ] ],
-    [ 'maven-deployit-plugin',    [ url: 'git@github.com:xebialabs/maven-deployit-plugin.git', toUpdate: [ 'pom' ] ] ],
+          projectData('bamboo-xl-deploy-plugin', ['depcfg', 'pom']),
+          projectData('maven-deployit-plugin', ['pom'])
   ]
-  middleWarePluginProjectData = [
-    [ 'tomcat-plugin',            [ url: 'git@github.com:xebialabs/tomcat-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'biztalk-plugin',           [ url: 'git@github.com:xebialabs/biztalk-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'glassfish-plugin',         [ url: 'git@github.com:xebialabs/glassfish-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-
-    [ 'jbossas-plugin',           [ url: 'git@github.com:xebialabs/jbossas-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'jbossdm-plugin',           [ url: 'git@github.com:xebialabs/jbossdm-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-
-    [ 'loadbalancer-plugin',      [ url: 'git@github.com:xebialabs/loadbalancer-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-
-    [ 'websphere-plugins',        [ url: 'git@github.com:xebialabs/websphere-plugins.git', toUpdate: [ 'depcfg' ] ] ],
-
-    [ 'windows-plugin',           [ url: 'git@github.com:xebialabs/windows-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'iis-plugin',               [ url: 'git@github.com:xebialabs/iis-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-
-    [ 'weblogic-plugins',         [ url: 'git@github.com:xebialabs/weblogic-plugins', toUpdate: [ 'depcfg' ] ] ],
-    [ 'rpm-plugin',               [ url: 'git@github.com:xebialabs/rpm-plugin.git', toUpdate: [ 'depcfg' ] ] ],
-  ]
-
-  miscProjectData = [
-    [ 'online-docs',              [ url: 'git@github.com:xebialabs/online-docs.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'online-docs-jekyll',       [ url: 'git@github.com:xebialabs/online-docs-jekyll.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'xl-config-compare',        [ url: 'git@github.com:xebialabs/xl-config-compare', toUpdate: [ 'depcfg' ] ] ],
-    [ 'xl-download',        [ url: 'git@github.com:xebialabs/xl-download', toUpdate: [ 'depcfg' ] ] ],
-  ]
-
-  testData = [ [ 'temp4test',     [ url:'git@github.com:xebialabs/temp4test.git', toUpdate: [ 'depcfg', 'pom'] ] ] ]
+  testData = [ projectData('temp4test', [ 'depcfg', 'pom']) ]
 
   pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
   projectData = mainProjectData + pluginProjectData + miscProjectData // + testData
 
-  versionProperties = [ 'xlPlatformVersion',
-                        'licenseDatabaseVersion',
-                        'xlDeployVersion',
-                        'cloudPackVersion',
-                        'docBaseStyleVersion',
-                        'overthereVersion',
-                        'overcastVersion',
-                        'compareVersion']
   propToProject = [ 'xlPlatformVersion'     : 'xl-platform',
                     'xlDeployVersion'       : 'xl-deploy',
                     'licenseDatabaseVersion': 'license-database',
@@ -65,6 +42,8 @@ ext {
                     'overthereVersion'      : 'overthere',
                     'overcastVersion'       : 'overcast',
                     'compareVersion'        : 'xl-config-compare']
+
+  versionProperties = propToProject.keySet().sort(false)
 
   numInconsistencies = 0
 }
