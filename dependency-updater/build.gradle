@@ -271,10 +271,7 @@ def defineUpdatePomTask(repoName) {
 ///// Dependency group update tasks
 
 def getUpdateTask(def cfg, def projectName) {
-  if( cfg.toUpdate.contains('depcfg') || cfg.toUpdate.contains('pom') )
-    "${updateProjectDependencyTaskName(projectName)}"
-  else
-    null
+  ( cfg.toUpdate.contains('depcfg') || cfg.toUpdate.contains('pom') ) ?  "${updateProjectDependencyTaskName(projectName)}" : null
 }
 
 def getPluginName(def cfg, def task) {
@@ -282,46 +279,28 @@ def getPluginName(def cfg, def task) {
 }
 
 def nextLine = ',\n    '
-task groupUpdateXlDeployDependencies(dependsOn: mainProjectData.findResults { getUpdateTask(it[1], it[0]) }) {
-  group "Group update"
-  description = "Update ${mainProjectData.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
+for (taskDef in [
+        [name: "groupUpdateXlDeployDependencies", data: mainProjectData],
+        [name: "groupUpdateCiPluginDependencies", data: ciPluginProjectData],
+        [name: "groupUpdateMiddleWarePluginDependencies", data: middleWarePluginProjectData],
+        [name: "groupUpdatePluginDependencies", data: pluginProjectData],
+        [name: "groupUpdateAllDependencies", data: projectData],
+]) {
+  task "${taskDef.name}"(dependsOn: taskDef.data.findResults { getUpdateTask(it[1], it[0]) }) {
+    group "Group update"
+    description = "Update ${taskDef.data.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
+  }
 }
 
-task groupUpdateCiPluginDependencies(dependsOn: ciPluginProjectData.findResults { getUpdateTask(it[1], it[0]) }) {
-  group "Group update"
-  description = "Update ${ciPluginProjectData.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
-}
-
-task groupUpdateMiddleWarePluginDependencies(dependsOn: middleWarePluginProjectData.findResults { getUpdateTask(it[1], it[0]) }) {
-  group "Group update"
-  description = "Update ${middleWarePluginProjectData.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
-}
-
-task groupUpdatePluginDependencies(dependsOn: pluginProjectData.findResults { getUpdateTask(it[1], it[0]) }) {
-  group "Group update"
-  description = "Update ${pluginProjectData.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
-}
-
-task groupUpdateAllDependencies(dependsOn: projectData.findResults { getUpdateTask(it[1], it[0]) }) {
-  group "Group update"
-  description = "Update ${projectData.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
-}
-
-///// Gradle group update tasks
-
-task groupUpdateXlDeployGradle(dependsOn: mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
-  group "Group gradle update"
-  description = "Update ${mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
-}
-
-task groupUpdatePluginGradle(dependsOn: pluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
-  group "Group gradle update"
-  description = "Update ${pluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
-}
-
-task groupUpdateAllGradle(dependsOn: projectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
-  group "Group gradle update"
-  description = "Update ${projectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
+for (taskDef in [
+        [name: "groupUpdateXlDeployGradle", data: mainProjectData],
+        [name: "groupUpdatePluginGradle", data: pluginProjectData],
+        [name: "groupUpdateAllGradle", data: projectData],
+]) {
+  task "${taskDef.name}"(dependsOn: taskDef.data.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
+    group "Group gradle update"
+    description = "Update ${mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
+  }
 }
 
 ////// Check targets
@@ -329,9 +308,6 @@ task groupUpdateAllGradle(dependsOn: projectData.findResults { it[1].toUpdate.co
 def getGradleVersionFromUrl(def url) {
   def start = url.lastIndexOf('/') + 1
   def end = url.lastIndexOf('-bin.zip')
-  if (start == -1) {
-    start = 0
-  }
   if (end == -1) {
     end = url.length()
   }
