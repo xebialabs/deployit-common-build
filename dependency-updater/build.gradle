@@ -125,10 +125,8 @@ def updateProjectGradleTaskName(def name) {
 }
 
 import com.typesafe.config.ConfigFactory
-import com.typesafe.config.ConfigValue
 import com.typesafe.config.ConfigValueType
 import com.typesafe.config.ConfigRenderOptions
-import com.typesafe.config.ConfigValueFactory
 import com.typesafe.config.ConfigParseOptions
 
 projectData.each { repoName, metadata ->
@@ -138,67 +136,53 @@ projectData.each { repoName, metadata ->
   })
 
   if( metadata.toUpdate.contains('depcfg') ) {
-    def taskName = "update${projectName(repoName)}DepCfg"
-    defineUpdateDefCfgTask(repoName, taskName)
-    updateProjDepTask.dependsOn taskName
-    updateProjDepTask.description += " gradle/dependencies.conf"
-    // depcfg implies gradle wrapper
+    def updateDefCfgTask = defineUpdateDefCfgTask(repoName)
     defineUpdateProjectGradleTask(repoName)
+
+    updateProjDepTask.dependsOn updateDefCfgTask
+    updateProjDepTask.description += " gradle/dependencies.conf"
   }
 
   if( metadata.toUpdate.contains('pom') ) {
-    def taskName = "update${projectName(repoName)}Pom"
-    defineUpdatePomTask(repoName, taskName)
-    updateProjDepTask.dependsOn taskName
+    def updatePomTask = defineUpdatePomTask(repoName)
+    updateProjDepTask.dependsOn updatePomTask
     updateProjDepTask.description += " pom.xml"
   }
 }
 
 
-def defineUpdateDefCfgTask(repoName, taskName) {
-
-  task "$taskName" (type: UpdateGithubFile) {
+def defineUpdateDefCfgTask(repoName) {
+  task "update${projectName(repoName)}DepCfg" (type: UpdateGithubFile) {
     group = "Single project gradle/dependency.conf update"
 
-    organization = 'xebialabs'
     repository = repoName
     contentPath = 'gradle/dependencies.conf'
-    branch = { -> project.getProperty('branch') }
-    username = githubOauthToken
-    password = 'x-oauth-basic'
 
     doUpdate { content ->
-      def cfg = ConfigFactory.parseString(content, ConfigParseOptions.defaults().setOriginDescription("Github project ${name} branch $branch gradle/dependencies.conf"))
+      def parseOptions = ConfigParseOptions.defaults().setOriginDescription("Github project $repoName branch $branch gradle/dependencies.conf")
+      def cfg = ConfigFactory.parseString(content, parseOptions)
       def updates = [:]
       def updatedToList = []
 
-      versionProperties.each {
+      versionProperties.grep{ project.hasProperty(it) && cfg.hasPath("xebialabs.dependencies.versions.${it}") }.each {
         def key = "xebialabs.dependencies.versions.${it}"
-        if (project.hasProperty(it)) {
-          def version = project.getProperty(it)
-          if (cfg.hasPath(key)) {
-            def currentVersion = cfg.getString(key)
-            if (!version.equals(currentVersion)) {
-              logger.info("Updating $it $currentVersion -> $version")
-              updates[key] = version
-              updatedToList += "${propToProject[it]}-$version"
-            } else {
-              logger.debug("Not updating $it no change")
-            }
-          }
+        def requestedProject = propToProject[it]
+        def requestedVersion = project.getProperty(it)
+        def currentVersion = cfg.getString(key)
+        if (!requestedVersion.equals(currentVersion)) {
+          logger.info("$repoName: Updating $it $currentVersion -> $requestedVersion")
+          updates[key] = requestedVersion
+          updatedToList += "$requestedProject-$requestedVersion"
+        } else {
+          logger.debug("Not updating $it no change")
         }
       }
 
-      def newCfg = ConfigFactory.parseMap(updates, "updated values")
-      cfg = newCfg.withFallback(cfg)
+      cfg = ConfigFactory.parseMap(updates, "updated values").withFallback(cfg)
 
       def rendered = cfg.root().render(ConfigRenderOptions.defaults().setOriginComments(false).setJson(false))
 
-      if (updatedToList.size() > 0) {
-        return [content: rendered, message: updatedToList.join(', ')]
-      } else {
-        return [:]
-      }
+      (updatedToList.size() > 0) ? [content: rendered, message: updatedToList.join(', ')] : [:]
     }
   }
 }
@@ -209,50 +193,41 @@ def defineUpdateProjectGradleTask(repoName) {
   task "${updateProjectGradleTaskName(repoName)}"(type: UpdateGithubFile) {
     group = "Single project Gradle Wrapper Update"
 
-    organization = 'xebialabs'
     repository = repoName
     contentPath = 'gradle/wrapper/gradle-wrapper.properties'
-    branch = { -> project.getProperty('branch') }
-    username = githubOauthToken
-    password = 'x-oauth-basic'
 
     doUpdate { content ->
-      if (project.hasProperty('gradleDistributionUrl')) {
-        def url = project.getProperty('gradleDistributionUrl')
-        Properties props = new Properties()
-        props.load(new StringReader(content))
-        def currentUrl = props['distributionUrl']
-
-        if (!url.equals(currentUrl)) {
-          logger.info("Updating gradle distribution $currentUrl -> $url")
-          props['distributionUrl'] = url
-          def newContent = new StringWriter()
-          props.store(newContent, null)
-          String gradleZip = url.substring(url.lastIndexOf('/') + 1).replace('-bin.zip', '')
-          return [content: newContent.toString(), message: gradleZip]
-        } else {
-          logger.debug("Not updating gradle distributionUrl no change (${currentUrl})")
-        }
-      } else {
+      if (!project.hasProperty('gradleDistributionUrl')) {
         throw new RuntimeException("Property gradleDistributionUrl not set, don't know which gradle to update to.")
       }
+      def requestedGradleUrl = project.getProperty('gradleDistributionUrl')
 
-      return [:]
+      Properties props = new Properties()
+      props.load(new StringReader(content))
+      def currentUrl = props['distributionUrl']
+
+      if (requestedGradleUrl.equals(currentUrl)) {
+        logger.debug("$repoName: Not updating gradle distributionUrl: already at $currentUrl")
+        return [:]
+      }
+
+      logger.info("$repoName: Updating gradle distribution $currentUrl -> $requestedGradleUrl")
+      props['distributionUrl'] = requestedGradleUrl
+      def newContent = new StringWriter()
+      props.store(newContent, null)
+
+      String gradleVersion = requestedGradleUrl.substring(requestedGradleUrl.lastIndexOf('/') + 1).replace('-bin.zip', '')
+      [content: newContent.toString(), message: gradleVersion]
     }
   }
 }
 
-def defineUpdatePomTask(repoName, taskName) {
-
-  task "$taskName" (type: UpdateGithubFile) {
+def defineUpdatePomTask(repoName) {
+  task "update${projectName(repoName)}Pom" (type: UpdateGithubFile) {
     group = "Single project pom.xml update"
 
-    organization = 'xebialabs'
     repository = repoName
     contentPath = 'pom.xml'
-    branch = { -> project.getProperty('branch') }
-    username = githubOauthToken
-    password = 'x-oauth-basic'
 
     doUpdate { content ->
       def newContent = new StringWriter()
@@ -301,11 +276,7 @@ def defineUpdatePomTask(repoName, taskName) {
         }
       }
 
-      if (updatedToList.size() > 0) {
-        return [content: newContent.toString(), message: updatedToList.join(', ')]
-      } else {
-        return [:]
-      }
+      return updatedToList.size() > 0 ? [content: newContent.toString(), message: updatedToList.join(', ')] : [:]
     }
   }
 }
