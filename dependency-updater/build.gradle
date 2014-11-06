@@ -171,10 +171,10 @@ def defineUpdateDefCfgTask(repoName) {
         def currentVersion = cfg.getString(key)
         if (!requestedVersion.equals(currentVersion)) {
           logger.info("$repoName: Updating $it $currentVersion -> $requestedVersion")
-          updates[key] = requestedVersion
           updatedToList += "$requestedProject-$requestedVersion"
+          updates[key] = requestedVersion
         } else {
-          logger.debug("Not updating $it no change")
+          logger.debug("$repoName: Not updating $it: $requestedProject already at version $requestedVersion")
         }
       }
 
@@ -232,51 +232,38 @@ def defineUpdatePomTask(repoName) {
     doUpdate { content ->
       def newContent = new StringWriter()
 
-      boolean inProperties = false
-      def updates = [:]
+      boolean insidePropertiesTag = false
       def updatedToList = []
+      def matcher
 
-      content.eachLine {
-        if( !inProperties ) {
-          if(it ==~ /^\s+<properties>\s*$/) {
-            inProperties = true;
-          }
-          newContent.println it
-        } else {
-          if(it ==~ "^\\s+</properties>\\s*\$") {
-            inProperties = false;
-            newContent.println it
-          } else {
-            def matcher = it =~ /^(\s+)<(\w+)>(.+)<\/\w+>(\s*)$/
-            if(matcher) {
+      content.eachLine { contentLine ->
+        def outputLine = contentLine
+        if (!insidePropertiesTag && contentLine ==~ /^\s+<properties>\s*$/) {
+          insidePropertiesTag = true;
+        } else if (insidePropertiesTag && contentLine ==~ "^\\s+</properties>\\s*\$") {
+          insidePropertiesTag = false;
+        } else if (insidePropertiesTag && (matcher = (contentLine =~ /^(\s+)<(\w+)>(.+)<\/\w+>(\s*)$/))) {
+          def leadingWhitespace = matcher[0][1]
+          def propertyName = matcher[0][2]
+          def currentVersion = matcher[0][3]
+          def trailingWhitespace = matcher[0][4]
 
-              def lws = matcher[0][1]
-              def prop = matcher[0][2]
-              def version = matcher[0][3]
-              def tws = matcher[0][4]
-
-              versionProperties.each {
-                if (prop == it && project.hasProperty(it)) {
-                  def newVersion = project.getProperty(it)
-                  if (!version.equals(newVersion)) {
-                    logger.info("Updating $it $version -> $newVersion")
-                    updates[it] = newVersion
-                    updatedToList += "${propToProject[it]}-$newVersion"
-                    version = newVersion
-                  } else {
-                    logger.debug("Not updating $it no change")
-                  }
-                }
-              }
-              newContent.println "${lws}<${prop}>${version}</${prop}>${tws}"
+          if (project.hasProperty(propertyName) && versionProperties.contains(propertyName)) {
+            def requestedVersion = project.getProperty(propertyName)
+            def requestedProject = propToProject[propertyName]
+            if (!requestedVersion.equals(currentVersion)) {
+              logger.info("$repoName: Updating $propertyName $currentVersion -> $requestedVersion")
+              updatedToList += "$requestedProject-$requestedVersion"
             } else {
-              newContent.println it
+              logger.debug("$repoName: Not updating $contentLine: $requestedProject already at version $requestedVersion")
             }
+            outputLine = "${leadingWhitespace}<${propertyName}>${requestedVersion}</${propertyName}>${trailingWhitespace}"
           }
         }
+        newContent.println outputLine
       }
 
-      return updatedToList.size() > 0 ? [content: newContent.toString(), message: updatedToList.join(', ')] : [:]
+      (updatedToList.size() > 0) ? [content: newContent.toString(), message: updatedToList.join(', ')] : [:]
     }
   }
 }
