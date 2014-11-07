@@ -1,6 +1,8 @@
 // TODO checkVersions should include the pom.xml in a project
 apply plugin: 'idea'
 apply from: 'projectsdata.gradle'
+apply from: 'grouptasks.gradle'
+
 
 buildscript {
   repositories { mavenCentral() }
@@ -173,8 +175,6 @@ def defineUpdatePomTask(repoName) {
   }
 }
 
-apply from: 'grouptasks.gradle'
-
 ////// Check targets
 
 def getGradleVersionFromUrl(def url) {
@@ -186,19 +186,24 @@ def getGradleVersionFromUrl(def url) {
   url.substring(start, end)
 }
 
+def readDistributionUrl(content) {
+  Properties props = new Properties();
+  props.load(new StringReader(content))
+  props['distributionUrl']
+}
+
 task checkGradleWrappers(type: CheckGithubFile) {
   group = "Check that gradle wrappers are the same across projects"
 
   repositories = projectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }
   contentPath = 'gradle/wrapper/gradle-wrapper.properties'
 
-  def nonMatching = []
   def touchstoneUrl = null
 
   check { repository, content ->
-    logger.debug("Checking $repository...")
+    logger.info("Checking $repository...")
     def currentUrl = readDistributionUrl(content)
-    logger.info("${repository}:\n\t Touchstone URL=${touchstoneUrl}\n\t Current    URL=${currentUrl}")
+    logger.debug("${repository}:\n\t Current    URL=${currentUrl}\n\t Touchstone URL=${touchstoneUrl}")
     if (touchstoneUrl == null) {
       logger.warn("Touchstone gradle wrapper url taken from $repository: $currentUrl")
       touchstoneUrl = currentUrl;
@@ -207,26 +212,11 @@ task checkGradleWrappers(type: CheckGithubFile) {
         if (currentUrl == null) {
             logger.warn "No distributionUrl defined in $repository $contentPath; not registering it as non-matching!"
         } else {
-            nonMatching += [[repository, touchstoneUrl, currentUrl]]
+            mismatch(repository, 'gradle wrapper', getGradleVersionFromUrl(touchstoneUrl), getGradleVersionFromUrl(currentUrl))
         }
       }
     }
   }
-
-  doLast {
-    if (nonMatching.size() > 0) {
-      project.ext.numInconsistencies += nonMatching.size()
-      nonMatching.each { repo, goodUrl, url ->
-        logger.error "$repo gradle version is ${getGradleVersionFromUrl(url)} not ${getGradleVersionFromUrl(goodUrl)}"
-      }
-    }
-  }
-}
-
-def readDistributionUrl(content) {
-  Properties props = new Properties();
-  props.load(new StringReader(content))
-  props['distributionUrl']
 }
 
 def renderCfg(def cfg) {
@@ -250,38 +240,35 @@ task checkVersions(type: CheckGithubFile) {
   repositories = projectData.grep{it[1].toUpdate.contains('depcfg')}.collect{it[0]}
   contentPath = 'gradle/dependencies.conf'
 
-  def nonMatching = []
   def touchstoneCfg = null
 
   check { repository, content ->
-    logger.debug("Checking $repository...")
+    logger.info("Checking $repository...")
     def parseOptions = ConfigParseOptions.defaults().setOriginDescription("Github project ${repository} branch $branch gradle/dependencies.conf")
     def cfg = ConfigFactory.parseString(content, parseOptions)
+
     if (touchstoneCfg == null) {
-      logger.warn("Repository $repository provides touchstone configuration for versions: ${renderCfg(cfg)}")
+      logger.info("Repository $repository provides touchstone configuration for versions: ${renderCfg(cfg)}")
       touchstoneCfg = cfg
     } else {
+
       cfg.entrySet().grep { it.getKey().startsWith('xebialabs.dependencies.versions')}.each { entry ->
-        String key = entry.getKey()
         def value = getEntryValue(cfg, entry)
 
-        if (touchstoneCfg.hasPath(key)) {
-          def touchstoneValue = touchstoneCfg.getString(key)
-          if (!touchstoneValue.equals(value)) {
-            nonMatching += [[repository, key, touchstoneValue, value]]
-          }
-        } else {
-          logger.warn("Repository $repository adds $key=$value to touchstone configuration")
+        String key = entry.getKey()
+        String shortkey = key - 'xebialabs.dependencies.versions.'
+
+        if (!touchstoneCfg.hasPath(key)) {
+          logger.info("\t Repository $repository adds $shortkey=$value to touchstone configuration")
           touchstoneCfg = ConfigFactory.parseMap([ ({-> key}()) : value], "updated values").withFallback(touchstoneCfg)
+        } else {
+          def touchstoneValue = touchstoneCfg.getString(key)
+          logger.debug("\t Current    $shortkey: $value\n\t Touchstone $shortkey: $touchstoneValue")
+
+          if (!touchstoneValue.equals(value)) {
+            mismatch(repository, shortkey, touchstoneValue, value)
+          }
         }
-      }
-    }
-  }
-  doLast {
-    if (nonMatching.size() > 0) {
-      project.ext.numInconsistencies += nonMatching.size()
-      nonMatching.each { repo, key, touchstoneValue, value ->
-        println "Repository $repo: key $key has value $value while $touchstoneValue was expected"
       }
     }
   }
