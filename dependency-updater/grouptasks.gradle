@@ -1,0 +1,34 @@
+///// Dependency group update tasks
+
+def getUpdateTask(def cfg, def projectName) {
+  ( cfg.toUpdate.contains('depcfg') || cfg.toUpdate.contains('pom') ) ?  "${updateProjectDependencyTaskName(projectName)}" : null
+}
+
+def getPluginName(def cfg, def task) {
+  (cfg.toUpdate.contains('depcfg') || cfg.toUpdate.contains('pom')) ? task : null
+}
+
+def nextLine = ',\n    '
+for (taskDef in [
+        [name: "groupUpdateXlDeployDependencies", data: mainProjectData],
+        [name: "groupUpdateCiPluginDependencies", data: ciPluginProjectData],
+        [name: "groupUpdateMiddleWarePluginDependencies", data: middleWarePluginProjectData],
+        [name: "groupUpdatePluginDependencies", data: pluginProjectData],
+        [name: "groupUpdateAllDependencies", data: projectData],
+]) {
+  task "${taskDef.name}"(dependsOn: taskDef.data.findResults { getUpdateTask(it[1], it[0]) }) {
+    group "Group update"
+    description = "Update ${taskDef.data.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
+  }
+}
+
+for (taskDef in [
+        [name: "groupUpdateXlDeployGradle", data: mainProjectData],
+        [name: "groupUpdatePluginGradle", data: pluginProjectData],
+        [name: "groupUpdateAllGradle", data: projectData],
+]) {
+  task "${taskDef.name}"(dependsOn: taskDef.data.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
+    group "Group gradle update"
+    description = "Update ${mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
+  }
+}

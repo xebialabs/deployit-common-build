@@ -1,98 +1,11 @@
 // TODO checkVersions should include the pom.xml in a project
+apply plugin: 'idea'
+apply from: 'projectsdata.gradle'
 
-def projectData(def repoName, def cfgs = [ 'depcfg' ]) {
-  return [ repoName, [ url: "git@github.com:xebialabs/${repoName}.git", toUpdate: cfgs ] ]
+buildscript {
+  repositories { mavenCentral() }
+  dependencies { classpath 'com.typesafe:config:1.2.0' }
 }
-
-def mainProjectNames = ['cloud-pack', 'xl-deploy']
-
-def middlewarePluginNames = ['tomcat-plugin', 'biztalk-plugin', 'glassfish-plugin', 'jbossas-plugin', 'jbossdm-plugin',
-        'loadbalancer-plugin', 'websphere-plugins', 'windows-plugin', 'iis-plugin', 'weblogic-plugins', 'rpm-plugin']
-
-def miscProjectNames = ['online-docs', 'online-docs-jekyll', 'xl-config-compare', 'xl-download']
-
-
-// The keys of mainProjectData should match with repository name from the URL
-ext {
-  mainProjectData = mainProjectNames.collect( { projectData(it)})
-  middleWarePluginProjectData = middlewarePluginNames.collect( { projectData(it) } )
-  miscProjectData = miscProjectNames.collect( { projectData(it) } )
-  ciPluginProjectData = [
-          projectData('bamboo-xl-deploy-plugin', ['depcfg', 'pom']),
-          projectData('maven-deployit-plugin', ['pom'])
-  ]
-  testData = [ projectData('temp4test', [ 'depcfg', 'pom']) ]
-
-  pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
-  projectData = mainProjectData + pluginProjectData + miscProjectData + testData
-
-  propToProject = [ 'xlPlatformVersion'     : 'xl-platform',
-                    'xlDeployVersion'       : 'xl-deploy',
-                    'licenseDatabaseVersion': 'license-database',
-                    'cloudPackVersion'      : 'cloud-pack',
-                    'docBaseStyleVersion'   : 'doc-base-style',
-                    'overthereVersion'      : 'overthere',
-                    'overcastVersion'       : 'overcast',
-                    'compareVersion'        : 'xl-config-compare']
-
-  versionProperties = propToProject.keySet().sort(false)
-
-  numInconsistencies = 0
-}
-
-description = """
-Use this gradle build to update the gradle/dependencies.conf, pom.xml and/or gradle
-distribution URL's across many projects. The pom.xml has to have a special format
-with a properties section with the same property names as the supported properties
-as described below.
-
-You can do single updates or update groups of projects.
-
-Supported properties:
-    ${versionProperties.join(',\n    ')}
-
-If a property is not present in the dependencies.conf it will not be
-added/updated.
-
-So to update all XL Deploy dependencies:
-
-    gradle groupUpdateXlDeployDependencies \\
-      -PxlPlatformVersion=5.0.1 \\
-      -Pbranch=master
-
-Or using task abbreviations:
-
-    gradle gUXD -PxlPlatformVersion=5.0.1 -PxlDeployVersion=5.0.1  -Pbranch=master
-
-To update only the jenkins deployit plugin:
-
-    gradle updateJenkinsDeployitPluginDependencies -PxlPlatformVersion=5.0.1 -Pbranch=master
-
-To specify the branch you want to update use -Pbranch=<branch>. There is no
-default by design.
-
-    gradle groupUpdateXlDeployDependencies \\
-      -PoverthereVersion=2.4.1 \\
-      -Pbranch=4.0.x-maintenance
-
-To update gradle wrappers use the update<plugin>Gradle or
-groupUpdate<group>Gradle tasks with an additional property
-'gradleDistributionUrl'. For instance:
-
-    gradle groupUpdateXlDeployGradle \\
-        -PgradleDistributionUrl=http://tech.xebialabs.com/xebialabs-gradle/xebialabs-gradle-1.11-1.2.21-bin.zip \\
-        -Pbranch=master
-
-Authentication
-
-To authenticate generate a oauth token for your github account and give
-it access to private repositories.
-
-Put the token in your private gradle.properties with key
-
-    githubOauthToken=<yourkey>
-
-"""
 
 gradle.buildStarted {
   numInconsistencies = 0
@@ -260,40 +173,7 @@ def defineUpdatePomTask(repoName) {
   }
 }
 
-///// Dependency group update tasks
-
-def getUpdateTask(def cfg, def projectName) {
-  ( cfg.toUpdate.contains('depcfg') || cfg.toUpdate.contains('pom') ) ?  "${updateProjectDependencyTaskName(projectName)}" : null
-}
-
-def getPluginName(def cfg, def task) {
-  (cfg.toUpdate.contains('depcfg') || cfg.toUpdate.contains('pom')) ? task : null
-}
-
-def nextLine = ',\n    '
-for (taskDef in [
-        [name: "groupUpdateXlDeployDependencies", data: mainProjectData],
-        [name: "groupUpdateCiPluginDependencies", data: ciPluginProjectData],
-        [name: "groupUpdateMiddleWarePluginDependencies", data: middleWarePluginProjectData],
-        [name: "groupUpdatePluginDependencies", data: pluginProjectData],
-        [name: "groupUpdateAllDependencies", data: projectData],
-]) {
-  task "${taskDef.name}"(dependsOn: taskDef.data.findResults { getUpdateTask(it[1], it[0]) }) {
-    group "Group update"
-    description = "Update ${taskDef.data.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
-  }
-}
-
-for (taskDef in [
-        [name: "groupUpdateXlDeployGradle", data: mainProjectData],
-        [name: "groupUpdatePluginGradle", data: pluginProjectData],
-        [name: "groupUpdateAllGradle", data: projectData],
-]) {
-  task "${taskDef.name}"(dependsOn: taskDef.data.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
-    group "Group gradle update"
-    description = "Update ${mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
-  }
-}
+apply from: 'grouptasks.gradle'
 
 ////// Check targets
 
