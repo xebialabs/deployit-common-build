@@ -1,0 +1,8 @@
+apply plugin: 'groovy'
+
+repositories { mavenCentral() }
+
+dependencies {
+  compile 'com.typesafe:config:1.2.0'
+  compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.6'
+}
