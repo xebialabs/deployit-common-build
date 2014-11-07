@@ -22,7 +22,7 @@ ext {
   testData = [ projectData('temp4test', [ 'depcfg', 'pom']) ]
 
   pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
-  projectData = mainProjectData + pluginProjectData + miscProjectData + testData
+  projectData = mainProjectData + pluginProjectData + miscProjectData // + testData
 
   propToProject = [ 'xlPlatformVersion'     : 'xl-platform',
                     'xlDeployVersion'       : 'xl-deploy',
