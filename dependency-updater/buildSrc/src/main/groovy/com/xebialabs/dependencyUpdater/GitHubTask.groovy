@@ -11,7 +11,7 @@ class GitHubTask extends DefaultTask {
   String password = 'x-oauth-basic'
   String organization = 'xebialabs'
   String contentPath
-  def ignoreMissing = true
+  def ignoreMissing = project.hasProperty("ignoreMissing") ? Boolean.parseBoolean(project.ignoreMissing) : true
   def branch = "${ -> project.branch}"
 
   def github() {
@@ -34,10 +34,10 @@ class GitHubTask extends DefaultTask {
   def checkBranch() {
     try {
       if (!"${branch}".trim()) {
-        throw new RuntimeException("Task ${name} requires you to specify a branch, ex. -Pbranch=master")
+        throw new RuntimeException("Task ${name} requires you to specify a branch, e.g. -Pbranch=master")
       }
     } catch (MissingPropertyException e) {
-      throw new RuntimeException("Task ${name} requires you to specify a branch, ex. -Pbranch=master", e)
+      throw new RuntimeException("Task ${name} requires you to specify a branch, e.g. -Pbranch=master", e)
     }
   }
 
