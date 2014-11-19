@@ -1,11 +1,11 @@
 ///// Dependency group update tasks
 
-def getUpdateTask(def cfg, def projectName) {
-  ( cfg.toUpdate.contains('depcfg') || cfg.toUpdate.contains('pom') ) ?  "${updateProjectDependencyTaskName(projectName)}" : null
+def getUpdateTask(projectData) {
+  (projectData.toUpdate.contains('depcfg') || projectData.toUpdate.contains('pom') ) ?  "${updateProjectDependencyTaskName(projectData.repoName)}" : null
 }
 
-def getPluginName(def cfg, def task) {
-  (cfg.toUpdate.contains('depcfg') || cfg.toUpdate.contains('pom')) ? task : null
+def getPluginName(projectData) {
+  (projectData.toUpdate.contains('depcfg') || projectData.toUpdate.contains('pom')) ? projectData.repoName : null
 }
 
 def nextLine = ',\n    '
@@ -16,9 +16,9 @@ for (taskDef in [
         [name: "groupUpdatePluginDependencies", data: pluginProjectData],
         [name: "groupUpdateAllDependencies", data: projectData],
 ]) {
-  task "${taskDef.name}"(dependsOn: taskDef.data.findResults { getUpdateTask(it[1], it[0]) }) {
+  task "${taskDef.name}"(dependsOn: taskDef.data.findResults { getUpdateTask(it) }) {
     group "Group update"
-    description = "Update ${taskDef.data.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
+    description = "Update ${taskDef.data.findResults { getPluginName(it) }.join(nextLine)}"
   }
 }
 
@@ -27,8 +27,8 @@ for (taskDef in [
         [name: "groupUpdatePluginGradle", data: pluginProjectData],
         [name: "groupUpdateAllGradle", data: projectData],
 ]) {
-  task "${taskDef.name}"(dependsOn: taskDef.data.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
+  task "${taskDef.name}"(dependsOn: taskDef.data.findResults { it.toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it.repoName)}" : null }) {
     group "Group gradle update"
-    description = "Update ${mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
+    description = "Update ${mainProjectData.findResults { it.toUpdate.contains('depcfg') ? it.repoName : null }.join(nextLine)}"
   }
 }

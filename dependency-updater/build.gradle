@@ -31,246 +31,72 @@ def updateProjectGradleTaskName(def name) {
   "update${projectName(name)}Gradle"
 }
 
-import com.typesafe.config.ConfigFactory
-import com.typesafe.config.ConfigValueType
-import com.typesafe.config.ConfigRenderOptions
-import com.typesafe.config.ConfigParseOptions
-
-projectData.each { repoName, metadata ->
-  def updateProjDepTask = task("${updateProjectDependencyTaskName(repoName)}" {
+projectData.each { projData ->
+  def repoName = projData.repoName
+  def updateProjDepTask = task("${updateProjectDependencyTaskName(repoName)}") {
     group = "Single project update"
     description = "Update"
-  })
+  }
 
-  if( metadata.toUpdate.contains('depcfg') ) {
-    def updateDefCfgTask = defineUpdateDefCfgTask(repoName)
+  if( projData.toUpdate.contains('depcfg') ) {
+    def updateDefCfgTask = defineUpdateDepCfgTask(repoName)
     defineUpdateProjectGradleTask(repoName)
 
     updateProjDepTask.dependsOn updateDefCfgTask
     updateProjDepTask.description += " gradle/dependencies.conf"
   }
 
-  if( metadata.toUpdate.contains('pom') ) {
+  if( projData.toUpdate.contains('pom') ) {
     def updatePomTask = defineUpdatePomTask(repoName)
     updateProjDepTask.dependsOn updatePomTask
     updateProjDepTask.description += " pom.xml"
   }
 }
 
+////// Update targets, per repo
 
-def defineUpdateDefCfgTask(repoName) {
-  task "update${projectName(repoName)}DepCfg" (type: UpdateGithubFile) {
+def defineUpdateDepCfgTask(repoName) {
+  task "update${projectName(repoName)}DepCfg" (type: UpdateDependenciesConf) {
     group = "Single project gradle/dependency.conf update"
 
     repository = repoName
     contentPath = 'gradle/dependencies.conf'
-
-    doUpdate { content ->
-      def parseOptions = ConfigParseOptions.defaults().setOriginDescription("Github project $repoName branch $branch gradle/dependencies.conf")
-      def cfg = ConfigFactory.parseString(content, parseOptions)
-      def updates = [:]
-      def updatedToList = []
-
-      versionProperties.grep{ project.hasProperty(it) && cfg.hasPath("xebialabs.dependencies.versions.${it}") }.each {
-        def key = "xebialabs.dependencies.versions.${it}"
-        def requestedProject = propToProject[it]
-        def requestedVersion = project.getProperty(it)
-        def currentVersion = cfg.getString(key)
-        if (!requestedVersion.equals(currentVersion)) {
-          logger.info("$repoName: Updating $it $currentVersion -> $requestedVersion")
-          updatedToList += "$requestedProject-$requestedVersion"
-          updates[key] = requestedVersion
-        } else {
-          logger.debug("$repoName: Not updating $it: $requestedProject already at version $requestedVersion")
-        }
-      }
-
-      cfg = ConfigFactory.parseMap(updates, "updated values").withFallback(cfg)
-
-      def rendered = cfg.root().render(ConfigRenderOptions.defaults().setOriginComments(false).setJson(false))
-
-      (updatedToList.size() > 0) ? [content: rendered, message: updatedToList.join(', ')] : [:]
-    }
   }
 }
 
-
 def defineUpdateProjectGradleTask(repoName) {
-
-  task "${updateProjectGradleTaskName(repoName)}"(type: UpdateGithubFile) {
+  task "${updateProjectGradleTaskName(repoName)}"(type: UpdateProjectGradle) {
     group = "Single project Gradle Wrapper Update"
 
     repository = repoName
     contentPath = 'gradle/wrapper/gradle-wrapper.properties'
-
-    doUpdate { content ->
-      if (!project.hasProperty('gradleDistributionUrl')) {
-        throw new RuntimeException("Property gradleDistributionUrl not set, don't know which gradle to update to.")
-      }
-      def requestedGradleUrl = project.getProperty('gradleDistributionUrl')
-
-      Properties props = new Properties()
-      props.load(new StringReader(content))
-      def currentUrl = props['distributionUrl']
-
-      if (requestedGradleUrl.equals(currentUrl)) {
-        logger.debug("$repoName: Not updating gradle distributionUrl: already at $currentUrl")
-        return [:]
-      }
-
-      logger.info("$repoName: Updating gradle distribution $currentUrl -> $requestedGradleUrl")
-      props['distributionUrl'] = requestedGradleUrl
-      def newContent = new StringWriter()
-      props.store(newContent, null)
-
-      String gradleVersion = requestedGradleUrl.substring(requestedGradleUrl.lastIndexOf('/') + 1).replace('-bin.zip', '')
-      [content: newContent.toString(), message: gradleVersion]
-    }
   }
 }
 
 def defineUpdatePomTask(repoName) {
-  task "update${projectName(repoName)}Pom" (type: UpdateGithubFile) {
+  task "update${projectName(repoName)}Pom" (type: UpdateProjectPom) {
     group = "Single project pom.xml update"
 
     repository = repoName
     contentPath = 'pom.xml'
-
-    doUpdate { content ->
-      def newContent = new StringWriter()
-
-      boolean insidePropertiesTag = false
-      def updatedToList = []
-      def matcher
-
-      content.eachLine { contentLine ->
-        def outputLine = contentLine
-        if (!insidePropertiesTag && contentLine ==~ /^\s+<properties>\s*$/) {
-          insidePropertiesTag = true;
-        } else if (insidePropertiesTag && contentLine ==~ "^\\s+</properties>\\s*\$") {
-          insidePropertiesTag = false;
-        } else if (insidePropertiesTag && (matcher = (contentLine =~ /^(\s+)<(\w+)>(.+)<\/\w+>(\s*)$/))) {
-          def leadingWhitespace = matcher[0][1]
-          def propertyName = matcher[0][2]
-          def currentVersion = matcher[0][3]
-          def trailingWhitespace = matcher[0][4]
-
-          if (project.hasProperty(propertyName) && versionProperties.contains(propertyName)) {
-            def requestedVersion = project.getProperty(propertyName)
-            def requestedProject = propToProject[propertyName]
-            if (!requestedVersion.equals(currentVersion)) {
-              logger.info("$repoName: Updating $propertyName $currentVersion -> $requestedVersion")
-              updatedToList += "$requestedProject-$requestedVersion"
-            } else {
-              logger.debug("$repoName: Not updating $contentLine: $requestedProject already at version $requestedVersion")
-            }
-            outputLine = "${leadingWhitespace}<${propertyName}>${requestedVersion}</${propertyName}>${trailingWhitespace}"
-          }
-        }
-        newContent.println outputLine
-      }
-
-      (updatedToList.size() > 0) ? [content: newContent.toString(), message: updatedToList.join(', ')] : [:]
-    }
   }
 }
 
 ////// Check targets
 
-def getGradleVersionFromUrl(def url) {
-  def start = url.lastIndexOf('/') + 1
-  def end = url.lastIndexOf('-bin.zip')
-  if (end == -1) {
-    end = url.length()
-  }
-  url.substring(start, end)
-}
-
-def readDistributionUrl(content) {
-  Properties props = new Properties();
-  props.load(new StringReader(content))
-  props['distributionUrl']
-}
-
-task checkGradleWrappers(type: CheckGithubFile) {
-  group = "Check that gradle wrappers are the same across projects"
-
-  repositories = projectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }
+task checkGradleWrappers(type: CheckProjectGradle) {
+  repositoriesToCheck = projectData.findResults { it.toUpdate.contains('depcfg') ? it.repoName : null }
   contentPath = 'gradle/wrapper/gradle-wrapper.properties'
 
-  def touchstoneUrl = null
-
-  check { repository, content ->
-    logger.info("Checking $repository...")
-    def currentUrl = readDistributionUrl(content)
-    logger.debug("${repository}:\n\t Current    URL=${currentUrl}\n\t Touchstone URL=${touchstoneUrl}")
-    if (touchstoneUrl == null) {
-      logger.warn("Touchstone gradle wrapper url taken from $repository: $currentUrl")
-      touchstoneUrl = currentUrl;
-    } else {
-      if (!currentUrl.equals(touchstoneUrl)) {
-        if (currentUrl == null) {
-            logger.warn "No distributionUrl defined in $repository $contentPath; not registering it as non-matching!"
-        } else {
-            mismatch(repository, 'gradle wrapper', getGradleVersionFromUrl(touchstoneUrl), getGradleVersionFromUrl(currentUrl))
-        }
-      }
-    }
-  }
+  group = "Version checks"
+  description = "Check gradle wrapper versions are consistent across ${repositoriesToCheck.join(' ')}"
 }
 
-def renderCfg(def cfg) {
-  cfg.root().render(ConfigRenderOptions.defaults().setOriginComments(false).setJson(false))
-}
-
-def getEntryValue(def cfg, def entry) {
-  if (entry.getValue().valueType() == ConfigValueType.STRING) {
-    cfg.getString(entry.getKey())
-  } else if (entry.getValue().valueType() == ConfigValueType.NUMBER) {
-    cfg.getNumber(entry.getKey()).toString()
-  } else {
-    throw new RuntimeException("$repository: gradle/dependencies.conf has key ${entry.getKey()} with unsupported type ${entry.getValue().valueType()}");
-  }
-}
-
-task checkVersions(type: CheckGithubFile) {
-  group = "Check that gradle wrappers are the same across projects"
-  description = "Check gradle wrapper versions in ${repositories.join(' ')}"
-
-  repositories = projectData.grep{it[1].toUpdate.contains('depcfg')}.collect{it[0]}
+task checkVersions(type: CheckDependencyVersions) {
+  repositoriesToCheck = projectData.grep{it.toUpdate.contains('depcfg')}.collect{it.repoName}
   contentPath = 'gradle/dependencies.conf'
 
-  def touchstoneCfg = null
-
-  check { repository, content ->
-    logger.info("Checking $repository...")
-    def parseOptions = ConfigParseOptions.defaults().setOriginDescription("Github project ${repository} branch $branch gradle/dependencies.conf")
-    def cfg = ConfigFactory.parseString(content, parseOptions)
-
-    if (touchstoneCfg == null) {
-      logger.info("Repository $repository provides touchstone configuration for versions: ${renderCfg(cfg)}")
-      touchstoneCfg = cfg
-    } else {
-
-      cfg.entrySet().grep { it.getKey().startsWith('xebialabs.dependencies.versions')}.each { entry ->
-        def value = getEntryValue(cfg, entry)
-
-        String key = entry.getKey()
-        String shortkey = key - 'xebialabs.dependencies.versions.'
-
-        if (!touchstoneCfg.hasPath(key)) {
-          logger.info("\t Repository $repository adds $shortkey=$value to touchstone configuration")
-          touchstoneCfg = ConfigFactory.parseMap([ ({-> key}()) : value], "updated values").withFallback(touchstoneCfg)
-        } else {
-          def touchstoneValue = touchstoneCfg.getString(key)
-          logger.debug("\t Current    $shortkey: $value\n\t Touchstone $shortkey: $touchstoneValue")
-
-          if (!touchstoneValue.equals(value)) {
-            mismatch(repository, shortkey, touchstoneValue, value)
-          }
-        }
-      }
-    }
-  }
+  group = "Version checks"
+  description = "Check dependency versions are consistent across ${repositoriesToCheck.join(' ')}"
 }
 

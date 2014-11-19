@@ -1,11 +1,11 @@
 import org.gradle.api.tasks.TaskAction
 
-class CheckGithubFile extends GitHubTask {
-  def repositories = []
+class CheckConsistencyAcrossRepos extends GitHubTask {
+  def repositoriesToCheck = []
   Closure check
   def nonMatching = []
 
-  def mismatch(repository, key, touchstoneValue, current) {
+  def registerMismatch(repository, key, touchstoneValue, current) {
     nonMatching += [[repository, key, touchstoneValue, current]]
   }
 
@@ -13,12 +13,12 @@ class CheckGithubFile extends GitHubTask {
   def check() {
     checkBranch()
 
-    repositories.each { repository ->
+    repositoriesToCheck.each { repository ->
       def content = ""
-      doWithRepo(repository, { url, urlContent, sha ->
+      readContentFromRepo(repository, { urlContent, token ->
         content = urlContent
-        logger.debug("Loaded from '{}': '{}'", url, content)
       })
+      logger.info("Checking $repository...")
       check repository, content
     }
 

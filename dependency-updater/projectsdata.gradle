@@ -1,20 +1,22 @@
 def projectData(def repoName, def cfgs = [ 'depcfg' ]) {
-  return [ repoName, [ url: "git@github.com:xebialabs/${repoName}.git", toUpdate: cfgs ] ]
+  [ repoName: repoName, url: "git@github.com:xebialabs/${repoName}.git", toUpdate: cfgs ]
 }
 
-def mainProjectNames = ['cloud-pack', 'xl-deploy']
+def mainRepoNames = ['cloud-pack', 'xl-deploy']
 
-def middlewarePluginNames = ['tomcat-plugin', 'biztalk-plugin', 'glassfish-plugin', 'jbossas-plugin', 'jbossdm-plugin',
-                             'loadbalancer-plugin', 'websphere-plugins', 'windows-plugin', 'iis-plugin', 'weblogic-plugins', 'rpm-plugin']
+def middlewareRepoNames = [
+        'tomcat-plugin', 'glassfish-plugin', 'jbossas-plugin', 'jbossdm-plugin',
+        'loadbalancer-plugin', 'websphere-plugins', 'weblogic-plugins', 'rpm-plugin',
+        'windows-plugin', 'iis-plugin', 'biztalk-plugin']
 
-def miscProjectNames = ['online-docs', 'online-docs-jekyll', 'xl-config-compare', 'xl-download']
+def miscRepoNames = ['online-docs', 'online-docs-jekyll', 'xl-config-compare', 'xl-download']
 
 
 // The keys of mainProjectData should match with repository name from the URL
 ext {
-  mainProjectData = mainProjectNames.collect( { projectData(it)})
-  middleWarePluginProjectData = middlewarePluginNames.collect( { projectData(it) } )
-  miscProjectData = miscProjectNames.collect( { projectData(it) } )
+  mainProjectData = mainRepoNames.collect( { projectData(it)})
+  middleWarePluginProjectData = middlewareRepoNames.collect( { projectData(it) } )
+  miscProjectData = miscRepoNames.collect( { projectData(it) } )
   ciPluginProjectData = [
           projectData('bamboo-xl-deploy-plugin', ['depcfg', 'pom']),
           projectData('maven-deployit-plugin', ['pom'])
@@ -22,18 +24,19 @@ ext {
   testData = [ projectData('temp4test', [ 'depcfg', 'pom']) ]
 
   pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
-  projectData = mainProjectData + pluginProjectData + miscProjectData // + testData
+  projectData = mainProjectData + pluginProjectData + miscProjectData + testData
 
-  propToProject = [ 'xlPlatformVersion'     : 'xl-platform',
-                    'xlDeployVersion'       : 'xl-deploy',
-                    'licenseDatabaseVersion': 'license-database',
-                    'cloudPackVersion'      : 'cloud-pack',
-                    'docBaseStyleVersion'   : 'doc-base-style',
-                    'overthereVersion'      : 'overthere',
-                    'overcastVersion'       : 'overcast',
-                    'compareVersion'        : 'xl-config-compare']
+  artifactBaseNames = [
+          'xlPlatformVersion'     : 'xl-platform',
+          'xlDeployVersion'       : 'xl-deploy',
+          'licenseDatabaseVersion': 'license-database',
+          'cloudPackVersion'      : 'cloud-pack',
+          'docBaseStyleVersion'   : 'doc-base-style',
+          'overthereVersion'      : 'overthere',
+          'overcastVersion'       : 'overcast',
+          'compareVersion'        : 'xl-config-compare']
 
-  versionProperties = propToProject.keySet().sort(false)
+  versionProperties = artifactBaseNames.keySet().sort(false)
 
   numInconsistencies = 0
 }

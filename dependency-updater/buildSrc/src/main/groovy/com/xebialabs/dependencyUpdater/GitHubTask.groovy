@@ -5,6 +5,9 @@ import static groovyx.net.http.ContentType.JSON
 import org.apache.http.*
 import org.apache.http.protocol.*
 import org.apache.http.auth.*
+import com.typesafe.config.ConfigFactory
+import com.typesafe.config.ConfigParseOptions
+
 
 class GitHubTask extends DefaultTask {
   String username = "${ -> project.githubOauthToken }"
@@ -13,6 +16,8 @@ class GitHubTask extends DefaultTask {
   String contentPath
   def ignoreMissing = project.hasProperty("ignoreMissing") ? Boolean.parseBoolean(project.ignoreMissing) : true
   def branch = "${ -> project.branch}"
+
+  def versionsPrefix = 'xebialabs.dependencies.versions.'
 
   def github() {
     // set auth header manually else it doesn't work
@@ -31,6 +36,11 @@ class GitHubTask extends DefaultTask {
     }
   }
 
+  def parseConfig(cfgString) {
+    ConfigFactory.parseString(cfgString, ConfigParseOptions.defaults())
+  }
+
+
   def checkBranch() {
     try {
       if (!"${branch}".trim()) {
@@ -41,13 +51,20 @@ class GitHubTask extends DefaultTask {
     }
   }
 
-  def doWithRepo(def repository, Closure action) {
+  def contentUrl(repoName, path) {
+    "/repos/$organization/$repoName/contents/$path"
+  }
+
+  def readContentFromRepo(def repository, Closure action) {
     try {
-      def contentUrl = "/repos/$organization/$repository/contents/$contentPath"
+      def contentUrl = contentUrl(repository, contentPath)
       def response = github().get(path: contentUrl, query: ['ref': "${branch}".toString()])
       def content = new String(response.data.content.decodeBase64(), 'UTF-8');
-      def sha = response.data.sha
-      action(contentUrl, content, sha)
+      def optimisticLockingToken = response.data.sha
+      logger.debug("Loaded from '{}': '{}'", contentUrl, content)
+
+      action(content, optimisticLockingToken)
+
     } catch (RuntimeException e) {
       if(ignoreMissing) {
         logger.warn("Could not access repository $repository branch $branch => skipping")
