@@ -38,7 +38,7 @@ ext {
 
   versionProperties = artifactBaseNames.keySet().sort(false)
 
-  numInconsistencies = 0
+  inconsistencies = []
 }
 
 description = """

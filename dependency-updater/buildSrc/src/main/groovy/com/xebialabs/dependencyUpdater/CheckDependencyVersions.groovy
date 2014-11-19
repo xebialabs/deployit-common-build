@@ -11,7 +11,7 @@ class CheckDependencyVersions extends CheckConsistencyAcrossRepos {
       def cfg = parseConfig(content)
 
       if (touchstoneCfg == null) {
-        logger.info("Repository $repository provides touchstone configuration for versions: ${renderCfg(cfg)}")
+        logger.warn("Repository $repository provides touchstone configuration for versions: ${renderCfg(cfg)}")
         touchstoneCfg = cfg
       } else {
 
@@ -30,7 +30,7 @@ class CheckDependencyVersions extends CheckConsistencyAcrossRepos {
     String shortkey = fullKey - versionsPrefix
 
     if (!touchstoneCfg.hasPath(fullKey)) {
-      logger.info("\t Repository $repository adds $shortkey=$value to touchstone configuration")
+      logger.warn("\t Repository $repository adds $shortkey=$value to touchstone configuration")
       touchstoneCfg = ConfigFactory.parseMap([(fullKey): value], "updated values").withFallback(touchstoneCfg)
     } else {
       def touchstoneValue = touchstoneCfg.getString(fullKey)

@@ -10,11 +10,15 @@ buildscript {
 }
 
 gradle.buildStarted {
-  numInconsistencies = 0
+  inconsistencies = []
 }
 gradle.buildFinished { buildresult ->
-  if(numInconsistencies > 0) {
-    throw new RuntimeException("${numInconsistencies} inconsistencies found.")
+  if(inconsistencies.size() > 0) {
+    def msg = ""
+    inconsistencies.each { repo, key, touchstoneValue, value ->
+      msg += "\n\tRepository $repo: $key was $value while $touchstoneValue was expected"
+    }
+    throw new GradleException("${inconsistencies.size()} inconsistencies found:" + msg)
   }
 }
 
