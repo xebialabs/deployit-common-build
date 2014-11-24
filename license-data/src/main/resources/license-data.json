@@ -1383,6 +1383,11 @@
         "org.knopflerfish:framework": {
             "license": "BSD-Knopflerfish",
             "licenseSource": "data"
+        },
+        "org.tmatesoft.svnkit:svnkit": {
+            "license": "Commercial",
+            "licenseSource": "data",
+            "comment": "We have a commercial license for this component."
         }
     },
     "licenses": {
