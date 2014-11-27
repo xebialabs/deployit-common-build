@@ -13,6 +13,7 @@ ext {
   mainProjectData = [
     [ 'cloud-pack',               [ url: 'git@github.com:xebialabs/cloud-pack.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'xl-deploy',                [ url: 'git@github.com:xebialabs/xl-deploy.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'xl-satellite',                [ url: 'git@github.com:xebialabs/xl-satellite.git', toUpdate: [ 'depcfg' ] ] ],
   ]
   ciPluginProjectData = [
     [ 'bamboo-xl-deploy-plugin',  [ url: 'git@github.com:xebialabs/bamboo-xl-deploy-plugin.git', toUpdate: [ 'depcfg', 'pom' ] ] ],
