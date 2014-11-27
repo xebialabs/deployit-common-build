@@ -19,6 +19,7 @@ project.ext {
   springBatchVersion = '2.1.9.RELEASE'
   springSecurityVersion = '3.2.5.RELEASE'
   trueZipVersion = '7.4.3'
+  yajswVersion = 'stable-11.11'
 
   // Scala dependency versions
   scalaVersion="2.10"
@@ -176,6 +177,7 @@ project.ext.deps = [
   typesafe_config: "com.typesafe:config:1.2.0",
   velocity: "org.apache.velocity:velocity:1.7",
   vijava: 'com.xebialabs.thirdparty:vijava:v5.1',
+  yajsw : "org.rzo.yajsw:yajsw:yajsw-${yajswVersion}@zip",
   xstream: 'com.thoughtworks.xstream:xstream:1.4.4'
 ]
 
