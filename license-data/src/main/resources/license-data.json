@@ -44,6 +44,14 @@
             "license": "Apache-2.0",
             "licenseSource": "data"
         },
+        "org.codehaus.plexus:plexus-component-annotations": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.codehaus.plexus:plexus-interpolation": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
         "org.codehaus.plexus:plexus-utils": {
             "license": "Apache-2.0",
             "licenseSource": "data"
@@ -102,6 +110,34 @@
         },
         "com.google.code.findbugs:jsr305": {
             "license": "BSD-2CLAUSE",
+            "licenseSource": "data"
+        },
+        "org.eclipse.aether:aether-api": {
+            "license": "EPL-1.0",
+            "licenseSource": "data"
+        },
+        "org.eclipse.aether:aether-connector-basic": {
+            "license": "EPL-1.0",
+            "licenseSource": "data"
+        },
+        "org.eclipse.aether:aether-impl": {
+            "license": "EPL-1.0",
+            "licenseSource": "data"
+        },
+        "org.eclipse.aether:aether-spi": {
+            "license": "EPL-1.0",
+            "licenseSource": "data"
+        },
+        "org.eclipse.aether:aether-transport-http": {
+            "license": "EPL-1.0",
+            "licenseSource": "data"
+        },
+        "org.eclipse.aether:aether-transport-file": {
+            "license": "EPL-1.0",
+            "licenseSource": "data"
+        },
+        "org.eclipse.aether:aether-util": {
+            "license": "EPL-1.0",
             "licenseSource": "data"
         },
         "org.eclipse.jetty:jetty-http": {
@@ -337,6 +373,22 @@
             "licenseSource": "data"
         },
         "org.apache.commons:commons-lang3": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.apache.maven:maven-aether-provider": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.apache.maven:maven-model": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.apache.maven:maven-model-builder": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.apache.maven:maven-repository-metadata": {
             "license": "Apache-2.0",
             "licenseSource": "data"
         },
