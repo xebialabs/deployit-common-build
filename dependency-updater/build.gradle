@@ -8,12 +8,12 @@ buildscript {
   }
 }
 
-// The keys of mainProjectData should match with repository name from the URL
+// The keys of xlDeployProjectData should match with repository name from the URL
 ext {
-  mainProjectData = [
+  xlDeployProjectData = [
     [ 'cloud-pack',               [ url: 'git@github.com:xebialabs/cloud-pack.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'xl-deploy',                [ url: 'git@github.com:xebialabs/xl-deploy.git', toUpdate: [ 'depcfg' ] ] ],
-    [ 'xl-satellite',                [ url: 'git@github.com:xebialabs/xl-satellite.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'xl-satellite',             [ url: 'git@github.com:xebialabs/xl-satellite.git', toUpdate: [ 'depcfg' ] ] ],
   ]
   ciPluginProjectData = [
     [ 'bamboo-xl-deploy-plugin',  [ url: 'git@github.com:xebialabs/bamboo-xl-deploy-plugin.git', toUpdate: [ 'depcfg', 'pom' ] ] ],
@@ -42,13 +42,13 @@ ext {
     [ 'online-docs',              [ url: 'git@github.com:xebialabs/online-docs.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'online-docs-jekyll',       [ url: 'git@github.com:xebialabs/online-docs-jekyll.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'xl-config-compare',        [ url: 'git@github.com:xebialabs/xl-config-compare', toUpdate: [ 'depcfg' ] ] ],
-    [ 'xl-download',        [ url: 'git@github.com:xebialabs/xl-download', toUpdate: [ 'depcfg' ] ] ],
+    [ 'xl-download',              [ url: 'git@github.com:xebialabs/xl-download', toUpdate: [ 'depcfg' ] ] ],
   ]
 
   testData = [ [ 'temp4test',     [ url:'git@github.com:xebialabs/temp4test.git', toUpdate: [ 'depcfg', 'pom'] ] ] ]
 
   pluginProjectData = ciPluginProjectData + middleWarePluginProjectData
-  projectData = mainProjectData + pluginProjectData + miscProjectData // + testData
+  projectData = xlDeployProjectData + pluginProjectData + miscProjectData // + testData
 
   versionProperties = [ 'xlPlatformVersion',
                         'licenseDatabaseVersion',
@@ -336,9 +336,9 @@ def getPluginName(def cfg, def task) {
 }
 
 def nextLine = ',\n    '
-task groupUpdateXlDeployDependencies(dependsOn: mainProjectData.findResults { getUpdateTask(it[1], it[0]) }) {
+task groupUpdateXlDeployDependencies(dependsOn: xlDeployProjectData.findResults { getUpdateTask(it[1], it[0]) }) {
   group "Group update"
-  description = "Update ${mainProjectData.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
+  description = "Update ${xlDeployProjectData.findResults { getPluginName(it[1], it[0]) }.join(nextLine)}"
 }
 
 task groupUpdateCiPluginDependencies(dependsOn: ciPluginProjectData.findResults { getUpdateTask(it[1], it[0]) }) {
@@ -363,9 +363,9 @@ task groupUpdateAllDependencies(dependsOn: projectData.findResults { getUpdateTa
 
 ///// Gradle group update tasks
 
-task groupUpdateXlDeployGradle(dependsOn: mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
+task groupUpdateXlDeployGradle(dependsOn: xlDeployProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
   group "Group gradle update"
-  description = "Update ${mainProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
+  description = "Update ${xlDeployProjectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }.join(nextLine)}"
 }
 
 task groupUpdatePluginGradle(dependsOn: pluginProjectData.findResults { it[1].toUpdate.contains('depcfg') ? "${updateProjectGradleTaskName(it[0])}" : null }) {
