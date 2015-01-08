@@ -43,6 +43,7 @@ ext {
     [ 'online-docs-jekyll',       [ url: 'git@github.com:xebialabs/online-docs-jekyll.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'xl-config-compare',        [ url: 'git@github.com:xebialabs/xl-config-compare', toUpdate: [ 'depcfg' ] ] ],
     [ 'xl-download',              [ url: 'git@github.com:xebialabs/xl-download', toUpdate: [ 'depcfg' ] ] ],
+    [ 'xl-release',               [ url: 'git@github.com:xebialabs/xl-release.git', toUpdate: [ 'depcfg' ] ] ],
   ]
 
   testData = [ [ 'temp4test',     [ url:'git@github.com:xebialabs/temp4test.git', toUpdate: [ 'depcfg', 'pom'] ] ] ]
