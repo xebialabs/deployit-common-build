@@ -43,7 +43,11 @@ ext {
     [ 'online-docs-jekyll',       [ url: 'git@github.com:xebialabs/online-docs-jekyll.git', toUpdate: [ 'depcfg' ] ] ],
     [ 'xl-config-compare',        [ url: 'git@github.com:xebialabs/xl-config-compare', toUpdate: [ 'depcfg' ] ] ],
     [ 'xl-download',              [ url: 'git@github.com:xebialabs/xl-download', toUpdate: [ 'depcfg' ] ] ],
-    [ 'xl-release',               [ url: 'git@github.com:xebialabs/xl-release.git', toUpdate: [ 'depcfg' ] ] ],
+    [ 'xl-release',               [ url: 'git@github.com:xebialabs/xl-release.git', toUpdate: [ 'depcfg' ], branchByXldBranch: [
+        '4.0.x-maintenance': 'ignore',
+        '4.5.x-maintenance': 'ignore',
+        '5.0.x-maintenance': '4.5.x-maintenance',
+    ] ] ],
   ]
 
   testData = [ [ 'temp4test',     [ url:'git@github.com:xebialabs/temp4test.git', toUpdate: [ 'depcfg', 'pom'] ] ] ]
@@ -161,6 +165,11 @@ projectData.each { repoName, metadata ->
     description = "Update"
   }
 
+  def repoBranch = { ->
+    String xldBranch = "${project.getProperty('branch')}".toString()
+    metadata.branchByXldBranch?.get(xldBranch) ?: xldBranch
+  }
+
   if( metadata.toUpdate.contains('depcfg') ) {
     def taskName = "update${projectName(repoName)}DepCfg"
 
@@ -170,7 +179,7 @@ projectData.each { repoName, metadata ->
       organization = 'xebialabs'
       repository = repoName
       contentPath = 'gradle/dependencies.conf'
-      branch = { -> project.getProperty('branch') }
+      branch = repoBranch
       username = githubOauthToken
       password = 'x-oauth-basic'
 
@@ -221,7 +230,7 @@ projectData.each { repoName, metadata ->
       organization = 'xebialabs'
       repository = repoName
       contentPath = 'pom.xml'
-      branch = { -> project.getProperty('branch') }
+      branch = repoBranch
       username = githubOauthToken
       password = 'x-oauth-basic'
 
@@ -291,7 +300,7 @@ projectData.each { repoName, metadata ->
       organization = 'xebialabs'
       repository = repoName
       contentPath = 'gradle/wrapper/gradle-wrapper.properties'
-      branch = { -> project.getProperty('branch') }
+      branch = repoBranch
       username = githubOauthToken
       password = 'x-oauth-basic'
 
@@ -397,7 +406,7 @@ task checkGradleWrappers(type: CheckGithubFile) {
   group = "Check that gradle wrappers are the same across projects"
 
   organization = 'xebialabs'
-  repositories = projectData.findResults { it[1].toUpdate.contains('depcfg') ? it[0] : null }
+  repositories = projectData.findResults { it[1].toUpdate.contains('depcfg') ? it : null }
   contentPath = 'gradle/wrapper/gradle-wrapper.properties'
   branch = { -> project.getProperty('branch') }
   username = githubOauthToken
@@ -438,10 +447,10 @@ def renderCfg(def cfg) {
 }
 
 task checkVersions(type: CheckGithubFile) {
-  group = "Check that gradle wrappers are the same across projects"
+  group = "Check that dependency versions are the same across projects"
 
   organization = 'xebialabs'
-  repositories = projectData.grep{it[1].toUpdate.contains('depcfg')}.collect{it[0]}
+  repositories = projectData.findAll { it[1].toUpdate.contains('depcfg') }
   contentPath = 'gradle/dependencies.conf'
   branch = { -> project.getProperty('branch') }
   username = githubOauthToken
@@ -541,7 +550,7 @@ class UpdateGithubFile extends DefaultTask {
       def response = github.get(path: url, query: ['ref': "${branch}".toString()])
       def content = new String(response.data.content.decodeBase64(), 'UTF-8');
       def sha = response.data.sha
-      logger.debug("Loaded from '{}': '{}'", url, content)
+      logger.debug("Loaded from '{}' (branch '{}'): '{}'", url, "${branch}".toString(), content)
 
       def updateMap = doUpdate content
       if (updateMap.size() > 0) {
@@ -597,19 +606,21 @@ class CheckGithubFile extends DefaultTask {
       }
       delegate
     }
-    repositories.each { repository ->
+    repositories.each { repositoryObject ->
+      def repository = repositoryObject[0]
+      def repoBranch = repositoryObject[1].branchByXldBranch?.get("$branch".toString()) ?: "$branch".toString()
       def url = "/repos/$organization/$repository/contents/$contentPath"
       def content = ""
       try {
-        def response = github.get(path: url, query: ['ref': "${branch}".toString()])
+        def response = github.get(path: url, query: ['ref': repoBranch])
         content = new String(response.data.content.decodeBase64(), 'UTF-8');
         def sha = response.data.sha
-        logger.debug("Loaded from '{}': '{}'", url, content)
+        logger.debug("Loaded from '{}' (branch '{}'): '{}'", url, repoBranch, content)
       } catch (RuntimeException e) {
         if(ignoreMissing) {
           logger.warn("Could not access repository {} => skipping", repository)
         } else {
-          throw new RuntimeException("Failed to read from repository $repository ($branch)", e)
+          throw new RuntimeException("Failed to read from repository $repository ($repoBranch)", e)
         }
       }
 
