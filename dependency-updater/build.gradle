@@ -115,7 +115,7 @@ groupUpdate<group>Gradle tasks with an additional property
 'gradleDistributionUrl'. For instance:
 
     gradle groupUpdateXlDeployGradle \\
-        -PgradleDistributionUrl=http://tech.xebialabs.com/xebialabs-gradle/xebialabs-gradle-1.11-1.2.21-bin.zip \\
+        -PgradleDistributionUrl=https://nexus.xebialabs.com/nexus/content/repositories/xebialabs-gradle/com/xebialabs/gradle/xebialabs-gradle-1.12/1.4.18/xebialabs-gradle-1.12-1.4.18-bin.zip \\
         -Pbranch=master
 
 Authentication
