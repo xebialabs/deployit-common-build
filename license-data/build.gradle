@@ -3,7 +3,30 @@
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 group = 'com.xebialabs.deployit.gradle'
-version = '1.0.33-SNAPSHOT'
 
 apply plugin: 'deployit-java'
 apply plugin: 'deployit-artifact'
+
+import groovy.json.JsonSlurper
+
+task checkLicenseData() {
+    doLast {
+        def slurper = new JsonSlurper()
+        file('src/main/resources/license-data.json').withReader {
+            def data = slurper.parse(it)
+            data.artifacts.each {
+                def source = it.value.licenseSource
+                def license = it.value.license
+                if(source == 'data') {
+                    def ld = data.licenses[license]
+                    def f = file("src/main/resources/${ld.file}")
+                    if(ld.file && !f.exists()) {
+                        throw new RuntimeException("License not found ${f} for ${it.key}")
+                    }
+                }
+            }
+        }
+    }
+}
+check.dependsOn checkLicenseData
+install.dependsOn check
