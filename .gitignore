@@ -8,5 +8,3 @@ bin
 .gradle
 .idea/*
 *.iml
-gradle/*
-gradle*
