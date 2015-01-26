@@ -60,6 +60,11 @@
             "license": "Apache-2.0",
             "licenseSource": "data"
         },
+        "com.h2database:h2": {
+            "license": "EPL-1.0",
+            "licenseSource": "data",
+            "additionalLicenses": "MPL-1.1"
+        },
         "org.apache.ant:ant-launcher": {
             "license": "Apache-2.0",
             "licenseSource": "data"
@@ -94,6 +99,23 @@
         },
         "com.google.protobuf:protobuf-java": {
             "license": "BSD-3CLAUSE",
+            "licenseSource": "data"
+        },
+        "org.infinispan:infinispan-cachestore-jdbc": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.infinispan:infinispan-commons": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.infinispan:infinispan-core": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.jgroups:jgroups": {
+            "comment": "Since version 3.4",
+            "license": "Apache-2.0",
             "licenseSource": "data"
         },
         "org.json:json": {
@@ -420,6 +442,26 @@
             "license": "Apache-2.0",
             "licenseSource": "data"
         },
+        "org.mapdb:mapdb": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.modeshape:modeshape-jcr": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.modeshape:modeshape-jcr-api": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.modeshape:modeshape-common": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.modeshape:modeshape-schematic": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
         "org.mortbay.jetty:jetty": {
             "license": "Apache-2.0",
             "licenseSource": "data"
@@ -477,6 +519,23 @@
             "licenseSource": "data"
         },
         "org.jboss.resteasy:resteasy-jettison-provider": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec": {
+            "license": "CDDL-1",
+            "licenseSource": "data",
+            additionalLicenses: "GPL-2, with classpath exception"
+        },
+        "org.jboss.marshalling:jboss-marshalling": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.jboss.logging:jboss-logging": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "org.jboss.marshalling:jboss-marshalling-river": {
             "license": "Apache-2.0",
             "licenseSource": "data"
         },
