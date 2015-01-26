@@ -1,5 +1,85 @@
 {
     "artifacts": {
+        "com.google.guava:guava": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.github.sommeri:less4j": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.google.javascript:closure-compiler": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.google.code.findbugs:jsr305": {
+            "license": "BSD-2CLAUSE",
+            "licenseSource": "data"
+        },
+        "com.github.lltyk:dojo-shrinksafe": {
+            "license": "AFL-2.1",
+            "licenseSource": "data"
+        },
+        "com.typesafe.akka:akka-actor_2.10": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"
+        },
+        "com.typesafe.akka:akka-testkit_2.10": {
+            "licenseSource": "data",
+            "license": "Apache-2.0"
+        },
+        "com.chuusai:shapeless_2.10": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.typesafe:config": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.fasterxml.jackson.core:jackson-databind": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.fasterxml.jackson.module:jackson-module-scala_2.10": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.fasterxml.jackson.module:jackson-module-jsonSchema": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.fasterxml.jackson.module:jackson-module-jaxb-annotations": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.thoughtworks.paranamer:paranamer": {
+            "license": "BSD-3CLAUSE",
+            "licenseSource": "data"
+        },
+        "com.thoughtworks.qdox:qdox": {
+            "license": "Apache-2.0",
+            "licenseSource": "data"
+        },
+        "com.thoughtworks.xstream:xstream": {
+            "license": "BSD-xstream",
+            "licenseSource": "data"
+        },
+        "com.samskivert:jmustache": {
+            "license": "BSD-jmustache",
+            "licenseSource": "data"
+        },
+        "com.xebialabs.overthere:overthere": {
+            "license": "XebiaLabs-FLOSS",
+            "licenseSource": "data"
+        },
+        "com.jcraft:jzlib": {
+            "license": "BSD-jzlib",
+            "licenseSource": "data"
+        },
         "es5-shim": {
             "license": "MIT-ES5-SHIM",
             "licenseSource": "data"
@@ -14,10 +94,6 @@
         },
         "ro.isdc.wro4j:rhino": {
             "license": "MPL-2.0",
-            "licenseSource": "data"
-        },
-        "com.thoughtworks.paranamer:paranamer": {
-            "license": "BSD-3CLAUSE",
             "licenseSource": "data"
         },
         "org.codehaus.groovy:groovy-all": {
@@ -53,10 +129,6 @@
             "licenseSource": "data"
         },
         "org.codehaus.plexus:plexus-utils": {
-            "license": "Apache-2.0",
-            "licenseSource": "data"
-        },
-        "com.thoughtworks.qdox:qdox": {
             "license": "Apache-2.0",
             "licenseSource": "data"
         },
@@ -128,10 +200,6 @@
         },
         "org.json4s:json4s-native_2.10": {
             "license": "Apache-2.0",
-            "licenseSource": "data"
-        },
-        "com.google.code.findbugs:jsr305": {
-            "license": "BSD-2CLAUSE",
             "licenseSource": "data"
         },
         "org.eclipse.aether:aether-api": {
@@ -230,10 +298,6 @@
             "license": "MIT",
             "licenseSource": "data"
         },
-        "com.github.sommeri:less4j": {
-            "license": "Apache-2.0",
-            "licenseSource": "data"
-        },
         "org.codehaus.gmaven.runtime:gmaven-runtime-1.7": {
             "license": "Apache-2.0",
             "licenseSource": "data"
@@ -282,14 +346,6 @@
             "license": "MIT-JSLINT",
             "licenseSource": "data"
         },
-        "com.google.javascript:closure-compiler": {
-            "license": "Apache-2.0",
-            "licenseSource": "data"
-        },
-        "com.github.lltyk:dojo-shrinksafe": {
-            "license": "AFL-2.1",
-            "licenseSource": "data"
-        },
         "org.jruby:jruby-complete": {
             "license": "CPL-1.0",
             "licenseSource": "data"
@@ -309,14 +365,6 @@
         "org.eclipse.jetty:jetty-security": {
             "license": "Apache-2.0",
             "licenseSource": "data"
-        },
-        "com.typesafe.akka:akka-actor_2.10": {
-            "licenseSource": "data",
-            "license": "Apache-2.0"
-        },
-        "com.typesafe.akka:akka-testkit_2.10": {
-            "licenseSource": "data",
-            "license": "Apache-2.0"
         },
         "org.json4s:json4s-jackson_2.10": {
             "licenseSource": "data",
@@ -362,35 +410,7 @@
             "license": "Apache-2.0",
             "licenseSource": "data"
         },
-        "com.chuusai:shapeless_2.10": {
-            "license": "Apache-2.0",
-            "licenseSource": "data"
-        },
-        "com.typesafe:config": {
-            "license": "Apache-2.0",
-            "licenseSource": "data"
-        },
         "org.json4s:json4s-core_2.10": {
-            "license": "Apache-2.0",
-            "licenseSource": "data"
-        },
-        "com.fasterxml.jackson.core:jackson-databind": {
-            "license": "Apache-2.0",
-            "licenseSource": "data"
-        },
-        "com.fasterxml.jackson.module:jackson-module-scala_2.10": {
-            "license": "Apache-2.0",
-            "licenseSource": "data"
-        },
-        "com.fasterxml.jackson.module:jackson-module-jsonSchema": {
-            "license": "Apache-2.0",
-            "licenseSource": "data"
-        },
-        "com.fasterxml.jackson.module:jackson-module-jaxb-annotations": {
-            "license": "Apache-2.0",
-            "licenseSource": "data"
-        },
-        "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider": {
             "license": "Apache-2.0",
             "licenseSource": "data"
         },
@@ -437,10 +457,6 @@
         "nl.javadude.t2bus:t2-bus": {
             "licenseSource": "data",
             "license": "Apache-2.0"
-        },
-        "com.google.guava:guava": {
-            "license": "Apache-2.0",
-            "licenseSource": "data"
         },
         "org.mapdb:mapdb": {
             "license": "Apache-2.0",
@@ -523,9 +539,9 @@
             "licenseSource": "data"
         },
         "org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec": {
-            "license": "CDDL-1",
+            "license": "CDDL-1.0",
             "licenseSource": "data",
-            additionalLicenses: "GPL-2, with classpath exception"
+            "additionalLicenses": "GPL-2, with classpath exception"
         },
         "org.jboss.marshalling:jboss-marshalling": {
             "license": "Apache-2.0",
@@ -574,10 +590,6 @@
         "org.apache.james:apache-mime4j": {
             "license": "Apache-2.0",
             "licenseSource": "jar"
-        },
-        "com.thoughtworks.xstream:xstream": {
-            "license": "BSD-xstream",
-            "licenseSource": "data"
         },
         "org.owasp.antisamy:antisamy": {
             "license": "BSD-antisamy",
@@ -666,14 +678,6 @@
         "org.apache.jackrabbit:jackrabbit-spi": {
             "license": "Apache-2.0",
             "licenseSource": "jar"
-        },
-        "com.samskivert:jmustache": {
-            "license": "BSD-jmustache",
-            "licenseSource": "data"
-        },
-        "com.xebialabs.overthere:overthere": {
-            "license": "XebiaLabs-FLOSS",
-            "licenseSource": "data"
         },
         "nl.javadude.scannit:scannit": {
             "license": "Apache-2.0",
@@ -832,10 +836,6 @@
         "org.apache.derby:derby": {
             "license": "Apache-2.0",
             "licenseSource": "jar"
-        },
-        "com.jcraft:jzlib": {
-            "license": "BSD-jzlib",
-            "licenseSource": "data"
         },
         "jcifs:jcifs": {
             "license": "LGPL-2.1",
@@ -1473,15 +1473,15 @@
         },
         "de.javakaffee:kryo-serializers": {
             "licenseSource": "data",
-            "license": "Apache-2.0"   
+            "license": "Apache-2.0"
         },
         "org.ow2.asm:asm": {
             "licenseSource": "data",
-            "license": "BSD-INRIA"   
+            "license": "BSD-INRIA"
         },
         "com.assembla.scala-incubator:graph-core_2.10": {
             "licenseSource": "data",
-            "license": "BSD-EPFL"   
+            "license": "BSD-EPFL"
         },
         "javassist:javassist":  {
             "license": "Apache-2.0",
