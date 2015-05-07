@@ -4,11 +4,11 @@ x=`pwd`
 gradleExec=`pwd`/gradlew
 
 while [[ ! -d "$x/.git" && $x != "/" ]]; do 
-    x=`dirname "$x"`
     if [ -x "$x/gradlew" ]; then
         gradleExec="$x/gradlew"
         break
     fi
+    x=`dirname "$x"`
 done
 
 if [ ! -x "$gradleExec" ]; then
