@@ -187,3 +187,20 @@ td {
   border-right: 1px solid #333;
 }
 
+/* Deprecated items and their replacements */
+
+.deprecated {
+    background-color: #ffdddd;
+    border: 1px solid #cccccc;
+}
+
+.replacement {
+    background-color: #ddffdd;
+    border: 1px solid #cccccc;
+}
+
+.deprecationtable {
+    border: 1px solid #cccccc;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
