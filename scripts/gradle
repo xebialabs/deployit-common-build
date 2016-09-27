@@ -3,7 +3,7 @@
 x=`pwd`
 gradleExec=`pwd`/gradlew
 
-while [[ ! -d "$x/.git" && $x != "/" ]]; do 
+while [[ ! -e "$gradleExec" && $x != "/" ]]; do
     if [ -x "$x/gradlew" ]; then
         gradleExec="$x/gradlew"
         break
