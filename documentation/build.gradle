@@ -10,7 +10,6 @@ defaultTasks 'buildDocumentationZip'
 
 task buildDocumentationZip(type:Zip) {
   baseName = 'base-documentation-style'
-  exclude '**/pdf*'
   from 'generation'
 }
 
