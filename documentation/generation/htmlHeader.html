@@ -8,31 +8,6 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
-        var hideVersion = function() {
-            return $('title').text() === "Release Notes";
-        };
-
-        if (document.productVersion) {
-            var majorVersion = /((\d+)\.(\d+))/.exec(document.productVersion)[0];
-
-            if (!hideVersion()) {
-                $(".version-number").text(majorVersion + ".x").attr('style', '');
-            }
-
-            // The following code dynamically builds URLs to the Jython API, which is not included
-            // into XL Deploy distribution.
-            // That's why we point to docs.xebialabs.com if the document was open via filesystem
-            var docHost = $(location).attr('protocol') == 'file:' ? 'docs.xebialabs.com' : $(location).attr('hostname');
-            var versionPath = (document.productVersion.match(/SNAPSHOT$/) ? 'snapshots/' : '') + 'releases/' + majorVersion;
-
-
-            $.each($('.api-doc-url'), function(i, url) {
-                var relativeHref = $(url).attr('href') == '#' ? '' : $(url).attr('href');
-                $(url).attr('href', 'http://'+ docHost + '/jython-docs/#!/' + versionPath + '/xl-deploy/' + relativeHref)
-            });
-
-        }
-
         $("ol#toc").tableOfContents("body", { topLinks: false, startLevel: 2 });
 
         //remove the toc if it is empty
