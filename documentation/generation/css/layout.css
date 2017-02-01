@@ -92,7 +92,7 @@ a:hover {color:#0683BF}
 .leftcol{float:left; margin:5px 0 0; width:654px;}
 .rightcol{float:right; margin:5px 0 0; width:257px;}
 
-#main_white_bg{background:#fff url(../image/cx_bg.gif) repeat-x center bottom; width:945px; float:left; padding:20px; position:relative}
+#main_white_bg{background:#fff; width:945px; float:left; padding:20px; position:relative}
 
 .logo{position:absolute; top:0px; left:-46px; float: left; margin-left: 23px;}
 
