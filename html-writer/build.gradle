@@ -1,9 +1,0 @@
-group = 'com.xebialabs'
-version = '1.1-SNAPSHOT'
-
-apply plugin: 'deployit-java'
-apply plugin: 'deployit-artifact'
-
-dependencies {
-    testCompile deps.junit_dep, deps.hamcrest_lib, deps.hamcrest_core
-}
